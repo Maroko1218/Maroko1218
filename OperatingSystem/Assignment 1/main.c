@@ -5,7 +5,7 @@
 
 #define NUM_THREADS 5
 
-
+//test comment
 void* routine(void* args) {
     printf("Hello I am thread %d!\n", *(int*)args);
     sleep(1);
