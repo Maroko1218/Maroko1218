@@ -5,8 +5,10 @@
 
 
 typedef struct {
-    sem_t full, empty;
-    char* buffer;
+    sem_t *full, *empty;
+    int* buffer;
+    int* id;
+    int sleep;
 } thread_args;
 
 #endif /* MAIN_H */
