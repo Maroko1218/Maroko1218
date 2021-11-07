@@ -141,7 +141,7 @@ void RR(Process list[], int listSize, int quantum) {
                     if (list[i].RanLast == 0) {
                         list[i].WaitTime = timePassed - list[i].ArrivalTime;
                     } else {
-                        list[i].WaitTime += timePassed - list[i].ArrivalTime - list[i].RanLast; 
+                        list[i].WaitTime += timePassed - list[i].RanLast; 
                     }
                     
                     doneRunning++;
@@ -160,6 +160,8 @@ void RR(Process list[], int listSize, int quantum) {
 
                     if (list[i].RanLast != 0) {
                         list[i].WaitTime += timePassed - list[i].RanLast;
+                    } else {
+                        list[i].WaitTime += timePassed - list[i].ArrivalTime;
                     }
                     list[i].RanLast = timePassed + quantum;
                     int temp = queue[0];
