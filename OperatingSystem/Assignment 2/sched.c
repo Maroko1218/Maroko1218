@@ -1,16 +1,5 @@
 #include "sched.h"
 
-void PrettyPrint(Process list[], int listSize) {
-    SortByPID(list, listSize);
-    int TWaitTime = 0, TTurnTime = 0;
-    for (size_t i = 0; i < listSize; i++) {
-        TWaitTime += list[i].WaitTime;
-        TTurnTime += list[i].WaitTime + list[i].BurstTime;
-        printf("PID:%d\nWait time:%d ms\nTurn over time:%d ms\n\n", list[i].PID, list[i].WaitTime, list[i].WaitTime + list[i].BurstTime);
-    }
-    printf("Average waiting time: %f ms\nAverage turnaround time: %f ms\n", (float)TWaitTime / listSize, (float)TTurnTime / listSize);
-}
-
 void SortByPID(Process list[], int listSize) {
     for (size_t i = 0; i < listSize; i++) {
         for (size_t j = 0; j < listSize - i; j++) {
@@ -21,6 +10,17 @@ void SortByPID(Process list[], int listSize) {
             }
         }
     }
+}
+
+void PrettyPrint(Process list[], int listSize) {
+    SortByPID(list, listSize);
+    int TWaitTime = 0, TTurnTime = 0;
+    for (size_t i = 0; i < listSize; i++) {
+        TWaitTime += list[i].WaitTime;
+        TTurnTime += list[i].WaitTime + list[i].BurstTime;
+        printf("PID:%d\nWait time:%d ms\nTurn over time:%d ms\n\n", list[i].PID, list[i].WaitTime, list[i].WaitTime + list[i].BurstTime);
+    }
+    printf("Average waiting time: %f ms\nAverage turnaround time: %f ms\n", (float)TWaitTime / listSize, (float)TTurnTime / listSize);
 }
 
 void FCFS(Process list[], int listSize) {
