@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["-f","pif.txt","-a","RR","-q","5"],
+            "args": ["-f","pif.txt","-a","FCFS","-q","5"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

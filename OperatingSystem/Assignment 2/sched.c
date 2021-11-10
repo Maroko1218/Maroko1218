@@ -1,9 +1,32 @@
 #include "sched.h"
 
+void PrettyPrint(Process list[], int listSize) {
+    SortByPID(list, listSize);
+    int TWaitTime = 0, TTurnTime = 0;
+    for (size_t i = 0; i < listSize; i++) {
+        TWaitTime += list[i].WaitTime;
+        TTurnTime += list[i].WaitTime + list[i].BurstTime;
+        printf("PID:%d\nWait time:%d ms\nTurn over time:%d ms\n\n", list[i].PID, list[i].WaitTime, list[i].WaitTime + list[i].BurstTime);
+    }
+    printf("Average waiting time: %f ms\nAverage turnaround time: %f ms\n", (float)TWaitTime / listSize, (float)TTurnTime / listSize);
+}
+
+void SortByPID(Process list[], int listSize) {
+    for (size_t i = 0; i < listSize; i++) {
+        for (size_t j = 0; j < listSize - i; j++) {
+            if (list[j].PID > list[j+1].PID) {
+                Process temp = list[j+1];
+                list[j+1] = list[j];
+                list[j] = temp;
+            }
+        }
+    }
+}
+
 void FCFS(Process list[], int listSize) {
     //Sorting all the processes based on arrival time
-    for (size_t i = 0; i < listSize - 1; i++) {
-        for (size_t j = 0; j < listSize - 1; j++) {
+    for (size_t i = 1; i < listSize; i++) {
+        for (size_t j = 0; j < listSize - i; j++) {
             if (list[j].ArrivalTime > list[j+1].ArrivalTime) {
                 Process temp = list[j+1];
                 list[j+1] = list[j];
@@ -17,16 +40,14 @@ void FCFS(Process list[], int listSize) {
         list[i].WaitTime = 0;
         list[i].WaitTime = timePassed - list[i].ArrivalTime;
         timePassed += list[i].BurstTime;
-        printf("PID:%d\nWait time:%d\nTurn over time:%d\n\n",list[i].PID, list[i].WaitTime, list[i].BurstTime + list[i].WaitTime);
     }
-
-        
+    PrettyPrint(list, listSize);
 }
 
 void SJF(Process list[], int listSize) {
     //Sorting processes based on arrival time
-    for (size_t i = 0; i < listSize - 1; i++) {
-        for (size_t j = 0; j < listSize - 1; j++) {
+    for (size_t i = 1; i < listSize; i++) {
+        for (size_t j = 0; j < listSize - i; j++) {
             if (list[j].ArrivalTime > list[j+1].ArrivalTime) {
                 Process temp = list[j+1];
                 list[j+1] = list[j];
@@ -36,8 +57,8 @@ void SJF(Process list[], int listSize) {
     }
 
     //Sorting processes based on burst time making sure not to mess with processes with different arrival times
-    for (size_t i = 0; i < listSize - 1; i++) {
-        for (size_t j = 0; j < listSize - 1; j++) {
+    for (size_t i = 1; i < listSize; i++) {
+        for (size_t j = 0; j < listSize - i; j++) {
             if (list[j].ArrivalTime == list[j+1].ArrivalTime && list[j].BurstTime > list[j+1].BurstTime) {
                 Process temp = list[j+1];
                 list[j+1] = list[j];
@@ -51,11 +72,10 @@ void SJF(Process list[], int listSize) {
         list[i].WaitTime = 0;
         list[i].WaitTime = timePassed - list[i].ArrivalTime;
         timePassed += list[i].BurstTime;
-        printf("PID:%d\nWait time:%d\nTurn over time:%d\n\n",list[i].PID, list[i].WaitTime, list[i].BurstTime + list[i].WaitTime);
         list[i].ArrivalTime = __INT16_MAX__;
         //Every time a process is run it gets moved to the back of the list using __INT16_MAX__ and the list gets sorted again
-        for (size_t k = 0; k < listSize - 1; k++) {
-            for (size_t j = 0; j < listSize - 1; j++) {
+        for (size_t k = 1; k < listSize; k++) {
+            for (size_t j = 0; j < listSize - k; j++) {
                 if (list[j].ArrivalTime <= timePassed && list[j+1].ArrivalTime <= timePassed &&list[j].BurstTime > list[j+1].BurstTime) {
                     Process temp = list[j+1];
                     list[j+1] = list[j];
@@ -64,18 +84,19 @@ void SJF(Process list[], int listSize) {
             }
         }
     }
+    PrettyPrint(list, listSize);
 }
 
 void RR(Process list[], int listSize, int quantum) {
-//    for (size_t i = 0; i < listSize - 1; i++) {
-//        for (size_t j = 0; j < listSize - 1; j++) {
-//            if (list[j].ArrivalTime > list[j+1].ArrivalTime) {
-//                Process temp = list[j+1];
-//                list[j+1] = list[j];
-//                list[j] = temp;
-//            }
-//        }
-//    }
+    for (size_t i = 1; i < listSize; i++) {
+        for (size_t j = 0; j < listSize - i; j++) {
+            if (list[j].ArrivalTime > list[j+1].ArrivalTime) {
+                Process temp = list[j+1];
+                list[j+1] = list[j];
+                list[j] = temp;
+            }
+        }
+    }
 
     //RoundRobin Queue
     int queue[listSize];
@@ -177,10 +198,7 @@ void RR(Process list[], int listSize, int quantum) {
         }
         timePassed++;
     }
-
-    for (size_t i = 0; i < listSize; i++) {
-        printf("PID:%d\nWait time:%d\nTurn over time:%d\n\n",list[i].PID, list[i].WaitTime, list[i].WaitTime + list[i].BurstTime);
-    }
+    PrettyPrint(list, listSize);
 }
 
 int main(int argc, char const *argv[]) {
@@ -220,8 +238,14 @@ int main(int argc, char const *argv[]) {
     }
 
     if (!strcmp(algorithm, "FCFS")) {
+        if (!q) {
+            printf("The entered quantum value will be ignores as it isn't required for this algorithm\n");
+        }
         mode = 1;
     } else if (!strcmp(algorithm, "SJF")) {
+        if (!q) {
+            printf("The entered quantum value will be ignores as it isn't required for this algorithm\n");
+        }
         mode = 2;
     } else if (!strcmp(algorithm, "RR")) {
         mode = 3;
