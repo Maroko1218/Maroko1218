@@ -1,4 +1,4 @@
-.PHONY: clean tidy
+.PHONY: clean tidy run
 
 CC=gcc
 CFLAGS=-Wall -Werror -std=gnu99
@@ -11,6 +11,9 @@ CFLAGS_TEST=$(CFLAGS)
 LFLAGS_TEST=$(LFLAGS) -lcheck -lm -lpthread -lrt -lsubunit
 SRC_TEST=$(filter-out main.c, $(wildcard *.c))
 OBJ_TEST=$(SRC_TEST:.c=.o)
+
+run: main
+	./main
 
 main: $(OBJ)
 	$(CC) $(CFLAGS) -o main $(OBJ) $(LFLAGS)

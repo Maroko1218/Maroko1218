@@ -85,7 +85,7 @@ static void list_times(const char *caller, result_t *results)
 	ui_line('~', 63);
 	printf("%7s%14s%14s%14s%14s\n","size", "time T(s)", "T/nlogn", "T/n", "T/n^2");
 	for (int i = 0; i < RESULT_ROWS; i++) {
-		printf("%7d%14.8lf%14.8lf%14.8lf%14.8lf\n", results[i].size, results[i].time, results[i].time, results[i].time / results[i].size, results[i].time);
+		printf("%7d%14.8lf%14.8lf%14.8lf%14.8lf\n", results[i].size, results[i].time, results[i].time, results[i].time / results[i].size, results[i].time / (results[i].size * results[i].size));
 	}
 	
 

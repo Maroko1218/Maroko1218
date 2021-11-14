@@ -57,7 +57,29 @@ void bench_insertion(const case_t c, result_t *result, int *arr, int listSize) {
 }
 
 void bench_quick(const case_t c, result_t *result, int *arr, int listSize) {
-
+    switch (c)
+    {
+    case best_t:
+        for (int i = 0; i < listSize; i++) {
+            arr[i] = INT_MAX - i;
+        }
+        break;
+    case worst_t:
+        for (int i = 0; i < listSize; i++) {
+            arr[i] = INT_MAX - i;
+        }
+        break;
+    case average_t:
+        srand(clock());
+        for (int i = 0; i < listSize; i++) {
+            arr[i] = rand();
+        }
+        break;
+    }
+    clock_t start = clock();
+    quick_sort(arr, listSize);
+    clock_t stop = clock();
+    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
 }
 
 void bench_linear(const case_t c, result_t *result, int *arr, int listSize) {
