@@ -1,12 +1,12 @@
 #ifndef ANALYZE_H
 #define ANALYZE_H
 
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
+
 
 #define SIZE_START 512
 #define ITERATIONS 4
+
+#include <time.h>
 
 // algorithm_t defines different algorithms
 typedef enum {

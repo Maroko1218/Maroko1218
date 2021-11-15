@@ -1,9 +1,38 @@
 #include "analyze.h"
 #include "algorithm.h"
 
+#include <stdlib.h>
+#include <limits.h>
+#include <string.h>
 //
 // Private
 //
+typedef void(*algorithm_func_t)(int *arr, int listSize, ...);
+#define ALGORITHM(fn) ((algorithm_func_t)fn)
+
+void bench_press(result_t *result, int *arr, int listSize, const int *v, algorithm_func_t alg) {
+    struct timespec gtstart, gtstop;
+    double gttotal = 0;
+    int *backup = malloc(sizeof(int)*listSize);
+    memcpy(backup, arr, sizeof(int)*listSize);
+
+    for (int i = 0; i < ITERATIONS; i++) {
+        if (v == NULL) {
+            clock_gettime(CLOCK_MONOTONIC, &gtstart);
+            alg(arr, listSize);
+            clock_gettime(CLOCK_MONOTONIC, &gtstop);
+        } else {
+            clock_gettime(CLOCK_MONOTONIC, &gtstart);
+            alg(arr, listSize, *v);
+            clock_gettime(CLOCK_MONOTONIC, &gtstop);
+        }
+        memcpy(arr, backup, sizeof(int)*listSize);
+        gttotal += (((double)gtstop.tv_sec + 1.0e-9 * gtstop.tv_nsec) - ((double)gtstart.tv_sec + 1.0e-9 * gtstart.tv_nsec));
+    }
+    result->time = gttotal / ITERATIONS;
+    free(backup);
+}
+
 void bench_bubble(const case_t c, result_t *result, int *arr, int listSize) {
     switch (c)
     {
@@ -24,10 +53,7 @@ void bench_bubble(const case_t c, result_t *result, int *arr, int listSize) {
         }
         break;
     }
-    clock_t start = clock();
-    bubble_sort(arr, listSize);
-    clock_t stop = clock();
-    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
+    bench_press(result, arr, listSize, NULL, ALGORITHM(bubble_sort));
 }
 
 void bench_insertion(const case_t c, result_t *result, int *arr, int listSize) {
@@ -50,23 +76,37 @@ void bench_insertion(const case_t c, result_t *result, int *arr, int listSize) {
         }
         break;
     }
-    clock_t start = clock();
-    insertion_sort(arr, listSize);
-    clock_t stop = clock();
-    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
+    bench_press(result, arr, listSize, NULL, ALGORITHM(insertion_sort));
 }
+
+void generate_quick_sort_best_case(int arr[], int begin, int end) {
+    int count = end - begin;
+    if (count < 3) {
+        return;
+    }
+
+    int middle = (begin + end) / 2;
+
+    generate_quick_sort_best_case(arr, begin, middle-1);
+    int temp = arr[end];
+    arr[end] = arr[middle];
+    arr[middle] = temp;
+    generate_quick_sort_best_case(arr, middle, end);  
+}
+
 
 void bench_quick(const case_t c, result_t *result, int *arr, int listSize) {
     switch (c)
     {
     case best_t:
         for (int i = 0; i < listSize; i++) {
-            arr[i] = INT_MAX - i;
+            arr[i] = i+1;
         }
+        generate_quick_sort_best_case(arr, 0, listSize);
         break;
     case worst_t:
         for (int i = 0; i < listSize; i++) {
-            arr[i] = INT_MAX - i;
+            arr[i] = i;
         }
         break;
     case average_t:
@@ -76,75 +116,51 @@ void bench_quick(const case_t c, result_t *result, int *arr, int listSize) {
         }
         break;
     }
-    clock_t start = clock();
-    quick_sort(arr, listSize);
-    clock_t stop = clock();
-    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
+    bench_press(result, arr, listSize, NULL, ALGORITHM(quick_sort));
 }
 
 void bench_linear(const case_t c, result_t *result, int *arr, int listSize) {
-    clock_t start, stop;
     switch (c)
     {
     case best_t:
         arr[0] = 1;
-        start = clock();
-        linear_search(arr, listSize, 1);
-        stop = clock();
         break;
     case worst_t:
         for (int i = 0; i < listSize; i++) {
-            arr[i] = 1;
+            arr[i] = 2;
         }
-        start = clock();
-        linear_search(arr, listSize, 2);
-        stop = clock();
         break;
     case average_t:
         srand(clock());
         for (int i = 0; i < listSize; i++) {
-            arr[i] = rand()%listSize;
+            arr[i] = 2;
         }
-        start = clock();
-        linear_search(arr, listSize, rand()%listSize);
-        stop = clock();
+        arr[rand()%listSize] = 1;
         break;
     }
-    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
+    const int search_val = 1;
+    bench_press(result, arr, listSize, &search_val, ALGORITHM(linear_search));
 }
 
 void bench_binary(const case_t c, result_t *result, int *arr, int listSize) {
-    clock_t start, stop;
+    for (int i = 0; i < listSize; i++) {
+        arr[i] = i;
+    }
+    static int search_val = 1;
     switch (c)
     {
     case best_t:
-        for (int i = 0; i < listSize; i++) {
-            arr[i] = 1;
-        }
-        start = clock();
-        binary_search(arr, listSize, 1);
-        stop = clock();
+        search_val = (listSize-1)/2;
         break;
     case worst_t:
-        for (int i = 0; i < listSize; i++) {
-            arr[i] = i;
-        }
-        start = clock();
-        binary_search(arr, listSize, listSize-1);
-        stop = clock();
+        search_val = 0;
         break;
     case average_t:
         srand(clock());
-        for (int i = 0; i < listSize; i++) {
-            arr[i] = rand()%listSize;
-        }
-        bubble_sort(arr, listSize);
-        start = clock();
-        binary_search(arr, listSize, rand()%listSize);
-        stop = clock();
+        search_val = rand()%listSize;
         break;
     }
-    result->time = (double)(stop - start) / CLOCKS_PER_SEC;
+    bench_press(result, arr, listSize, &search_val, ALGORITHM(binary_search));
 }
 //
 // Public

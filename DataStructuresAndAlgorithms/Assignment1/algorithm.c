@@ -76,12 +76,12 @@ bool linear_search(const int *a, int n, int v) {
 }
 
 bool binary_search(const int *a, int n, int v) {	
-	int roof = n;
+	int roof = n-1;
 	int floor = 0;
-	int mid = n/2;
+	int mid = (n-1)/2;
 	if (v > a[roof] || v < a[floor]) {
 		return false;
-	} 
+	}
 	while (v != a[mid]) {
 		if (roof == floor) {
 			return false;
