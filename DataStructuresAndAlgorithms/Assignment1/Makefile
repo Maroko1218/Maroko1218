@@ -14,7 +14,6 @@ OBJ_TEST=$(SRC_TEST:.c=.o)
 
 run: main
 	./main
-
 main: $(OBJ)
 	$(CC) $(CFLAGS) -o main $(OBJ) $(LFLAGS)
 

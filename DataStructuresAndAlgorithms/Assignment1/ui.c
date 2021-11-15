@@ -8,43 +8,35 @@
 //
 // Private
 //
-static void ui_invalid_input()
-{
+static void ui_invalid_input() {
 	printf("info> bad input\n");
 }
 
-static void ui_exit()
-{
+static void ui_exit() {
 	printf("info> bye\n");
 }
 
-static char ui_get_choice()
-{
+static char ui_get_choice() {
 	char buf[3];
 
 	printf("input> ");
 	return read_line(buf, 3) ? buf[0] : 0;
 }
 
-static void ui_line(char c, int n)
-{
+static void ui_line(char c, int n) {
 	while (n-- > 0) {
 		putchar(c);
 	}
 	putchar('\n');
 }
 
-static void ui_menu_options(const char *options[], int num_options)
-{
-	int i;
-
-	for (i=0; i<num_options; i++) {
+static void ui_menu_options(const char *options[], int num_options) {
+	for (int i=0; i<num_options; i++) {
 		printf("    %c) %s\n", 'a'+i, options[i]);
 	}
 }
 
-static void ui_menu()
-{
+static void ui_menu() {
 	const char *options[] = {
 		"Menu",
 		"Exit\n",
@@ -70,8 +62,7 @@ static void ui_menu()
 	ui_line('-', MENU_WIDTH);
 }
 
-static void list_times(const char *caller, result_t *results)
-{
+static void list_times(const char *caller, result_t *results) {
 	ui_line('*', 63);
 	int strlen = 0;
 	for (int i = 0; caller[i] != '\0'; i++) {
@@ -87,15 +78,11 @@ static void list_times(const char *caller, result_t *results)
 	for (int i = 0; i < RESULT_ROWS; i++) {
 		printf("%7d%14.8lf%14.8lf%14.8lf%14.8lf\n", results[i].size, results[i].time, results[i].time, results[i].time / results[i].size, results[i].time / (results[i].size * results[i].size));
 	}
-	
-
 }
-
 //
 // Public
 //
-void ui_run()
-{
+void ui_run() {
 	bool running, show_menu;
 	result_t result[RESULT_ROWS];
 	show_menu = true;

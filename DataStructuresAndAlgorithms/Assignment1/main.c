@@ -1,7 +1,6 @@
 #include "ui.h"
 
-int main()
-{
+int main() {
 	ui_run();
 	return 0;
 }

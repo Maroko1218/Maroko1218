@@ -149,8 +149,7 @@ void bench_binary(const case_t c, result_t *result, int *arr, int listSize) {
 //
 // Public
 //
-void benchmark(const algorithm_t a, const case_t c, result_t *result, int n)
-{
+void benchmark(const algorithm_t a, const case_t c, result_t *result, int n) {
     int *arr = malloc(sizeof(int));
     int sampleSize;
     int multiplier = 2;
