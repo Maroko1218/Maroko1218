@@ -18,7 +18,7 @@ int partition(int *a, int lb, int ub) {
 
 void quick_sort_impl(int *a, int lb, int ub) {
 	if (lb >= 0 && ub >= 0 && lb < ub) {
-		int pivot = partition(a, lb, ub);
+		int pivot = partition(a, lb, ub-1);
 		quick_sort_impl(a, lb, pivot - 1);
 		quick_sort_impl(a, pivot + 1, ub);
 	}
