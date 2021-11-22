@@ -27,7 +27,7 @@ void bench_press(result_t *result, int *arr, int listSize, const int *v, algorit
             clock_gettime(CLOCK_MONOTONIC, &gtstop);
         }
         memcpy(arr, backup, sizeof(int)*listSize);
-        gttotal += (((double)gtstop.tv_sec + 1.0e-9 * gtstop.tv_nsec) - ((double)gtstart.tv_sec + 1.0e-9 * gtstart.tv_nsec));
+        gttotal += (((double)gtstop.tv_sec * 1e9 + gtstop.tv_nsec) - ((double)gtstart.tv_sec * 1e9 + gtstart.tv_nsec))/1e9;
     }
     result->time = gttotal / ITERATIONS;
     free(backup);
@@ -79,30 +79,13 @@ void bench_insertion(const case_t c, result_t *result, int *arr, int listSize) {
     bench_press(result, arr, listSize, NULL, ALGORITHM(insertion_sort));
 }
 
-void generate_quick_sort_best_case(int arr[], int begin, int end) {
-    int count = end - begin;
-    if (count < 3) {
-        return;
-    }
-
-    int middle = (begin + end) / 2;
-
-    generate_quick_sort_best_case(arr, begin, middle-1);
-    int temp = arr[end];
-    arr[end] = arr[middle];
-    arr[middle] = temp;
-    generate_quick_sort_best_case(arr, middle, end);  
-}
-
-
 void bench_quick(const case_t c, result_t *result, int *arr, int listSize) {
     switch (c)
     {
-    case best_t:
+    case best_t: // I wasn't able to make a perfect best case array. But random values are better than a sorted list due to my quick sort picking the last element as a pivot
         for (int i = 0; i < listSize; i++) {
-            arr[i] = i+1;
+            arr[i] = rand();
         }
-        generate_quick_sort_best_case(arr, 0, listSize);
         break;
     case worst_t:
         for (int i = 0; i < listSize; i++) {

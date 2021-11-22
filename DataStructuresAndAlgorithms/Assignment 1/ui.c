@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 //
 // Private
@@ -64,20 +65,16 @@ static void ui_menu() {
 }
 
 static void list_times(const char *caller, result_t *results) {
-	ui_line('*', 63);
-	int strlen = 0;
-	for (int i = 0; caller[i] != '\0'; i++) {
-		strlen++;
-	}
-	int adjustedWidth = (63 - strlen) / 2;
+	ui_line('*', RESULT_WIDTH);
+	int adjustedWidth = (RESULT_WIDTH - strlen(caller)) / 2;
 	for (int i = 0; i < adjustedWidth; i++) {
 		putchar(' ');
 	}
-	printf("%s\n", caller);
-	ui_line('~', 63);
-	printf("%7s%14s%14s%14s%14s\n","size", "time T(s)", "T/nlogn", "T/n", "T/n^2");
+	printf("%s", caller);
+	ui_line('~', RESULT_WIDTH);
+	printf("%-7s%-14s%-14s%-14s%-14s%-14s\n","size", "time T(s)", "T/nlogn", "T/n", "T/n^2", "T/n^3");
 	for (int i = 0; i < RESULT_ROWS; i++) {
-		printf("%7d%14e%14e%14e%14e\n", results[i].size, results[i].time, results[i].time / (results[i].size * log2(results[i].size)), results[i].time / results[i].size, results[i].time / results[i].size * results[i].size);
+		printf("%-7d%-14e%-14e%-14e%-14e%-14e\n", results[i].size, results[i].time, results[i].time / (results[i].size * log2(results[i].size)), results[i].time / results[i].size, results[i].time / (results[i].size * results[i].size), results[i].time / (results[i].size * results[i].size * results[i].size));
 	}
 }
 //

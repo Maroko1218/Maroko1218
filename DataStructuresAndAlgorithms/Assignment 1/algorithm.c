@@ -6,23 +6,25 @@
 int partition(int *a, int lb, int ub) {
 	int pivot = a[ub];
 	int i = lb - 1;
-	for (int j = lb; j <= ub; j++) {
+	for (int j = lb; j < ub; j++) {
 		if (a[j] <= pivot) {
 			int temp = a[++i];
 			a[i] = a[j];
 			a[j] = temp;
 		}
 	}
+	int temp = a[++i];
+	a[i] = a[ub];
+	a[ub] = temp;
 	return i;
 }
 
 void quick_sort_impl(int *a, int lb, int ub) {
 	if (lb >= 0 && ub >= 0 && lb < ub) {
-		int pivot = partition(a, lb, ub-1);
+		int pivot = partition(a, lb, ub);
 		quick_sort_impl(a, lb, pivot - 1);
 		quick_sort_impl(a, pivot + 1, ub);
 	}
-		
 }
 //
 // Public
@@ -47,23 +49,18 @@ void bubble_sort(int *a, int n) {
                                          		
 void insertion_sort(int *a, int n) {
 	for (int i = 1; i < n; i++) {
-		if (a[i] >= a[i-1]) {
-			continue;
+		int temp = a[i];
+		int j = i - 1;
+		while (j >= 0 && a[j] > temp) {
+			a[j+1] = a[j];
+			j--;
 		}
-		for (int j = i-1; j >= 0; j--) {
-			if (a[i] < a[j]) {
-				int temp = a[i];
-				for (int k = i; k > j; k--) {
-					a[k] = a[k-1];
-				}
-				a[j] = temp;
-			}	
-		}
+		a[j+1] = temp;
 	}
 }
 
 void quick_sort(int *a, int n) {
-	quick_sort_impl(a, 0, n);
+	quick_sort_impl(a, 0, n - 1);
 }
 
 bool linear_search(const int *a, int n, int v) {
