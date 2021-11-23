@@ -72,9 +72,9 @@ static void list_times(const char *caller, result_t *results) {
 	}
 	printf("%s", caller);
 	ui_line('~', RESULT_WIDTH);
-	printf("%-7s%-14s%-14s%-14s%-14s%-14s%-14s\n","size", "time T(s)", "T/nlogn", "T/(n/2)", "T/n", "T/n^2", "T/n^3");
+	printf("%-7s%-14s%-14s%-14s%-14s%-14s%-14s%-14s\n","size", "time T(s)", "T/logn", "T/nlogn", "T/(n/2)", "T/n", "T/n^2", "T/n^3");
 	for (int i = 0; i < RESULT_ROWS; i++) {
-		printf("%-7d%-14e%-14e%-14e%-14e%-14e%-14e\n", results[i].size, results[i].time, results[i].time / (results[i].size * log2(results[i].size)), results[i].time / (results[i].size/2), results[i].time / results[i].size, results[i].time / (results[i].size * results[i].size), results[i].time / (results[i].size * results[i].size * results[i].size));
+		printf("%-7d%-14e%-14e%-14e%-14e%-14e%-14e%-14e\n", results[i].size, results[i].time, results[i].time/log2(results[i].size), results[i].time / (results[i].size * log2(results[i].size)), results[i].time / (results[i].size/2), results[i].time / results[i].size, results[i].time / (results[i].size * results[i].size), results[i].time / (results[i].size * results[i].size * results[i].size));
 	}
 }
 //

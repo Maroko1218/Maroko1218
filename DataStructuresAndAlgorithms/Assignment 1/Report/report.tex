@@ -1,0 +1,183 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+
+\title{Laboration 1}
+\author{Markus Svan}
+\date{2021/11/23}
+\begin{document}
+    \maketitle
+    \newpage
+    \tableofcontents
+    \newpage
+    \section{Introduction}
+    This report is about testing different sorting and search algorithms. The different sorting algorithms that are being tested in this report are the following \texttt{Bubble Sort}, \texttt{Insertion Sort}, and \texttt{QuickSort}
+    The search algorithms that get tested are \texttt{Linear Search} and \texttt{Binary Search}\\
+    The report will look at the complexity of each algorithm in ``big O" notation which is used to explain the expected time complexity of an algorithm based on the size of the list needing to be sorted which is noted down as \texttt{n}
+    \section{Algorithm Explanation}
+    \subsection{Bubble Sort}
+    Bubble Sort steps through the given list of items from the lowest index to the next highest index and compares the element it is currently looking at with the element one index higher.
+    If the element at the current index is bigger than the index adjacent to it they swap places and the algorithm continues.
+    After each iteration of the list it goes back to the lowest index but will then go up to the past highest index minus one.
+    This continues until either there's an iteration where no swaps had to be made, meaning the list is already sorted or until the lowest index and past highest index become the same.\\
+    The best case for Bubble Sort is if the list is already sorted. This results in a complexity of \texttt{O(n)} as the algorithm will step through the list once and then return since it didn't make a single swap.\\
+    The worst case for Bubble Sort is if the list is already sorted in the opposite direction. This results in a complexity of \texttt{O(n²)} because the algorithm has to step through the list making a swap on every single iteration of the loop\\
+    The average case for Bubble Sort is when the algorithm is given a random list. After benchmarking Bubble Sort average case through \texttt{analyze.c > bench\_bubble} the measured times somehow result in a time complexity worse than \texttt{O(n²)}.
+    \subsection{Insertion Sort}
+    Insertion Sort steps through the given list of items from the next lowest index to the highest index. On each step it stores the value of the current index.
+    If the stored value is lower than the value one index before it'll enter a loop that goes from the current index towards the start of the list,
+    constantly overwriting the new current index with the value before it until the stored value is no longer smaller than the new index and finally put the stored value on the index of the second loop.\\
+    The best case for Insertion Sort is an already sorted list. This results in a complexity of \texttt{O(n)} because the algorithm will step through the list once and never have to move any values before it finishes.\\
+    The worst case for Insertion Sort is an array sorted in the opposite direction. This results in a complexity of \texttt{O(n²)} due to the algorithm looping through the entire list of items and has to constantly move values during the second loop.\\
+    The average case for Insertion Sort is a random list. After benchmarking Insertion Sort average case through \texttt{analyze.c > bench\_insertion} the measured times while faster than worst case still closely resemble a complexity of \texttt{O(n²)}.
+    \subsection{Quick Sort}
+    Quick sort selects the last element in the list as a pivot element and puts all values smaller than the pivot element to the left of it in the list and all the values bigger than the pivot element to the right of it in the list.
+    The pivot element is placed correctly in the list by comparing it to every element in the list (including itself) and counting the amount of times the pivot element is bigger or equal.
+    The amount of times the pivot was bigger or equal is also the pivot elements index in the list! After having placed the pivot element on the correct the algorithm then continues on the new smaller lists to the left and or right of the pivot element.
+    The best case for Insertion Sort is when the pivot element is the middle element in each list section. Sadly implementing a function to make the best case list was very hard. However I can give an example list that would be best case of 9 values.
+    \texttt{1 3 4 6 8 9 2 7 5} this list is a best case list as 5 is the middle element and will be picked as a pivot. And in the next recursive call of the function 2 and 7 will be the pivot element for the new respective sections.\\
+    The worst case for Quick Sort is an already sorted list. The reason for this is that the pivot element will already be in the last and correct position. So there would be no splitting of the list into smaller sections. This results in a complexity of \texttt{O(N²)}.
+    The average case for Quick Sort is a random list. After benchmarking quick sort average case through \texttt{analyze.c > bench\_quick} it conforms to a complexity of \texttt{O(nLog(n))}.\\
+    The theoretical best case for Quick Sort is \texttt{O(nLog(n))}.
+    \subsection{Linear Search}
+    Linear search compares every item in the list from the lowest index to either the highest index or when the queried value is found.
+    The best case for Linear Search is when the value being searched for is the first item in the list. This results in a copmplexity of \texttt{O(1)} as there is just one comparison before the value being found it is constant time in best case.\\
+    The worst case for Linear Search is when the value is not in the list. This results in a complexity of \texttt{O(n)} as it steps through every single item in the list before not finding the element.\\
+    The average case for Linear Search is when the value is somewhere in the list, preferably not at the start or end but closer to the middle. The complexity for Linear Search average case is less than \texttt{0(n)} but higher than \texttt{O(1)} and could be represented by roughly \texttt{O(n/2)}.
+    \subsection{Binary Search}
+    Binary Search is the only algorithm out of the ones listed which has a prerequisite, which is that the list has to be sorted. Binary search checks the middle element of the list and compares it to the queried value,
+    if the search query is bigger than the middle element it will ``raise the floor" to the middle elements index + 1. Efectively cutting the list in half, and will then compare the new middle
+    element in the ``new list" to the search query and repeat until the right value is found or that there's no more dividing the list in half. Of course if the search query is smaller the ``Roof" will be lowered instead to the middle elements index - 1.\\
+    The best case for Binary Search is when the first calculated middle element is the same as the search query. This results in a complexity of \texttt{O(1)} since binary search will finish
+    instantly on the first comparison.\\
+    The worst case for Binary Search is when the search query is the last element in the list. This results in a complexity of \texttt{O(log(n))} because of the continuous division of 2 on the list.\\
+    The average case for Binary Search is when the search query is a random element potentially in a random list. This results in a complexity in between best case and worst case.  
+    \section{Code Justification}
+    The code uses the same benchmark function called \texttt{bench\_press} for each algorithm. It recieves a function pointer to the algorithm it has to run and based on the parameters
+    which are meant to be fed into the algorithm decides if it's a sorting or search algorithm. The function then measures the time of each function \texttt{ITERATION} amount of times which is
+    decided in \texttt{analyze.h} and stores the average in the results parameter sent in through the function call. Each algorithm has their own function to generate the best, worst and average case lists.
+    The time measurement is started and stopped right before and after the algorithm call to measure no other instructions.
+    \newpage
+    \section{Algorithm Analysis}
+    \subsection{Bubble Sort best case}[!ht]
+    All the following tables are average results from 10 iterations.\\
+    Bubble Sort best case seems to conform to \texttt{O(n)}. This makes sense as the algorithm steps through the list once (compares n elements) before declaring it sorted.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{sbsb.png}
+        \caption{Bubble Sort best case benchmar results}
+        \label{fig:result1}
+    \end{figure}
+    \subsection{Bubble Sort worst case}[!ht]
+    Bubble Sort worst case seems to conform to \texttt{O(n²)}. This makes sense because the algorithm has to swap every single element in the list before it's sorted.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{sbsw.png}
+        \caption{Bubble Sort worst case benchmark results}
+        \label{fig:result2}
+    \end{figure}
+    \subsection{Bubble Sort average case}[!ht]
+    Bubble sort average case seems to conform most closely to \texttt{O(n²)}. This does make some sense as it should be comparing and swapping elements roughly 50\% of the time,
+    meaning it's more operations than best case but should be less operations than worst case. However the shocking result is that average case took longer to compute than worst case.
+    While I am unable to give an objective answer without speculation as for why this result is the way it is I will try to explain it in section 5 Probelms.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{sbsa.png}
+        \caption{Bubble Sort average case benchmark results}
+        \label{fig:result3}
+    \end{figure}
+    \subsection{Insertion Sort best case}[!ht]
+    Insertion Sort best case seems to conform to \texttt{O(n)}. This makes sense as the algorithm steps through the lise once before declaring the list as sorted.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{isb.png}
+        \caption{Insertion Sort best case benchmark results}
+        \label{fig:result4}
+    \end{figure}
+    \subsection{Insertion Sort worst case}[!ht]
+    Insertion Sort worst case seems to conform to \texttt{O(n²)}. This makes sense as the algorithm has to move and compare the highest possible amount of times, which due to the nested
+    for loops is n².
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{isw.png}
+        \caption{Insertion Sort worst case benchmark results}
+        \label{fig:result5}
+    \end{figure}
+    \subsection{Insertion Sort average case}[!ht]
+    Insertion Sort average case seems to conform the most to \texttt{O(n²)} but on a downwards trend. This makes sense as the algorithm compares a randomly generated list of elements,
+    so if truly random it should on average insert elements somewhere in the middle of the sorted elements before it. While these times aren't slower than their worst case counterpart
+    they still seem very close to the worst case times. I will try to explain this in section 5 Problems.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{isa.png}
+        \caption{Insertion Sort average case benchmark results}
+        \label{fig:result6}
+    \end{figure}
+    \subsection{Quick Sort best case}[!ht]
+    I was unable to generate a best case array for Quick Sort so there are no results to show for it.
+    \subsection{Quick Sort worst case}[!ht]
+    Quick Sort worst case conforms to \texttt{O(n²)}. This makes sense because on every failed recursive splitting of the list no improvement was made from trying to divide the list. 
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{qsw.png}
+        \caption{Quick Sort worst case benchmark results}
+        \label{fig:result7}
+    \end{figure}
+    \subsection{Quick Sort average case}[!ht]
+    Quick Sort average case seems to conform to either \texttt{O(nlogn)} or \texttt{O(n/2)}. This result makes sense because the algorithm will sometimes pick the best, worst or average pivot for it's list.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{qsa.png}
+        \caption{Quick Sort average case benchmark results}
+        \label{fig:result8}
+    \end{figure}
+    \subsection{Linear Search best case}[!ht]
+    Linear Search best case conforms to \texttt{O(1)}. This constant time makes sense since the best case is immediately finding the search query and returning true.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{lsb.png}
+        \caption{Linear Search best case benchmark results}
+        \label{fig:result9}
+    \end{figure}
+    \subsection{Linear Search worst case}[!ht]
+    Linear Search worst case seems to conform the best to \texttt{O(n)}. This makes sense due to the value either not being in the list but the search algorithm still having to go through the entire list to be certain the value isn't in the list.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{lsw.png}
+        \caption{Linear Search worst case benchmark results}
+        \label{fig:result10}
+    \end{figure}
+    \subsection{Linear Search average case}[!ht]
+    Linear Search average case conforms the most to \texttt{O(n/2)}. This is due to the search query value existing at a random location in the list, and the average of all the possible locations becomes the center of the list. Meaning it makes sense that the complexity is for half the list. 
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{lsa.png}
+        \caption{Linear Search average case benchmark results}
+        \label{fig:result11}
+    \end{figure}
+    \subsection{Binary Search best case}[!ht]
+    Binary Search best case conforms to \texttt{O(1)}. This constant time is due to the first element compared is the correct value every time so the size of the list isn't relevant.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{bsb.png}
+        \caption{Binary Search best case benchmark results}
+        \label{fig:result12}
+    \end{figure}
+    \subsection{Binary Search worst case}[!ht]
+    Binary Search worst case conforms to \texttt{O(logn)}. This very quick worst case is because the correct value is placed as the maximum index of the list.
+    Binary Search similarly to Quick Sort divides the list in halves, but unlike Quick Sort Binary Search succeeds in the division every time until the element is found or declared not in the list.  
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{bsw.png}
+        \caption{Binary Search worst case benchmark results}
+        \label{fig:result13}
+    \end{figure}
+    \subsection{Binary Search average case}[!ht]
+    Binary Search average case conforms the most to \texttt{O(logn)}. This makes sense because the amount of divisions needed to get to a lot of values in the list is the same as the worst case.
+    The reason for this is that the divisions let the algorithm step through the list as a binary tree. The values at the bottom are the furthest away but there are more of them than values found right away.
+    \begin{figure}[!ht]
+        \includegraphics*[width=\linewidth]{bsa.png}
+        \caption{Binary Search average case benchmark results}
+        \label{fig:result14}
+    \end{figure}
+    \newpage
+    \section{Problems}[!ht]
+    Why is the average case for bubble sort on some occasions slower than the theoretical worst case?
+    The speculated answer I've arrived at is that the branch prediction on processors learns to predict the guaranteed swapping of both bubble and insertion sort.
+    Every time the processor predicts an if statement (including conditions for loops) it results in a high performance increase compared to when it guesses incorrectly.
+    On average cases the processor can't predict if it should or shouldn't swap due to the list being random. On each failed prediction the processor has to rebuild the pipeline
+    resulting in a huge slowdown of performance.\\
+    Quick Sort best case is a ``Binary Search Tree in preorder". I was sadly unable to make a function able to generate lists sorted this way in time for this assignment 
+    \section{Conclusion}
+    During this assignment I learned the meaning and usage of ``Big O notation". I also learned how to code different sorting and search algorithms. I learned how to think recursively with
+    Quick Sort. The worst case for sorting any list often conforms to n² unless you're using a \texttt{O(n+r)} algorithm like Counting Sort. Binary Search is able to be so quick due to the list
+    already being sorted letting the algorithm draw conclusions not possible on unsorted lists for which you'd have to use Linear Search.
+\end{document}

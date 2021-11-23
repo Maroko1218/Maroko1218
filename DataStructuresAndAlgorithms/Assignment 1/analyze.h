@@ -4,7 +4,7 @@
 
 
 #define SIZE_START 512
-#define ITERATIONS 4
+#define ITERATIONS 10
 
 #include <time.h>
 
