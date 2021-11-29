@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import bst
 import avl
+import bst
+import sys
 import logging
 
 log = logging.getLogger(__name__)
@@ -176,7 +177,25 @@ class TerminalUI:
         Shows a pretty 2D tree based on the output of bfs_order_star(). None
         values are are replaced by stars ("*").
         '''
-        log.info("TODO@src/ui.py: implement show_2d() using bfs_order_star()")
+        output = [v if v is not None else "*" for v in self._tree.bfs_order_star()]
+        height = self._tree.height()
+        multiplier = 1
+        i = 1
+        counter = 0
+        for node in output:
+            if counter % 2 == 0 and counter != 0 and i == 1:
+                print(" ", end='')
+            for _ in range(height - counter):
+                print("    ", end='')
+            print(node, end='')
+            if i % multiplier == 0:
+                print()
+                multiplier *= 2
+                i = 0
+                counter += 1
+            i += 1
+
+        #log.info("TODO@src/ui.py: implement show_2d() using bfs_order_star()")
 
 if __name__ == "__main__":
     logging.critical("ui contains no main module")
