@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+#Markus Svan och Jesper Olsson
 import bt
 import sys
 import logging
@@ -84,9 +85,7 @@ class BST(bt.BT):
         For example, consider the following tree `t`:
                     10
               5           15
-           *     *     *     20
-                           *    25
-
+           *     *     *     20 
         The output of t.bfs_order_star() should be:
         [ 10, 5, 15, None, None, None, 20 ]
         '''
@@ -96,22 +95,22 @@ class BST(bt.BT):
             queue.append(self)
             length = (2 ** self.height()) - 1
             i = 0
-            scounter = 0
             while queue != [] and i < length:
                 p = queue[0]
                 queue.remove(p)
-                if not p.is_empty():
-                    scounter += 1
                 output.append(p.value())
-                if not p.is_empty() and p.height() > 1:
+                if not p.is_empty():
                     if not p.lc().is_empty():
                         queue.append(p.lc())
-                    elif scounter < self.size():
+                    else:
                         queue.append(BST())
                     if not p.rc().is_empty():
                         queue.append(p.rc())
-                    elif scounter < self.size():
+                    else:
                         queue.append(BST())
+                else:
+                    queue.append(BST())
+                    queue.append(BST())
                 i += 1
 
         return output
@@ -137,8 +136,43 @@ class BST(bt.BT):
         Removes the value `v` from the tree and returns the new (updated) tree.
         If `v` is a non-member, the same tree is returned without modification.
         '''
-        log.info("TODO@src/bst.py: implement delete()")
+        if self.is_empty():
+            return self #returns the empty tree
+        if not self.is_member(v):
+            return self #returns the tree as it is when v isnt in tree
+        if v < self.value():
+            return self.cons(self.lc().delete(v),self.rc())
+        if v > self.value():
+            return self.cons(self.lc(), self.rc().delete(v))
+        return self.remove_root()
+        #log.info("TODO@src/bst.py: implement delete()")
         return self
+
+    def remove_root(self):
+        if self.is_leaf(): #if leaf node
+            self.set_value(None)
+            self.set_lc(None)
+            self.set_rc(None)
+        elif not self.lc().is_empty() and self.rc().is_empty(): #if node has left child 
+            self.set_value(self.lc().value())
+            self.set_rc(self.lc().rc())
+            self.set_lc(self.lc().lc()) 
+        elif self.lc().is_empty() and not self.rc().is_empty(): #if node has right child
+            self.set_value(self.rc().value())
+            self.set_lc(self.rc().lc())
+            self.set_rc(self.rc().rc())
+        elif not self.lc().is_empty() and not self.rc().is_empty(): #if node has left and right child
+            if self.lc().height() > self.rc().height(): #not sure if this works. balance depending on which child has the largest depth
+                biggest = max(self.lc().inorder())
+                self.delete(biggest)
+                self.set_value(biggest)
+            else:
+                lowest = min(self.rc().inorder())
+                self.delete(lowest)
+                self.set_value(lowest)
+                #find and take lowest value node from the right subtree and replace local root with it
+        return self
+
 
 if __name__ == "__main__":
     log.critical("module contains no main module")

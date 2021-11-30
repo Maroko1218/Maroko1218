@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
+#Markus Svan och Jesper Olsson
 import avl
 import bst
 import sys
+import math
 import logging
 
 log = logging.getLogger(__name__)
@@ -181,20 +183,25 @@ class TerminalUI:
         height = self._tree.height()
         multiplier = 1
         i = 1
-        counter = 0
-        for node in output:
-            if counter % 2 == 0 and counter != 0 and i == 1:
+        spaces = 2**height
+        counter = 1
+        for x, node in enumerate(output):
+            """if counter % 2 == 0:
+                for _ in range(spaces):
+                    print(" ", end='')"""
+            for _ in range(spaces):
                 print(" ", end='')
-            for _ in range(height - counter):
-                print("    ", end='')
             print(node, end='')
-            if i % multiplier == 0:
+            if i % multiplier != 0:
+                for _ in range(spaces - len(str(output[x+1]))):
+                    print(" ", end='')
+            else:
                 print()
                 multiplier *= 2
                 i = 0
                 counter += 1
+                spaces = math.floor(spaces/2)
             i += 1
-
         #log.info("TODO@src/ui.py: implement show_2d() using bfs_order_star()")
 
 if __name__ == "__main__":

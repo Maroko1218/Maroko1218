@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+#Markus Svan och Jesper Olsson
 import sys
 import logging
 
@@ -32,6 +33,9 @@ class BT:
         Returns true if the tree is empty.
         '''
         return self.value() is None
+
+    def is_leaf(self):
+        return self.lc().is_empty() and self.rc().is_empty()
 
     def lc(self):
         '''

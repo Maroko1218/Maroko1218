@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+#Markus Svan och Jesper Olsson
 import bst
 import sys
 import logging
