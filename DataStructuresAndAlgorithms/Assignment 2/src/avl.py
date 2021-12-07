@@ -23,9 +23,9 @@ class AVL(bst.BST):
         may remove this function and overide something else if you'd like.
         '''
         log.debug("calling bst.BST.add() explicitly from child")
+        temp = bst.BST.add(self, v)
         self.balance() # TODO: apply this method correctly for add/delete
-        return bst.BST.add(self, v)
-
+        return temp
     def balance(self):
         '''
         AVL-balances around the node rooted at `self`.  In other words, this
@@ -39,29 +39,33 @@ class AVL(bst.BST):
         '''
         Performs a single-left rotate around the node rooted at `self`.
         '''
-        log.info("TODO@src/avl.py: implement slr()")
-        return self
+        temprc = self.rc()
+        self.set_rc(temprc.lc())
+        temprc.set_lc(self)
+        return temprc
 
     def srr(self):
         '''
         Performs a single-right rotate around the node rooted at `self`.
         '''
-        log.info("TODO@src/avl.py: implement srr()")
-        return self
+        templc = self.lc()
+        self.set_lc(templc.rc())
+        templc.set_rc(self)
+        return templc
 
     def dlr(self):
         '''
         Performs a double-left rotate around the node rooted at `self`.
         '''
-        log.info("TODO@src/avl.py: implement drl()")
-        return self
+        self.set_rc(self.lc().srr())
+        return self.slr()
 
     def drr(self):
         '''
         Performs a double-right rotate around the node rooted at `self`.
         '''
-        log.info("TODO@src/avl.py: implement drr()")
-        return self
+        self.set_lc(self.rc().slr())
+        return self.srr()
 
 if __name__ == "__main__":
     log.critical("module contains no main module")

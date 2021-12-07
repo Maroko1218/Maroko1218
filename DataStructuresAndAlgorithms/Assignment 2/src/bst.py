@@ -28,28 +28,17 @@ class BST(bt.BT):
         '''
         Returns the number of nodes in the tree.
         '''
-        #logging.info("TODO@src/bst.py: implement size()")
-        if not self.lc().is_empty() and not self.rc().is_empty():
-            return self.lc().size() + self.rc().size() + 1
-        elif not self.lc().is_empty():
-            return self.lc().size() + 1
-        elif not self.rc().is_empty():
-            return self.rc().size() + 1
-        return 1
-        
+        if self.is_empty():
+            return 0
+        return self.lc().size() + self.rc().size() + 1
 
     def height(self):
         '''
         Returns the height of the tree.
         '''
-        #logging.info("TODO@src/bst.py: implement height()")
-        if not self.lc().is_empty() and not self.rc().is_empty():
-            return max(self.lc().height(), self.rc().height()) + 1
-        elif not self.lc().is_empty():
-            return self.lc().height() + 1
-        elif not self.rc().is_empty():
-            return self.rc().height() + 1
-        return 1
+        if self.is_empty():
+            return 0
+        return max(self.lc().height(), self.rc().height()) + 1
         
     def preorder(self):
         '''
@@ -99,18 +88,12 @@ class BST(bt.BT):
                 p = queue[0]
                 queue.remove(p)
                 output.append(p.value())
-                if not p.is_empty():
-                    if not p.lc().is_empty():
-                        queue.append(p.lc())
-                    else:
-                        queue.append(BST())
-                    if not p.rc().is_empty():
-                        queue.append(p.rc())
-                    else:
-                        queue.append(BST())
+                if p.is_empty():
+                    queue.append(BST())
+                    queue.append(BST())
                 else:
-                    queue.append(BST())
-                    queue.append(BST())
+                    queue.append(p.lc())
+                    queue.append(p.rc())
                 i += 1
 
         return output
