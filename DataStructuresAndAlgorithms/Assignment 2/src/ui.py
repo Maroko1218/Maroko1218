@@ -7,6 +7,8 @@ import sys
 import math
 import logging
 
+
+
 log = logging.getLogger(__name__)
 
 class TerminalUI:
@@ -202,7 +204,6 @@ class TerminalUI:
                 counter += 1
                 spaces = math.floor(spaces/2)
             i += 1
-        #log.info("TODO@src/ui.py: implement show_2d() using bfs_order_star()")
 
 if __name__ == "__main__":
     logging.critical("ui contains no main module")

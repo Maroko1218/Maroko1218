@@ -21,8 +21,17 @@ class BST(bt.BT):
         '''
         Returns true if the value `v` is a member of the tree.
         '''
-        #logging.info("TODO@src/bst.py: implement is_member()")
         return v in self.inorder()
+
+    def lc(self):
+        if self.value() == None:
+            return BST()
+        return bt.BT.lc(self)
+
+    def rc(self):
+        if self.value() == None:
+            return BST()
+        return bt.BT.rc(self)
 
     def size(self):
         '''
@@ -52,7 +61,6 @@ class BST(bt.BT):
         '''
         Returns a list of all members in inorder.
         '''
-        #log.info("TODO@src/bst.py: implement inorder()")
         if self.is_empty():
             return []
         return self.lc().inorder() + [self.value()] + self.rc().inorder() 
@@ -61,7 +69,6 @@ class BST(bt.BT):
         '''
         Returns a list of all members in postorder.
         '''
-        #log.info("TODO@src/bst.py: implement postorder()")
         if self.is_empty():
             return []
         return self.lc().postorder() + self.rc().postorder() + [self.value()]
@@ -88,17 +95,11 @@ class BST(bt.BT):
                 p = queue[0]
                 queue.remove(p)
                 output.append(p.value())
-                if p.is_empty():
-                    queue.append(BST())
-                    queue.append(BST())
-                else:
-                    queue.append(p.lc())
-                    queue.append(p.rc())
+                queue.append(p.lc())
+                queue.append(p.rc())
                 i += 1
 
         return output
-
-        #log.info("TODO@src/bst.py: implement bfs_order_star()")
 
     def add(self, v):
         '''
@@ -128,7 +129,6 @@ class BST(bt.BT):
         if v > self.value():
             return self.cons(self.lc(), self.rc().delete(v))
         return self.remove_root()
-        #log.info("TODO@src/bst.py: implement delete()")
         return self
 
     def remove_root(self):
