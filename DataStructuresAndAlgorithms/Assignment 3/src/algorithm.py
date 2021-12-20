@@ -2,6 +2,8 @@
 
 import sys
 import logging
+#To create empty node for parent of start_node to avoid checking for None
+from adjlist import AdjacencyList
 
 log = logging.getLogger(__name__)
 
@@ -48,14 +50,51 @@ def dijkstra(adjlist, start_node):
     c|* * *
 
     For start node "a", the expected output would then be:
-
     d: [ None, 1, 2]
     e: [ None, 'a', 'a' ]
     '''
-    log.info("TODO: dijkstra()")
+    node_list = make_node_list(adjlist)
+    node_list[get_node_index(node_list, start_node)].key = 0
+
+    tree = AdjacencyList()
+    queue = list(node_list)
+    while len(queue) > 0:
+        u = extract_min(queue)
+        tree = tree_union_node(tree, u)
+        for node in node_list:
+            if tree.find_edge(u.name(), node.name()):
+                if dijkstra_relax(u, node):
+                    decrease_key(queue, node, node.key)
+
     d = []
     e = []
+
+    for node in node_list:
+        if node.key == 0 or node.key == inf:
+            d.append(None)
+        else:
+            d.append(node.key)
+        e.append(node.p.name())
+
     return d, e
+
+def dijkstra_relax(u, v):
+    '''
+    Returns true if v.key is changed
+    '''
+    if v.key > u.key + weight(u, v):
+        v.key = u.key + weight(u, v)
+        v.p = u
+        return True
+    return False
+
+def tree_union_node(tree, u):
+    if tree.is_empty():
+        tree = u
+    else:
+        u.cons(AdjacencyList())
+        tree.cons(u)
+    return tree
 
 def prim(adjlist, start_node):
     '''
@@ -83,10 +122,64 @@ def prim(adjlist, start_node):
     l: [ None, 1, 1]
     c: [ None, 'a', 'b' ]
     '''
-    log.info("TODO: prim()")
+    queue = make_node_list(adjlist)
+
+    
+    decrease_key(queue, queue[get_node_index(queue, start_node)], 0)
+
+    all_nodes = list(queue)
+    while len(queue) > 0:
+        u = extract_min(queue)
+        for node in all_nodes:
+            if adjlist.find_edge(u.name(), node.name()):
+                if node in queue and weight(u, node) < node.key:
+                    node.p = u
+                    decrease_key(queue, node, weight(u, node))
+    
     l = []
     c = []
+    for node in all_nodes:
+        if node.key != inf and node.key != 0:
+            l.append(node.key)
+        else:
+            l.append(None)
+        c.append(node.p.name())
+
     return l, c
+
+def extract_min(queue):
+    smallest = min([node.key for node in queue])
+    for node in queue:
+        if node.key == smallest:
+            temp = node
+            queue.remove(node)
+            return temp
+
+def decrease_key(queue, node, value):
+    if node in queue and value < node.key:
+        node.key = value
+
+def weight(src, dst):
+    temp = src.edges()
+    while not temp.is_empty():
+        if temp.dst() == dst.name():
+            return temp.weight()
+        temp = temp.tail() 
+
+def make_node_list(adjlist):
+    queue = list()
+    temp = adjlist
+    while not temp.is_empty():
+        temp.key = inf
+        temp.p = AdjacencyList()
+        queue.append(temp)
+        temp = temp.tail()
+    return queue
+
+def get_node_index(adjlist, start_node):
+    for i, node in enumerate(adjlist):
+        if node.name() == start_node:
+            return i
 
 if __name__ == "__main__":
     logging.critical("module contains no main")
