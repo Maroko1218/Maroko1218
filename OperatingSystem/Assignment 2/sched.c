@@ -262,7 +262,7 @@ int main(int argc, char const *argv[]) {
         printf("Could not find file of name %s!\nPlease enter a valid file name!\n",filename);
         return 1;
     }
-
+    //After this line the args should have been properly read in and handled
     int lines = 0;
     char temp[15];
     while (fscanf(infile, "%s", temp) != EOF) {
