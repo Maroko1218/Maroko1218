@@ -63,8 +63,7 @@ def dijkstra(adjlist, start_node):
         tree = tree_union_node(tree, u)
         for node in node_list:
             if tree.find_edge(u.name(), node.name()):
-                if dijkstra_relax(u, node):
-                    decrease_key(queue, node, node.key)
+                dijkstra_relax(u, node)
 
     d = []
     e = []
