@@ -13,20 +13,34 @@ def warshall(adjlist):
     '''
     Returns an NxN matrix that contains the result of running Warshall's
     algorithm.
-
+    true false matrix
     Pre: adjlist is not empty.
     '''
-    log.info("TODO: warshall()")
-    return [[]]
+    matrix = floyd(adjlist)
+    for i, row in enumerate(matrix):
+        for j, col in enumerate(row):
+            if col == inf:
+                matrix[i][j] = False
+            else:
+                matrix[i][j] = True
+    return matrix
 
 def floyd(adjlist):
     '''
     Returns an NxN matrix that contains the result of running Floyd's algorithm.
-
+    distance matrix
     Pre: adjlist is not empty.
     '''
-    log.info("TODO: floyd()")
-    return [[]]
+    matrix = adjlist.adjacency_matrix()
+    max_nodes = adjlist.node_cardinality()
+    #All nodes to themselves has a shortest path of 0
+    for i in range(max_nodes):
+        matrix[i][i] = 0
+    for k in range(max_nodes):
+        for row in range(max_nodes):
+            for col in range(max_nodes):
+                matrix[row][col] = min(matrix[row][col], matrix[row][k] + matrix[k][col]) 
+    return matrix
 
 def dijkstra(adjlist, start_node):
     '''
