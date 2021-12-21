@@ -272,7 +272,7 @@ class AdjacencyList:
         for i, n_src in enumerate(self.list_nodes()):
             for j, n_dst in enumerate(self.list_nodes()):
                 for edge in self.list_edges():
-                    src, dst, wgt = edge[0], edge[1], edge[2]
+                    src, dst, wgt = edge
                     if n_src == src and n_dst == dst:
                         matrix[i][j] = wgt
         return matrix
