@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+
+from argparse import ArgumentParser
+from os import remove
+
+def main(args):
+    pagehit, pagefault, pagereplacements = 0, 0, 0
+    lines = list()
+    pages = dict()
+    with open(args.file) as addresses:
+        for i, line in enumerate(addresses):
+            lines.append(line[:6]) #[:6] to not read in the new line character
+            if int(line[:4], base=16) in pages:
+                pages[int(line[:4], base=16)].append(lines[i])
+            else:
+                pages[int(line[:4], base=16)] = [lines[i]]
+    print("Running simulation...\n")
+    if args.algorithm == "fifo":
+        pagehit, pagefault, pagereplacements = fifo(lines, pages, args.frames)
+    elif args.algorithm == "lru":
+        pagehit, pagefault, pagereplacements = lru(lines, pages, args.frames)
+    elif args.algorithm == "optimal":
+        pagehit, pagefault, pagereplacements = optimal(lines, pages, args.frames)
+    else:
+        print("No valid algorithm was entered")
+        return
+    print("\nRunning simulation...Done.\n")
+    print("Simulation Summary\n")
+    print("Algorithm:", args.algorithm.upper())
+    print("Frames:", args.frames)
+    print("Memory accesses:", len(lines))
+    print("Page hits:", pagehit)
+    print("Page faults:", pagefault)
+    print("Page replacements:", pagereplacements)
+
+def fifo(lines, pages, frames):
+    pagehit, pagefault, pagereplacements = 0, 0, 0
+    buffer = list()
+    for line in lines:
+        if int(line[:4], base=16) in buffer:
+            pagehit += 1
+            print("Address", line, "is on page", int(line[:4], base=16), "which is already in physical memory")
+        else:
+            pagefault += 1
+            print("Address", line, "not on physical memory")
+            if len(buffer) >= frames:
+                pagereplacements += 1
+                print("Page #"+str(buffer[0]),"paged out")
+                buffer.remove(buffer[0])
+            print("Page #"+str(int(line[:4], base=16)),"paged in")
+            buffer.append(int(line[:4], base=16))
+    return pagehit, pagefault, pagereplacements
+
+
+def lru(lines, pages, frames):
+    pagehit, pagefault, pagereplacements = 0, 0, 0
+    buffer = list()
+    lastused = dict()
+    counter = 0
+    for line in lines:
+        if int(line[:4], base=16) in buffer:
+            pagehit += 1
+            print("Address", line, "is on page", int(line[:4], base=16), "which is already in physical memory")
+        else:
+            pagefault += 1
+            print("Address", line, "not on physical memory")
+            if len(buffer) >= frames:
+                smallest = min([lastused[i] for i in buffer])
+                for key, value in lastused.items():
+                    if value == smallest:
+                        print("Page #"+str(key),"paged out")
+                        buffer.remove(key)
+                pagereplacements += 1
+            lastused[int(line[:4], base=16)] = counter
+            counter += 1
+            print("Page #"+str(int(line[:4], base=16)),"paged in")
+            buffer.append(int(line[:4], base=16))
+    return pagehit, pagefault, pagereplacements
+
+def optimal(lines, pages, frames):
+    pass
+
+def getargs():
+    parser = ArgumentParser()
+    parser.add_argument("--algorithm","-a", type=str, default="fifo")
+    parser.add_argument("--frames","-n", type=int, default=4)
+    parser.add_argument("--file","-f", type=str, default="trace.dat")
+    return parser.parse_args()
+
+if __name__ == "__main__":
+    main(getargs())
