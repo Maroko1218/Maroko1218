@@ -71,14 +71,50 @@ def lru(lines, pages, frames):
                         print("Page #"+str(key),"paged out")
                         buffer.remove(key)
                 pagereplacements += 1
-            lastused[int(line[:4], base=16)] = counter
-            counter += 1
             print("Page #"+str(int(line[:4], base=16)),"paged in")
             buffer.append(int(line[:4], base=16))
+        lastused[int(line[:4], base=16)] = counter
+        counter += 1
     return pagehit, pagefault, pagereplacements
 
 def optimal(lines, pages, frames):
-    pass
+    pagehit, pagefault, pagereplacements = 0, 0, 0
+    buffer = list()
+    for i, line in enumerate(lines):
+        if int(line[:4], base=16) in buffer:
+            pagehit += 1
+            print("Address", line, "is on page", int(line[:4], base=16), "which is already in physical memory")
+        else:
+            pagefault += 1
+            print("Address", line, "not on physical memory")
+            if len(buffer) >= frames:
+                pagereplacements += 1
+                tobeused = dict()
+                for x in range(i,len(lines)):
+                    if int(lines[x][:4], base=16) not in tobeused.keys():        
+                        tobeused[int(lines[x][:4], base=16)] = x
+                keys = list()
+                for key in tobeused:
+                    keys.append(key)
+                skip = False
+                #temp = buffer[:]
+                #temp.reverse()
+                for x in buffer:
+                    if x not in keys:
+                        skip = True
+                        print("Page #"+str(x),"paged out")
+                        buffer.remove(x)
+                        break
+                if not skip:
+                    keys.reverse()
+                    for key in keys:
+                        if key in buffer:
+                            print("Page #"+str(key),"paged out")
+                            buffer.remove(key)
+                            break
+            print("Page #"+str(int(line[:4], base=16)),"paged in")
+            buffer.append(int(line[:4], base=16))
+    return pagehit, pagefault, pagereplacements
 
 def getargs():
     parser = ArgumentParser()
