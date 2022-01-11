@@ -268,7 +268,7 @@ int main(int argc, char const *argv[]) {
     while (fscanf(infile, "%s", temp) != EOF) {
         lines++;
     }
-    Process processList[lines];
+    Process *processList = (Process*) malloc(sizeof(Process) * lines);
     rewind(infile);
     int currentLine = 0;
     while (fscanf(infile, "%s", temp) != EOF) {
