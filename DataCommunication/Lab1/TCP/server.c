@@ -18,13 +18,18 @@ void fatal(char *string) {
     exit(1);
 }
 
-void sendresponse(int response, int sa) {
+void sendresponse(int response, int sa, char *buf) {
     switch (response)
     {
     case 200:
-        //char length[BUF_SIZE];
-        //sprintf(length, "%d", documentlength);
-        write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: big\r\nContent-Type: text/html\r\n\r\n", 91);
+        if (strstr(buf, "index")) {
+            write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: 873\r\nContent-Type: text/html\r\n\r\n", 90);
+        } else if (strstr(buf, "quokka")) {
+            write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: 316243\r\nContent-Type: image/jpeg\r\n\r\n", 94);
+        }
+        break;
+    case 404:
+        write(sa, "HTTP/1.0 404 Not Found\r\n\r\n", 27);
         break;
     default:
         break;
@@ -33,7 +38,7 @@ void sendresponse(int response, int sa) {
 
 char* parserequest(char* buf) {
     char *temp = (char*)malloc(sizeof(char) * BUF_SIZE);
-    if (buf[0] == 'G' && buf[1] == 'E' && buf[2] == 'T' && buf[3] == ' ') {
+    if (strstr(buf, "GET ")) {
         int i = 0;
         for (i = 0; i < strlen(WEBPAGE_FOLDER); i++) {
             temp[i] = WEBPAGE_FOLDER[i];
@@ -86,19 +91,16 @@ int main(int argc, char *argv[]) {
         printf("%s\n", parserequest(buf));
         fd = open(parserequest(buf), O_RDONLY); /* open the file to be sent back */
         if (fd < 0) {
-            fatal("open failed");
-        }
-        if (parserequest(buf)[strlen(parserequest(buf))-1] == 'g') {
-            write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: 316243\r\nContent-Type: image/jpeg\r\n\r\n", 95);
+            sendresponse(404, sa, buf);
         } else {
-            sendresponse(200, sa);
-        }
-        while (1) {
-            bytes = read(fd, buf, BUF_SIZE); /* read from file */
-            if (bytes <= 0) {
-                break;             /* check for end of file */
+            sendresponse(200, sa, parserequest(buf));
+            while (1) {
+                bytes = read(fd, buf, BUF_SIZE); /* read from file */
+                if (bytes <= 0) {
+                    break;             /* check for end of file */
+                }
+                write(sa, buf, bytes); /* write bytes to socket */
             }
-            write(sa, buf, bytes); /* write bytes to socket */
         }
         close(fd); /* close file */
         close(sa); /* close connection */
