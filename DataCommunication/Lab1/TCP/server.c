@@ -24,7 +24,7 @@ void sendresponse(int response, int sa) {
     case 200:
         //char length[BUF_SIZE];
         //sprintf(length, "%d", documentlength);
-        write(sa, "HTTP/1.1 200 OK\r\nServer: Demo Web Server\r\nContent-Length: big\r\nContent-Type: text/html\r\n\r\n", 91);
+        write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: big\r\nContent-Type: text/html\r\n\r\n", 91);
         break;
     default:
         break;
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
             fatal("open failed");
         }
         if (parserequest(buf)[strlen(parserequest(buf))-1] == 'g') {
-            write(sa, "HTTP/1.1 200 OK\r\nServer: Demo Web Server\r\nContent-Length: big\r\nContent-Type: image/jpeg\r\n\r\n", 92);
+            write(sa, "HTTP/1.0 200 OK\r\nServer: Demo Web Server\r\nContent-Length: 316243\r\nContent-Type: image/jpeg\r\n\r\n", 95);
         } else {
             sendresponse(200, sa);
         }
@@ -98,9 +98,6 @@ int main(int argc, char *argv[]) {
             if (bytes <= 0) {
                 break;             /* check for end of file */
             }
-           
-            printf("I'm having a heart attack!\nBecause: %d is not equal to %d\n", strlen(buf), bytes);
-                       
             write(sa, buf, bytes); /* write bytes to socket */
         }
         close(fd); /* close file */
