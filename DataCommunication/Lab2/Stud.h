@@ -18,6 +18,8 @@
 /* Change to 1 if you want to implement the assignment for both
  * directions. You do not have to do so in this assignment. */
 #define BIDIRECTIONAL 0
+#define A 0
+#define B 1
 
 /* You can check the simulated time using the time variable */
 extern float time;
