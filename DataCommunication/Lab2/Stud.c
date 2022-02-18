@@ -12,19 +12,21 @@ struct pkt Asendpacket;
 //B
 int Backnum;
 int Bseqnum;
+
+int PASSEDPACKETS; //Debug
 /********* HELPER FUCTIONS START HERE *********/
-int make_checksum(char arr[20]) {
+int make_checksum(struct pkt packet) {
     int sum = 0;
     for (int i = 0; i < 20; i++) {
-        sum += (2 * i) * (int)arr[i];
+        sum += (2 * (i+1)) * (int)packet.payload[i];
     }
-    return sum;
+    return sum + packet.seqnum + packet.acknum;
 }
 
 struct pkt make_pkt(struct msg message, int acknum, int seqnum) {
     struct pkt temp = {seqnum, acknum, 0};
     strcpy(temp.payload, message.data);
-    temp.checksum = make_checksum(temp.payload);
+    temp.checksum = make_checksum(temp);
     return temp;
 }
 
@@ -34,15 +36,15 @@ struct msg make_msg(struct pkt packet) {
     return temp;
 }
 
-int is_packet_corrupt(struct pkt packet){
-    if(packet.checksum != make_checksum(packet.payload)){
+int is_packet_corrupt(struct pkt packet, int seqnum){
+    if(packet.checksum != make_checksum(packet)){
         return 1;
     } 
     return 0; 
 }
 
 int is_ACK(struct pkt packet, int acknum) {
-    if (strcmp(packet.payload, "ACK") && packet.acknum == acknum) {
+    if (packet.acknum == acknum) {
         return 1;
     }
     return 0;
@@ -57,7 +59,7 @@ void A_output(struct msg message) {
     Asendpacket = make_pkt(message, Aacknum, Aseqnum);
     Aseqnum++;
     Aacknum = (Aacknum + 1) % 2;
-    starttimer(A, 1);
+    starttimer(A, 25);
     tolayer3(A, Asendpacket);
 }
 
@@ -68,7 +70,7 @@ void B_output(struct msg message) {
 
 /* called from layer 3, when a packet arrives for layer 4 */
 void A_input(struct pkt packet) {
-    if (is_packet_corrupt(packet) || is_ACK(packet, ((Aacknum % 2 == 0) ? 1 : 0))) {
+    if (is_packet_corrupt(packet, Aseqnum-1) || !is_ACK(packet, ((Aacknum % 2 == 0) ? 1 : 0))) {
         return;
     }
     stoptimer(A);
@@ -93,19 +95,22 @@ void A_init() {
 
 /* called from layer 3, when a packet arrives for layer 4 at B*/
 void B_input(struct pkt packet) {    
-    if (is_packet_corrupt(packet)) {  //If packet corrupt return;
+    if (is_packet_corrupt(packet, Bseqnum)) {  //If packet corrupt return;
         return;  //makes timout trigger for A resending the same packet.
     }
-    if (Backnum == packet.acknum) { //If packet not corrupt and ACKnum is correct
+    if (packet.seqnum < Bseqnum) { //ACKnum is incorrect
+        struct msg temp = {"ACK"};
+        tolayer3(B, make_pkt(temp, ((Backnum % 2 == 0) ? 1 : 0), Bseqnum-1));
+        return;
+    } else { //If packet not corrupt and ACKnum is correct
         tolayer5(B, packet.payload);
+        PASSEDPACKETS++;
+        printf("Passed packets: %d\n", PASSEDPACKETS);
         struct msg temp = {"ACK"};
         tolayer3(B, make_pkt(temp, Backnum, Bseqnum));
         Bseqnum++;
         Backnum = (Backnum + 1) % 2;
         // send packet to stop timer
-    } else { //ACKnum is incorrect
-        struct msg temp = {"ACK"};
-        tolayer3(B, make_pkt(temp, ((Backnum % 2 == 0) ? 1 : 0), Bseqnum-1));
     }
 }
 
@@ -119,4 +124,5 @@ void B_timerinterrupt() {
 void B_init() {
     Backnum = 0;
     Bseqnum = 0;
+    PASSEDPACKETS = 0; //Debug
 }
