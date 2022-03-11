@@ -18,43 +18,46 @@ void printdt2(struct distance_table *dtptr) {
 
 /* students to write the following two routines, and maybe some others */
 
+static int nodeToShortestPath[4];
 
 void rtinit2() {
     for (int i = 0; i < 4; i++) {
+        nodeToShortestPath[i] = i;
         for (int j = 0; j < 4; j++) {
             dt2.costs[i][j] = 999;
         }
     }
        
-    dt2.costs[2][0] = 3;
-    dt2.costs[2][1] = 1;
+    dt2.costs[0][0] = 3;
+    dt2.costs[1][1] = 1;
     dt2.costs[2][2] = 0;
-    dt2.costs[2][3] = 2;       
+    dt2.costs[3][3] = 2;       
 /*
 999 999 3 999
 999 999 1 999
 999 999 0 999
 999 999 2 999
 */
-    shotgunlayer2(2, mincost(dt2));
+    shotgunlayer2(2, dt2.costs, nodeToShortestPath);
 }
 
 
 void rtupdate2(struct rtpkt *rcvdpkt) {
     struct distance_table *debug = &dt2;
-    int changed = 0; //boolean
+    int changed = 0; //boolean/flag
     for (int i = 0; i < 4; i++) {
-        if (i == rcvdpkt->destid) { continue; } // Exclude self node
-        int temp = dt2.costs[rcvdpkt->sourceid][i]; // Temporarily store old value
-        dt2.costs[rcvdpkt->sourceid][i] = mincost(dt2)[rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Potentially change value
-        if (dt2.costs[rcvdpkt->sourceid][i] > 999) { dt2.costs[rcvdpkt->sourceid][i] = 999; } // if the cost was infinite reset back to 999
-        if (temp < dt2.costs[rcvdpkt->sourceid][i]) { dt2.costs[rcvdpkt->sourceid][i] == temp; } // Don't want to increase distance
-        if (temp != dt2.costs[rcvdpkt->sourceid][i]) { changed++; } // A change was made 
+        if (i == rcvdpkt->destid) { continue; } //Skip self node
+        int old = dt2.costs[i][nodeToShortestPath[i]]; // Temporarily store old value
+        int new = dt2.costs[rcvdpkt->sourceid][rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Potentially change value
+        dt2.costs[i][rcvdpkt->sourceid] = new; 
+        if(new < old){
+            nodeToShortestPath[i] = rcvdpkt->sourceid;
+            changed++;
+        } 
+        if (dt2.costs[i][rcvdpkt->sourceid] > 999) { dt2.costs[i][rcvdpkt->sourceid] = 999; } // if the cost was infinite reset back to 999
     }
     if (changed) {
-        shotgunlayer2(rcvdpkt->destid, mincost(dt2));
+        shotgunlayer2(rcvdpkt->destid, dt2.costs, nodeToShortestPath);
     }
     printdt2(&dt2);
-
 }
-
