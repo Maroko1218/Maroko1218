@@ -11,7 +11,7 @@ struct rtpkt makepacket(int src, int dst, int arr[4][4], int *shortestPath) {
     return pkt;
 }
 
-void shotgunlayer2(int src, int arr[4][4], int *shortestPath) {
+void shotgunlayer2(int src, int arr[4][4], int *shortestPath) { //Sends a packet to all possible nodes
     for (int i = 0; i < 4; i++) {
         if (i != src && arr[i][i] != 999)
         {

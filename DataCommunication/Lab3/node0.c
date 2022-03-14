@@ -14,7 +14,7 @@ void printdt0(struct distance_table *dtptr) {
 
 /* students to write the following two routines, and maybe some others */
 
-static int nodeToShortestPath[4];
+static int nodeToShortestPath[4]; //Remembering the "parent" of shortest path
 
 void rtinit0() {
     for (int i = 0; i < 4; i++) {
@@ -28,29 +28,22 @@ void rtinit0() {
     dt0.costs[1][1] = 1;
     dt0.costs[2][2] = 3;
     dt0.costs[3][3] = 7;
-/*
-0 999 999 999
-1 999 999 999
-3 999 999 999
-7 999 999 999
-*/
-
-    //make shitty ass packet code goes here
+/*  0 999 999 999
+    999 1 999 999
+    999 999 3 999
+    999 999 999 7 */
     shotgunlayer2(0, dt0.costs, nodeToShortestPath);
 }
 
-
 void rtupdate0(struct rtpkt *rcvdpkt) {
-    struct distance_table *debug = &dt0;
     int changed = 0; //boolean/flag
     for (int i = 0; i < 4; i++) {
-        if (i == rcvdpkt->destid) { continue; } //Skip self node
+        if (i == rcvdpkt->destid || i == rcvdpkt->sourceid) { continue; } //Skip self node
         int old = dt0.costs[i][nodeToShortestPath[i]]; // Temporarily store old value
-        int new = dt0.costs[rcvdpkt->sourceid][rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Potentially change value
-        dt0.costs[i][rcvdpkt->sourceid] = new; 
-        if(new < old){
-            nodeToShortestPath[i] = rcvdpkt->sourceid;
-            changed++;
+        dt0.costs[i][rcvdpkt->sourceid] = dt0.costs[rcvdpkt->sourceid][rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Update the cost matrix
+        if(dt0.costs[i][rcvdpkt->sourceid] < old) { // Check if the updated cost is lower than the old cost
+            nodeToShortestPath[i] = rcvdpkt->sourceid; // Change shorest path parent to updated cost
+            changed++; // Remember to notify other nodes
         } 
         if (dt0.costs[i][rcvdpkt->sourceid] > 999) { dt0.costs[i][rcvdpkt->sourceid] = 999; } // if the cost was infinite reset back to 999
     }
