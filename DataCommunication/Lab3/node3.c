@@ -27,7 +27,9 @@ void rtinit3() {
     dt3.costs[0][0] = 7;
     //dt3.costs[1][1] = 999;
     dt3.costs[2][2] = 2;
-    dt3.costs[3][3] = 0;  
+    dt3.costs[3][3] = 0;
+    dt3.costs[0][3] = 7;
+    dt3.costs[2][3] = 2;  
 /*  7 999 999 999
     999 999 999 999
     999 999 2 999
@@ -38,10 +40,10 @@ void rtinit3() {
 void rtupdate3(struct rtpkt *rcvdpkt) {
     int changed = 0; //boolean/flag
     for (int i = 0; i < 4; i++) {
-        if (i == rcvdpkt->destid || i == rcvdpkt->sourceid) { continue; } //Skip self node
+        //if (i == rcvdpkt->destid || i == rcvdpkt->sourceid) { continue; } //Skip self node
         int old = dt3.costs[i][nodeToShortestPath[i]]; // Temporarily store old value
         dt3.costs[i][rcvdpkt->sourceid] = dt3.costs[rcvdpkt->sourceid][rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Update the cost matrix
-        if(dt3.costs[i][rcvdpkt->sourceid] < old) { // Check if the updated cost is lower than the old cost
+        if(dt3.costs[i][rcvdpkt->sourceid] < old ) { // Check if the updated cost is lower than the old cost
             nodeToShortestPath[i] = rcvdpkt->sourceid; // Change shorest path parent to updated cost
             changed++; // Remember to notify other nodes
         } 

@@ -27,7 +27,10 @@ void rtinit2() {
     dt2.costs[0][0] = 3;
     dt2.costs[1][1] = 1;
     dt2.costs[2][2] = 0;
-    dt2.costs[3][3] = 2;       
+    dt2.costs[3][3] = 2;
+    dt2.costs[0][2] = 3;
+    dt2.costs[1][2] = 1;
+    dt2.costs[3][2] = 2;       
 /*  3 999 999 999
     999 1 999 999
     999 999 0 999
@@ -38,7 +41,7 @@ void rtinit2() {
 void rtupdate2(struct rtpkt *rcvdpkt) {
     int changed = 0; //boolean/flag
     for (int i = 0; i < 4; i++) {
-        if (i == rcvdpkt->destid || i == rcvdpkt->sourceid) { continue; } //Skip self node
+        //if (i == rcvdpkt->destid || i == rcvdpkt->sourceid) { continue; } //Skip self node
         int old = dt2.costs[i][nodeToShortestPath[i]]; // Temporarily store old value
         dt2.costs[i][rcvdpkt->sourceid] = dt2.costs[rcvdpkt->sourceid][rcvdpkt->sourceid] + rcvdpkt->mincost[i]; // Update the cost matrix
         if(dt2.costs[i][rcvdpkt->sourceid] < old) { // Check if the updated cost is lower than the old cost
