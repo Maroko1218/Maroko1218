@@ -12,7 +12,7 @@
 /**********************************************************************/
 /* Other OBJECT's METHODS (IMPORTED)                                  */
 /**********************************************************************/
-/* #include "keytoktab.h"   */       /* when the keytoktab is added   */
+#include "keytoktab.h"               /* when the keytoktab is added   */
 /* #include "lexer.h"       */       /* when the lexer     is added   */
 /* #include "symtab.h"      */       /* when the symtab    is added   */
 /* #include "optab.h"       */       /* when the optab     is added   */
@@ -29,7 +29,7 @@ static int  is_parse_ok=1;
 /**********************************************************************/
 /* define tokens + keywords NB: remove this when keytoktab.h is added */
 /**********************************************************************/
-enum tvalues { program = 257, id, input, output, var, integer, begin, assign, number, end, boolean, real};
+//enum tvalues { program = 257, id, input, output, var, integer, begin, assign, number, end, boolean, real};
 /**********************************************************************/
 /* Simulate the token stream for a given program                      */
 /**********************************************************************/
@@ -73,7 +73,7 @@ static void program_header() {
 /**********************************************************************/
 /* The var part                                                       */
 /**********************************************************************/
-static void typ() {
+static void type() {
    if (lookahead == integer) {
       match(integer);
    } else if (lookahead == boolean) {
@@ -89,7 +89,7 @@ static void id_list() {
 }
 
 static void var_dec() {
-   id_list(); match(':'); typ(); match(';'); // match(integer) to be replaced with some sort of type(); function to match integer and booleans
+   id_list(); match(':'); type(); match(';'); // match(integer) to be replaced with some sort of type(); function to match integer and booleans
 }
 
 static void var_dec_list() {
