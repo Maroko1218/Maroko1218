@@ -103,7 +103,7 @@ static void var_part() {
 /**********************************************************************/
 /* The stat part                                                      */
 /**********************************************************************/
-static void expr();
+static void expr(); //This is here to remove warnings with the "upwards" call to expr() from factor
 
 static void operand() {
    if (lookahead == id) match(id);
@@ -112,7 +112,7 @@ static void operand() {
 
 static void factor() {
    if (lookahead == '(') {
-      match('('); expr(); match(')');   
+      match('('); expr(); match(')');
    } else {
       operand();
    }
@@ -144,15 +144,14 @@ static void stat_part(){
 /*  PUBLIC METHODS for this OBJECT  (EXPORTED)                        */
 /**********************************************************************/
 
-int parser()
-{
+int parser() {
    if (DEBUG) printf("\n *** In  parser");
    lookahead = pget_token();       // get the first token
    program_header();               // call the first grammar rule
-   var_part();
-   stat_part();
+   var_part();                     // call the second grammar rule
+   stat_part();                    // call the third grammar rule
    return is_parse_ok;             // status indicator
-   }
+}
 
 /**********************************************************************/
 /* End of code                                                        */

@@ -7,8 +7,9 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "driver.c",
-                "parser.c",
+                "Dlexer",
+                "lexer.c",
+                "keytoktab.c",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
