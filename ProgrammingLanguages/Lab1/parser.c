@@ -13,7 +13,7 @@
 /* Other OBJECT's METHODS (IMPORTED)                                  */
 /**********************************************************************/
 #include "keytoktab.h"               /* when the keytoktab is added   */
-/* #include "lexer.h"       */       /* when the lexer     is added   */
+#include "lexer.h"                   /* when the lexer     is added   */
 /* #include "symtab.h"      */       /* when the symtab    is added   */
 /* #include "optab.h"       */       /* when the optab     is added   */
 
@@ -25,26 +25,6 @@ static int  lookahead=0;
 static int  is_parse_ok=1;
 
 /**********************************************************************/
-/* RAPID PROTOTYPING - simulate the token stream & lexer (get_token)  */
-/**********************************************************************/
-/* define tokens + keywords NB: remove this when keytoktab.h is added */
-/**********************************************************************/
-//enum tvalues { program = 257, id, input, output, var, integer, begin, assign, number, end, boolean, real};
-/**********************************************************************/
-/* Simulate the token stream for a given program                      */
-/**********************************************************************/
-static int tokens[] = {program, id, '(', input, ',', output, ')', ';', var, id, ',', id, ',', id, ',', id, ',', id, ':', integer, ';', begin, id, assign, id, '+', id, '+', id, '+', id, '*', number, end, '.', '$' };
-
-/**********************************************************************/
-/*  Simulate the lexer -- get the next token from the buffer          */
-/**********************************************************************/
-static int pget_token()
-{  
-   static int i=0;
-   if (tokens[i] != '$') return tokens[i++]; else return '$';
-   }
-
-/**********************************************************************/
 /*  PRIVATE METHODS for this OBJECT  (using "static" in C)            */
 /**********************************************************************/
 
@@ -54,7 +34,7 @@ static int pget_token()
 static void match(int t)
 {
    if(DEBUG) printf("\n --------In match expected: %4d, found: %4d", t, lookahead);
-   if (lookahead == t) lookahead = pget_token();
+   if (lookahead == t) lookahead = get_token();
    else {
       is_parse_ok=0;
       printf("\n *** Unexpected Token: expected: %4d found: %4d (in match)",
@@ -89,7 +69,7 @@ static void id_list() {
 }
 
 static void var_dec() {
-   id_list(); match(':'); type(); match(';'); // match(integer) to be replaced with some sort of type(); function to match integer and booleans
+   id_list(); match(':'); type(); match(';');
 }
 
 static void var_dec_list() {
@@ -146,7 +126,7 @@ static void stat_part(){
 
 int parser() {
    if (DEBUG) printf("\n *** In  parser");
-   lookahead = pget_token();       // get the first token
+   lookahead = get_token();        // get the first token
    program_header();               // call the first grammar rule
    var_part();                     // call the second grammar rule
    stat_part();                    // call the third grammar rule
