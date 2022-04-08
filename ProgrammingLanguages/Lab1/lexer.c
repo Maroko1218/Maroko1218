@@ -21,7 +21,7 @@
 #define LEXSIZE 30
 static int Progcheck = 0;
 static char cbuffer[BUFSIZE];      /* Character buffer for reading in the program */
-static char buffer[BUFSIZE];
+static char buffer[BUFSIZE];       /* Program buffer which stores the entire program text */
 static char lexbuf[LEXSIZE];
 static int pbuf = 0;               /* current index program buffer */
 static int plex = 0;               /* current index lexeme buffer  */
@@ -35,13 +35,17 @@ static int plex = 0;               /* current index lexeme buffer  */
 /**********************************************************************/
 /* Read the input file into the buffer                                */
 /**********************************************************************/
+static void pbuffer();
 
 static void get_prog() {
     while(Progcheck == 0 && fgets(cbuffer, BUFSIZE, stdin)){
         strcat(buffer, cbuffer);
     }
+    if (Progcheck == 0) {
+        strcat(buffer, "$");
+        pbuffer();
+    }
     Progcheck = 1;
-    //printf("%s", buffer); //Debug
 }
 
 /**********************************************************************/
@@ -49,7 +53,9 @@ static void get_prog() {
 /**********************************************************************/  
 
 static void pbuffer() {
+    printf("________________________________________________________\n THE PROGRAM TEXT\n________________________________________________________\n");
     printf("%s", buffer);
+    printf("\n________________________________________________________\n");
 }
 
 /**********************************************************************/
@@ -59,7 +65,49 @@ static void pbuffer() {
 static void get_char() {
     lexbuf[plex++] = buffer[pbuf++];
     lexbuf[plex] = '\0';
-    
+}
+
+/**********************************************************************/
+/* Skip whitespace and newline characters in the program buffer       */
+/**********************************************************************/
+
+static void skip_whitespace() {
+    while (buffer[pbuf] == ' ' || buffer[pbuf] == '\n') {
+        pbuf++;
+    }
+}
+
+/**********************************************************************/
+/* Read from program buffer until a special character                 */
+/**********************************************************************/
+
+static void read_lexeme() {
+    while (buffer[pbuf] != ' ' && buffer[pbuf] != '\n' && buffer[pbuf] != ',' && buffer[pbuf] != '.'
+        && buffer[pbuf] != '(' && buffer[pbuf] != ')'  && buffer[pbuf] != ';' && buffer[pbuf] != ':'
+        && pbuf < strlen(buffer)) {
+        get_char();
+    }
+    if (plex == 0) {
+        get_char();
+        if (buffer[pbuf - 1] == ':' && buffer[pbuf] == '=') {
+            get_char();
+        }
+    }
+}
+
+/**********************************************************************/
+/* Check if the lexeme is a number                                    */
+/**********************************************************************/
+
+static int is_num() {
+    if (lexbuf[0] == '0' || lexbuf[0] == '1' || 
+        lexbuf[0] == '2' || lexbuf[0] == '3' || 
+        lexbuf[0] == '4' || lexbuf[0] == '5' || 
+        lexbuf[0] == '6' || lexbuf[0] == '7' || 
+        lexbuf[0] == '8' || lexbuf[0] == '9') {
+        return 1;
+    }
+    return 0;
 }
 
 /**********************************************************************/
@@ -75,27 +123,12 @@ static void get_char() {
 
 int get_token() {
     get_prog();
+    skip_whitespace();
+    read_lexeme();
     plex = 0;
-    get_char();
-    while (lexbuf[plex - 1] == ' ' || lexbuf[plex - 1] == '\n') {
-        plex = 0;
-        get_char();
+    if (is_num()) {
+        return lex2tok("number");
     }
-
-    while (lexbuf[plex - 1] != ' ' && lexbuf[plex - 1] != '\n' && lexbuf[plex - 1] != ',' && lexbuf[plex - 1] != '(' && lexbuf[plex - 1] != ')' && lexbuf[plex - 1] != ';') {
-        get_char();
-        if (lexbuf[plex - 1] == ',' || lexbuf[plex - 1] == '(' || lexbuf[plex - 1] == ')' || lexbuf[plex - 1] == ';') {
-            lexbuf[plex - 1] = '\000';
-            pbuf--;
-            return lex2tok(lexbuf);
-        }
-    }
-    if (lexbuf[plex - 1] == ' ' || lexbuf[plex - 1] == '\n') {
-        lexbuf[plex - 1] = '\000';    
-    } else {
-        lexbuf[plex] = '\000';
-    }
-    
     return lex2tok(lexbuf);
 }
 

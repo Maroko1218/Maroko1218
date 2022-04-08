@@ -7,7 +7,7 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "Dlexer",
+                "Dlexer.c",
                 "lexer.c",
                 "keytoktab.c",
                 "-o",
