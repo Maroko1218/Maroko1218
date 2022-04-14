@@ -129,6 +129,10 @@ int get_token() {
     if (is_num()) {
         return lex2tok("number");
     }
+    toktyp temp = lex2tok(lexbuf);
+    if (temp == number || temp == undef || temp == predef || temp == tempty || temp == error || temp == typ) {
+        return key2tok(lexbuf);
+    }
     return lex2tok(lexbuf);
 }
 

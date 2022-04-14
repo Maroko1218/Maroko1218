@@ -15,12 +15,12 @@
 #include "keytoktab.h"               /* when the keytoktab is added   */
 #include "lexer.h"                   /* when the lexer     is added   */
 #include "symtab.h"                  /* when the symtab    is added   */
-/* #include "optab.h"       */       /* when the optab     is added   */
+#include "optab.h"                   /* when the optab     is added   */
 
 /**********************************************************************/
 /* OBJECT ATTRIBUTES FOR THIS OBJECT (C MODULE)                       */
 /**********************************************************************/
-#define DEBUG 1
+#define DEBUG 0
 static int  lookahead=0;
 static int  is_parse_ok=1;
 
@@ -31,16 +31,29 @@ static int  is_parse_ok=1;
 /**********************************************************************/
 /* The Parser functions                                               */
 /**********************************************************************/
-static void match(int t)
-{
+static void match(int t) {
    if(DEBUG) printf("\n --------In match expected: %4d, found: %4d", t, lookahead);
    if (lookahead == t) lookahead = get_token();
    else {
       is_parse_ok=0;
-      printf("\n *** Unexpected Token: expected: %4d found: %4d (in match)",
-              t, lookahead);
+
+      switch (t)
+      {
+      case typ:
+         printf("SYNTAX:   Type name expected found: %s\n", get_lexeme());
+         break;
+      case ':':
+         printf("SYNTAX:   Symbol expected : found: %s\n", get_lexeme());
+         break;   
+      case ';':
+         printf("SYNTAX:   Symbol expected ; found: %s\n", get_lexeme());
+         break;
+      default: 
+         printf("*** Unexpected Token: expected: %s found: %s (in match)\n", tok2lex(t), get_lexeme());
+         break;
       }
    }
+}
 
 /**********************************************************************/
 /* The grammar functions                                              */
@@ -61,7 +74,8 @@ static void declarevariable() {
    if (!find_name(get_lexeme())) {
       addv_name(get_lexeme()); match(id);
    } else {
-      printf("ERROR: The variable %s is already declared\n", get_lexeme());
+      printf("SEMANTIC: The variable %s is already declared\n", get_lexeme());
+      match(id);
    }
 }
 
@@ -73,7 +87,8 @@ static void type() {
    } else if (lookahead == real) {
       setv_type(real); match(real);
    } else {
-      printf("ERROR: invalid type %s expected integer, boolean, or real\n" , get_lexeme());
+      setv_type(error);
+      match(typ);
    }
 }
 
@@ -97,40 +112,69 @@ static void var_part() {
 /**********************************************************************/
 /* The stat part                                                      */
 /**********************************************************************/
-static void expr(); //This is here to remove warnings with the "upwards" call to expr() from factor
+static toktyp expr(); //This is here to remove warnings with the "upwards" call to expr() from factor
 
-static void getvariable() {
+static toktyp getvariable() {
    if (find_name(get_lexeme())) {
+      toktyp temp = get_ntype(get_lexeme());
       match(id);
+      return temp;
    } else {
-      printf("ERROR: variable name %s undeclared", get_lexeme());
+      printf("SEMANTIC: variable name %s undeclared\n", get_lexeme());
+      is_parse_ok = 0;
+      match(id);
+      return undef;
    }
 }
 
-static void operand() {
-   if (lookahead == id) getvariable();
-   else match(number);
+static toktyp operand() {
+   if (lookahead == id) {
+      toktyp temp = getvariable();
+      return temp;
+   } else {
+      match(number);
+      return integer;
+   }
 }
 
-static void factor() {
+static toktyp factor() {
+   toktyp temp;
    if (lookahead == '(') {
-      match('('); expr(); match(')');
+      match('('); temp = expr(); match(')');
+      return temp;
    } else {
-      operand();
+      return operand();
    }
 }
 
-static void term(){
-   factor(); if (lookahead == '*') { match('*'); factor(); }// '*' to be replaced with mulop which is * or /
+static toktyp term() {
+   toktyp leftside, rightside;
+   leftside = factor(); if (lookahead == '*') { 
+      match('*'); 
+      rightside = factor();
+      return get_otype('*', leftside, rightside);
+   }
+   return leftside;
 }
 
-static void expr() {
-   term(); if (lookahead == '+') { match('+'); expr(); }// '+' to be replaced with addop which is + or -
+static toktyp expr() {
+   toktyp leftside, rightside;
+   leftside = term(); if (lookahead == '+') { 
+      match('+'); 
+      rightside = expr(); 
+      return get_otype('+', leftside, rightside);
+   }
+   return leftside;
 }
 
 //same as assign stat hence we wont make an assign_stat function.
 static void stat() {
-   getvariable(); match(assign); expr();
+   toktyp leftside, rightside;
+   leftside = getvariable(); match(assign); rightside = expr();
+   if (leftside != rightside) {
+      printf("SEMANTIC: trying to assign %s to variable of type %s\n", tok2lex(rightside), tok2lex(leftside));
+      is_parse_ok = 0;
+   }
 }
 
 static void stat_list() {
