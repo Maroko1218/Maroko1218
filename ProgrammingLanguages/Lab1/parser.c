@@ -14,7 +14,7 @@
 /**********************************************************************/
 #include "keytoktab.h"               /* when the keytoktab is added   */
 #include "lexer.h"                   /* when the lexer     is added   */
-/* #include "symtab.h"      */       /* when the symtab    is added   */
+#include "symtab.h"                  /* when the symtab    is added   */
 /* #include "optab.h"       */       /* when the optab     is added   */
 
 /**********************************************************************/
@@ -45,27 +45,41 @@ static void match(int t)
 /**********************************************************************/
 /* The grammar functions                                              */
 /**********************************************************************/
+static void matchprogheader() {
+   addp_name(get_lexeme()); match(id);
+}
+
 static void program_header() {
    if (DEBUG) printf("\n *** In  program_header");
-   match(program); match(id); match('('); match(input);
+   match(program); matchprogheader(); match('('); match(input);
    match(','); match(output); match(')'); match(';');
 }
 /**********************************************************************/
 /* The var part                                                       */
 /**********************************************************************/
+static void declarevariable() {
+   if (!find_name(get_lexeme())) {
+      addv_name(get_lexeme()); match(id);
+   } else {
+      printf("ERROR: The variable %s is already declared\n", get_lexeme());
+   }
+}
+
 static void type() {
    if (lookahead == integer) {
-      match(integer);
+      setv_type(integer); match(integer);
    } else if (lookahead == boolean) {
-      match(boolean);
+      setv_type(boolean); match(boolean);
+   } else if (lookahead == real) {
+      setv_type(real); match(real);
    } else {
-      match(real);
+      printf("ERROR: invalid type %s expected integer, boolean, or real\n" , get_lexeme());
    }
 }
 
 static void id_list() {
    //if (DEBUG) printf("\n *** In id_list");
-   match(id); if (lookahead == ',') { match(','); id_list(); }
+   declarevariable(); if (lookahead == ',') { match(','); id_list(); }
 }
 
 static void var_dec() {
@@ -85,8 +99,16 @@ static void var_part() {
 /**********************************************************************/
 static void expr(); //This is here to remove warnings with the "upwards" call to expr() from factor
 
+static void getvariable() {
+   if (find_name(get_lexeme())) {
+      match(id);
+   } else {
+      printf("ERROR: variable name %s undeclared", get_lexeme());
+   }
+}
+
 static void operand() {
-   if (lookahead == id) match(id);
+   if (lookahead == id) getvariable();
    else match(number);
 }
 
@@ -107,8 +129,8 @@ static void expr() {
 }
 
 //same as assign stat hence we wont make an assign_stat function.
-static void stat() { 
-   match(id); match(assign); expr();
+static void stat() {
+   getvariable(); match(assign); expr();
 }
 
 static void stat_list() {
