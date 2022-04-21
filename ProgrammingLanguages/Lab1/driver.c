@@ -17,10 +17,10 @@
 /**********************************************************************/
 int main()
 {
-   parser() ? printf(" \n Parse Successful! \n")
-            : printf(" \n Parse Failed! \n");
+   parser() ? printf(" Parse Successful! \n")
+            : printf(" Parse Failed! \n");
    p_symtab();
-   return 1;
+   return 0;
    }
 
 /**********************************************************************/

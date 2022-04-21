@@ -78,6 +78,21 @@ static void skip_whitespace() {
 }
 
 /**********************************************************************/
+/* Check if the lexeme is a number                                    */
+/**********************************************************************/
+
+static int is_num(char chr) {
+    if (chr == '0' || chr == '1' || 
+        chr == '2' || chr == '3' || 
+        chr == '4' || chr == '5' || 
+        chr == '6' || chr == '7' || 
+        chr == '8' || chr == '9') {
+        return 1;
+    }
+    return 0;
+}
+
+/**********************************************************************/
 /* Read from program buffer until a special character                 */
 /**********************************************************************/
 
@@ -86,6 +101,10 @@ static void read_lexeme() {
         && buffer[pbuf] != '(' && buffer[pbuf] != ')'  && buffer[pbuf] != ';' && buffer[pbuf] != ':'
         && pbuf < strlen(buffer)) {
         get_char();
+        if (is_num(lexbuf[0]) && !is_num(buffer[pbuf])) {
+            break;
+        }
+        
     }
     if (plex == 0) {
         get_char();
@@ -93,21 +112,6 @@ static void read_lexeme() {
             get_char();
         }
     }
-}
-
-/**********************************************************************/
-/* Check if the lexeme is a number                                    */
-/**********************************************************************/
-
-static int is_num() {
-    if (lexbuf[0] == '0' || lexbuf[0] == '1' || 
-        lexbuf[0] == '2' || lexbuf[0] == '3' || 
-        lexbuf[0] == '4' || lexbuf[0] == '5' || 
-        lexbuf[0] == '6' || lexbuf[0] == '7' || 
-        lexbuf[0] == '8' || lexbuf[0] == '9') {
-        return 1;
-    }
-    return 0;
 }
 
 /**********************************************************************/
@@ -126,7 +130,7 @@ int get_token() {
     skip_whitespace();
     read_lexeme();
     plex = 0;
-    if (is_num()) {
+    if (is_num(lexbuf[0])) {
         return lex2tok("number");
     }
     toktyp temp = lex2tok(lexbuf);

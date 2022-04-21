@@ -42,14 +42,8 @@ static void match(int t) {
       case typ:
          printf("SYNTAX:   Type name expected found: %s\n", get_lexeme());
          break;
-      case ':':
-         printf("SYNTAX:   Symbol expected : found: %s\n", get_lexeme());
-         break;   
-      case ';':
-         printf("SYNTAX:   Symbol expected ; found: %s\n", get_lexeme());
-         break;
       default: 
-         printf("*** Unexpected Token: expected: %s found: %s (in match)\n", tok2lex(t), get_lexeme());
+         printf("SYNTAX:   Symbol expected: %s found: %s\n", tok2lex(t), get_lexeme());
          break;
       }
    }
@@ -120,10 +114,15 @@ static toktyp getvariable() {
       match(id);
       return temp;
    } else {
-      printf("SEMANTIC: variable name %s undeclared\n", get_lexeme());
+      if (lookahead == id) {
+         printf("SEMANTIC: variable name %s undeclared\n", get_lexeme());
+         is_parse_ok = 0;
+         match(id);
+         return undef;
+      }
       is_parse_ok = 0;
       match(id);
-      return undef;
+      return error;
    }
 }
 
@@ -131,9 +130,12 @@ static toktyp operand() {
    if (lookahead == id) {
       toktyp temp = getvariable();
       return temp;
-   } else {
+   } else if (lookahead == number) {
       match(number);
       return integer;
+   } else {
+      printf("SYNTAX:   Operand Expected\n");
+      return error;
    }
 }
 
@@ -172,7 +174,7 @@ static void stat() {
    toktyp leftside, rightside;
    leftside = getvariable(); match(assign); rightside = expr();
    if (leftside != rightside) {
-      printf("SEMANTIC: trying to assign %s to variable of type %s\n", tok2lex(rightside), tok2lex(leftside));
+      printf("SEMANTIC: Assign types: %s := %s\n", tok2lex(leftside), tok2lex(rightside));
       is_parse_ok = 0;
    }
 }
@@ -184,6 +186,16 @@ static void stat_list() {
 static void stat_part(){
    if (DEBUG) printf("\n *** In stat_part");
    match(begin), stat_list(); match(end); match('.');
+   if (lookahead != '$') {
+      is_parse_ok = 0;
+      printf("SYNTAX:   Extra symbols after end of parse!\n          ");
+      while (lookahead != '$') {
+         printf("%s ", get_lexeme());
+         lookahead = get_token();
+      }
+      
+   }
+   
 }
    
 /**********************************************************************/

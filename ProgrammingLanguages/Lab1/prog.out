@@ -1,0 +1,26 @@
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun1(input, output);
+var A, B, A: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+________________________________________________________
+SEMANTIC: The variable A is already declared
+SEMANTIC: variable name C undeclared
+SEMANTIC: Assign types: integer := undef
+ Parse Failed! 
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+       fun1    program    program         8         0
+          A        var    integer         4         0
+          B        var    integer         4         4
+________________________________________________________
+ STATIC STORAGE REQUIRED is 8 BYTES
+________________________________________________________
