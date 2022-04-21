@@ -72,7 +72,7 @@ static void get_char() {
 /**********************************************************************/
 
 static void skip_whitespace() {
-    while (buffer[pbuf] == ' ' || buffer[pbuf] == '\n') {
+    while (buffer[pbuf] == ' ' || buffer[pbuf] == '\n' || buffer[pbuf] == '\r') {
         pbuf++;
     }
 }
@@ -97,7 +97,7 @@ static int is_num(char chr) {
 /**********************************************************************/
 
 static void read_lexeme() {
-    while (buffer[pbuf] != ' ' && buffer[pbuf] != '\n' && buffer[pbuf] != ',' && buffer[pbuf] != '.'
+    while (buffer[pbuf] != ' ' && buffer[pbuf] != '\n' && buffer[pbuf] != '\r' && buffer[pbuf] != ',' && buffer[pbuf] != '.'
         && buffer[pbuf] != '(' && buffer[pbuf] != ')'  && buffer[pbuf] != ';' && buffer[pbuf] != ':'
         && pbuf < strlen(buffer)) {
         get_char();
