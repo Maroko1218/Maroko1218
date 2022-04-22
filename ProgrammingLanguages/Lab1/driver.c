@@ -11,17 +11,11 @@
 /* Other OBJECT's METHODS (IMPORTED)                                  */
 /**********************************************************************/
 #include "parser.h"
-#include "symtab.h"
+
 /**********************************************************************/
 /* The main function (the driver)                                     */
 /**********************************************************************/
-int main()
-{
-   parser() ? printf(" Parse Successful! \n")
-            : printf(" Parse Failed! \n");
-   p_symtab();
-   return 0;
-   }
+int main() { parser(); return 0; }
 
 /**********************************************************************/
 /* End of code                                                        */

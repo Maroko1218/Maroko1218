@@ -40,13 +40,13 @@ static void match(int t) {
       switch (t)
       {
       case typ:
-         printf("SYNTAX:   Type name expected found: %s\n", get_lexeme());
+         printf("SYNTAX:   Type name expected found %s\n", get_lexeme());
          break;
       case id:
-         printf("SYNTAX:   ID expected. Found: %s\n", get_lexeme());
+         printf("SYNTAX:   ID expected found %s\n", get_lexeme());
          break;
       default: 
-         printf("SYNTAX:   Symbol expected: %s found: %s\n", tok2lex(t), get_lexeme());
+         printf("SYNTAX:   Symbol expected %s found %s\n", tok2lex(t), get_lexeme());
          break;
       }
    }
@@ -76,7 +76,7 @@ static void declarevariable() {
    if (!find_name(get_lexeme())) {
       addv_name(get_lexeme()); match(id);
    } else {
-      printf("SEMANTIC: The variable %s is already declared\n", get_lexeme());
+      printf("SEMANTIC: ID already declared: %s\n", get_lexeme());
       match(id);
    }
 }
@@ -98,6 +98,8 @@ static void id_list() {
    //if (DEBUG) printf("\n *** In id_list");
    if (lookahead == id) {
       declarevariable(); 
+   } else {
+      match(id);
    }
    if (lookahead == ',') { match(','); id_list(); }
 }
@@ -127,12 +129,12 @@ static toktyp getvariable() {
    } else {
       if (lookahead == id) {
          if (find_name(get_lexeme())) {
-            printf("SEMANTIC: variable name %s undeclared\n", get_lexeme());
+            printf("SEMANTIC: ID NOT declared: %s\n", get_lexeme());
             is_parse_ok = 0;
             match(id);
             return undef;
          }
-         printf("SEMANTIC: variable name %s undeclared\n", get_lexeme());
+         printf("SEMANTIC: ID NOT declared: %s\n", get_lexeme());
          is_parse_ok = 0;
          match(id);
          return error;
@@ -203,6 +205,14 @@ static void stat_list() {
 static void stat_part(){
    if (DEBUG) printf("\n *** In stat_part");
    match(begin), stat_list(); match(end); match('.');
+}
+
+
+/**********************************************************************/
+/*  Helper Function                                                   */
+/**********************************************************************/
+
+static void end_of_file() {
    if (lookahead != '$') {
       is_parse_ok = 0;
       printf("SYNTAX:   Extra symbols after end of parse!\n          ");
@@ -210,11 +220,11 @@ static void stat_part(){
          printf("%s ", get_lexeme());
          lookahead = get_token();
       }
-      
+      printf("\n");
    }
-   
 }
-   
+
+
 /**********************************************************************/
 /*  PUBLIC METHODS for this OBJECT  (EXPORTED)                        */
 /**********************************************************************/
@@ -223,13 +233,21 @@ int parser() {
    if (DEBUG) printf("\n *** In  parser");
    lookahead = get_token();        // get the first token
    if (lookahead == '$') {         // If the file is empty only a dollar will be found
-      printf("WARNING:   Input file is empty\n");
+      printf("SYNTAX:   Input file is empty\n");
+      printf("________________________________________________________\n");
+      p_symtab();
       is_parse_ok = 0;
       return is_parse_ok;
    }
    program_header();               // call the first grammar rule
    var_part();                     // call the second grammar rule
    stat_part();                    // call the third grammar rule
+   end_of_file();
+   if (is_parse_ok) {
+      printf("PARSE SUCCESSFUL!\n");
+   }
+   printf("________________________________________________________\n");
+   p_symtab();
    return is_parse_ok;             // status indicator
 }
 
