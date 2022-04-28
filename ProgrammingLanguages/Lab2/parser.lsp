@@ -21,11 +21,10 @@
 (defun get-wspace (ip)
    (setf c (read-char ip nil 'EOF))
    (cond   
-           ((whitespace c)  (get-wspace ip))
-           (t                             c)
+      ((whitespace c)  (get-wspace ip))
+      (t                             c)
    )
 )
-
 ;;=====================================================================
 ;; Read an Identifier         Compare this with C's do-while construct
 ;;=====================================================================
@@ -34,8 +33,8 @@
    (setf lexeme (str-con lexeme c))
    (setf c      (read-char ip nil 'EOF))
    (cond        
-                ((alphanumericp c)  (get-name ip lexeme c))
-                (t                  (list        c lexeme))
+      ((alphanumericp c)  (get-name ip lexeme c))
+      (t                  (list        c lexeme))
    )
 )
 
@@ -47,8 +46,8 @@
    (setf lexeme (str-con lexeme c))
    (setf c      (read-char ip nil 'EOF))
    (cond
-         ((not (null (digit-char-p c)))  (get-number ip lexeme c))
-         (t                              (list          c lexeme))
+      ((not (null (digit-char-p c)))  (get-number ip lexeme c))
+      (t                              (list          c lexeme))
    )
   )
 
@@ -61,8 +60,8 @@
    (setf c1 c)
    (setf c (read-char ip nil 'EOF))
    (cond
-         ((and (char= c1 #\:) (char= c #\=))  (get-symbol ip lexeme c))
-         (t                                   (list          c lexeme))
+      ((and (char= c1 #\:) (char= c #\=))  (get-symbol ip lexeme c))
+      (t                                   (list          c lexeme))
    )
 )
 
@@ -93,27 +92,34 @@
    (list (cond
          ((string=   lexeme "program")  'PROGRAM )
          ((string=   lexeme "var"    )  'VAR     )
-
+         ((string=   lexeme "input"  )  'INPUT   )
+         ((string=   lexeme "output" )  'OUTPUT  )
+         ((string=   lexeme "begin"  )  'BEGIN   )
+         ((string=   lexeme "end"    )  'END     )
+         ((string=   lexeme "boolean")  'BOOLEAN )
+         ((string=   lexeme "integer")  'INTEGER )
+         ((string=   lexeme "real"   )  'REAL    )
 ;; etc,  *** TO BE DONE ***
-
-         ((string=   lexeme ""       )	'EOF     )
+         ((string=   lexeme ""       )	'EOF      )
          ((is-id     lexeme          )  'ID      )
          ((is-number lexeme          )  'NUM     )
          (t                             'UNKNOWN )
-         )
-    lexeme)
+      )
+   lexeme)
 )
 
 ;;=====================================================================
 ; ID is [A-Z,a-z][A-Z,a-z,0-9]*          number is [0-9][0-9]*
 ;;=====================================================================
 
-(defun is-id (str)
-;; *** TO BE DONE ***
+(defun is-id (str) ;; MIGHT need to be changed to recursion
+   (cond
+      ((alpha-char-p (first (coerce str 'list))) (every #'alphanumericp (rest (coerce str 'list))))                          
+   )
 )
 
-(defun is-number (str)
-;; *** TO BE DONE ***
+(defun is-number (str) ;; MIGHT need to be changed to recursion
+   (every #'digit-char-p (coerce str 'list))
 )
 
 ;;=====================================================================
@@ -131,11 +137,11 @@
 ;;=====================================================================
 
 (defstruct pstate
-    (lookahead)
-    (stream)
-    (nextchar)
-    (status)
-    (symtab)
+   (lookahead)
+   (stream)
+   (nextchar)
+   (status)
+   (symtab)
 )
 
 ;;=====================================================================
@@ -150,7 +156,7 @@
       :nextchar      #\Space
       :status        'OK
       :symtab        ()
-    )
+   )
 )
 
 ;;=====================================================================
@@ -190,40 +196,34 @@
 ;;=====================================================================
 
 (defun synerr1 (state symbol)
-    (format t "*** Syntax error:   Expected ~8S found ~8S ~%"
-           symbol (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
+   (format t "*** Syntax error:   Expected ~8S found ~8S ~%" symbol (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
 )
 
 (defun synerr2 (state)
-    (format t "*** Syntax error:   Expected TYPE     found ~S ~%"
-           (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
+   (format t "*** Syntax error:   Expected TYPE     found ~S ~%" (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
 )
 
 (defun synerr3 (state)
-    (format t "*** Syntax error:   Expected OPERAND  found ~S ~%"
-           (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
+   (format t "*** Syntax error:   Expected OPERAND  found ~S ~%" (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
 )
 
 (defun semerr1 (state)
-    (format t "*** Semantic error: ~S already declared.~%"
-                (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
+   (format t "*** Semantic error: ~S already declared.~%" (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
 )
 
 (defun semerr2 (state)
-    (format t "*** Semantic error: ~S not declared.~%"
-          (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
+   (format t "*** Semantic error: ~S not declared.~%" (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
 )
 
 (defun semerr3 (state)
-    (format t "*** Semantic error: found ~8S expected EOF.~%"
-          (lexeme state))
-    (setf (pstate-status state) 'NOTOK)
-    ;; *** TO BE DONE - completed! ***
+   (format t "*** Semantic error: found ~8S expected EOF.~%" (lexeme state))
+   (setf (pstate-status state) 'NOTOK)
+   ;; *** TO BE DONE - completed! ***
 )
 
 ;;=====================================================================
@@ -231,11 +231,11 @@
 ;;=====================================================================
 
 (defun get-token (state)
-  (let    ((result (get-lex state)))
-    (setf (pstate-nextchar  state) (first result))
-    (setf (pstate-lookahead state) (map-lexeme (second result)))
-  )
- )
+   (let    ((result (get-lex state)))
+      (setf (pstate-nextchar  state) (first result))
+      (setf (pstate-lookahead state) (map-lexeme (second result)))
+   )
+)
 
 ;;=====================================================================
 ; match compares lookahead with symbol (the expected token)
@@ -244,10 +244,10 @@
 
 (defun match (state symbol)
    (if (eq symbol (token state))
-       (get-token  state)
-       (synerr1    state symbol)
-       )
-)
+      (get-token  state)
+      (synerr1    state symbol)
+   )
+) 
 
 ;;=====================================================================
 ; THE GRAMMAR RULES
@@ -314,11 +314,11 @@
       (program        state)
       (check-end      state)
       (symtab-display state)
-      )
+   )
    (if (eq (pstate-status state) 'OK)
       (format t "Parse Successful. ~%")
       (format t "Parse Fail. ~%")
-      )
+   )
    (format t "------------------------------------------------------~%")
 )
 
