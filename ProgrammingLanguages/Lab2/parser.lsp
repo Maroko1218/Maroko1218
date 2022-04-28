@@ -49,7 +49,7 @@
       ((not (null (digit-char-p c)))  (get-number ip lexeme c))
       (t                              (list          c lexeme))
    )
-  )
+)
 
 ;;=====================================================================
 ;; Read a single character or ":="
@@ -76,10 +76,10 @@
    (setf c  (pstate-nextchar state))
    (if (whitespace c) (setf c (get-wspace ip)))
    (cond
-         ((eq c 'EOF)                     (list 'EOF ""))
-         ((alpha-char-p c)                (get-name   ip lexeme c))
-         ((not (null (digit-char-p c)))   (get-number ip lexeme c))
-         (t                               (get-symbol ip lexeme c))
+      ((eq c 'EOF)                     (list 'EOF ""))
+      ((alpha-char-p c)                (get-name   ip lexeme c))
+      ((not (null (digit-char-p c)))   (get-number ip lexeme c))
+      (t                               (get-symbol ip lexeme c))
    )
 )
 
@@ -90,20 +90,31 @@
 (defun map-lexeme (lexeme)
 (format t "Symbol: ~S ~%" lexeme)
    (list (cond
-         ((string=   lexeme "program")  'PROGRAM )
-         ((string=   lexeme "var"    )  'VAR     )
-         ((string=   lexeme "input"  )  'INPUT   )
-         ((string=   lexeme "output" )  'OUTPUT  )
-         ((string=   lexeme "begin"  )  'BEGIN   )
-         ((string=   lexeme "end"    )  'END     )
-         ((string=   lexeme "boolean")  'BOOLEAN )
-         ((string=   lexeme "integer")  'INTEGER )
-         ((string=   lexeme "real"   )  'REAL    )
+         ((string=   lexeme "program")  'PROGRAM  )
+         ((string=   lexeme "var"    )  'VAR      )
+         ((string=   lexeme "input"  )  'INPUT    )
+         ((string=   lexeme "output" )  'OUTPUT   )
+         ((string=   lexeme "begin"  )  'BEGIN    )
+         ((string=   lexeme "end"    )  'END      )
+         ((string=   lexeme "boolean")  'BOOLEAN  )
+         ((string=   lexeme "integer")  'INTEGER  )
+         ((string=   lexeme "real"   )  'REAL     )
 ;; etc,  *** TO BE DONE ***
-         ((string=   lexeme ""       )	'EOF      )
-         ((is-id     lexeme          )  'ID      )
-         ((is-number lexeme          )  'NUM     )
-         (t                             'UNKNOWN )
+         ((string=   lexeme ":="     )  'ASSIGN   )
+         ((string=   lexeme "+"      )  'ADDOP    )
+         ((string=   lexeme "*"      )  'MULOP    )
+         ((string=   lexeme ","      )  'COMMA    )
+         ((string=   lexeme "."      )  'DOT      )
+         ((string=   lexeme ":"      )  'COLON    )
+         ((string=   lexeme ";"      )  'SEMICOLON)
+         ((string=   lexeme "="      )  'EQUALS   )
+         ((string=   lexeme "("      )  'OPENPAR  )
+         ((string=   lexeme ")"      )  'CLOSEPAR )
+         
+         ((string=   lexeme ""       )	 'EOF      )
+         ((is-id     lexeme          )  'ID       )
+         ((is-number lexeme          )  'NUM      )
+         (t                             'UNKNOWN  )
       )
    lexeme)
 )
@@ -169,8 +180,10 @@
 ;;=====================================================================
 
 (defun token  (state) ;; *** TO BE DONE ***
+   (first (pstate-lookahead state))
 )
 (defun lexeme (state) ;; *** TO BE DONE *** 
+   (second (pstate-lookahead state))
 )
 
 ;;=====================================================================
@@ -264,7 +277,54 @@
 ; <operand>       --> id | number
 ;;=====================================================================
 
-;; *** TO BE DONE ***
+(defun operand (state)
+   (cond
+      ((eq (token state) 'ID)  (match state 'ID))
+      ((eq (token state) 'NUM) (match state 'NUM))
+      (t (synerr3 state))
+   )
+)
+
+(defun factor (state)
+   (when (eq (token state) 'OPENPAR)
+      (expr state) (match state 'CLOSEPAR)       ;; might fuck up because expr state might be interpreted as a function
+   )
+   (unless (eq (token state) 'OPENPAR)
+      (operand state)
+   )
+)
+
+(defun term (state)
+   (factor state)
+   (when (eq (token state) 'MULOP)
+      (match state' MULOP)
+      (factor state)
+   )
+)
+
+(defun expr (state)
+   (term state)
+   (when (eq (token state) 'ADDOP)
+      (match state 'ADDOP)
+      (expr state)
+   )
+)
+
+(defun stat (state) ;;Identical to assign-stat hence we won't make an assign-stat function.
+   (match state 'ID) (match state 'ASSIGN) (expr state)
+)
+
+(defun stat-list (state)
+   (stat state) 
+   (when (eq (token state) 'SEMICOLON)
+      (match state 'SEMICOLON)
+      (stat-list state)
+   )
+)
+
+(defun stat-part (state)
+   (match state 'BEGIN) (stat-list state) (match state 'END) (match state 'DOT) 
+)
 
 ;;=====================================================================
 ; <var-part>     --> var <var-dec-list>
@@ -274,13 +334,48 @@
 ; <type>         --> integer | real | boolean
 ;;=====================================================================
 
-;; *** TO BE DONE ***
+(defun typ (state)
+   (cond
+      ((eq (token state) 'INTEGER) (match state 'INTEGER))
+      ((eq (token state) 'BOOLEAN) (match state 'BOOLEAN))
+      ((eq (token state) 'REAL)    (match state 'REAL))
+      (t   (synerr2 state))
+   )
+)
+
+(defun id-list (state)
+   (match state 'ID)
+   (when (eq (token state) 'COMMA)
+      (match state 'COMMA)
+      (id-list state)
+   )
+)
+
+(defun var-dec (state)
+   (id-list state) 
+   (match state 'COLON)
+   (typ state)
+   (match state 'SEMICOLON)
+)
+
+(defun var-dec-list (state)
+   (var-dec state) 
+   (when (eq (token state) 'ID)
+      (var-dec-list state)
+   )
+)
+
+(defun var-part (state)
+   (match state 'VAR) (var-dec-list state)
+)
 
 ;;=====================================================================
 ; <program-header>
 ;;=====================================================================
 
-;; *** TO BE DONE ***
+(defun program-header (state)
+   (match state 'PROGRAM) (match state 'ID) (match state 'OPENPAR) (match state 'INPUT) (match state 'COMMA) (match state 'OUTPUT) (match state 'CLOSEPAR) (match state 'SEMICOLON)
+)
 
 ;;=====================================================================
 ; <program> --> <program-header><var-part><stat-part>
@@ -331,7 +426,6 @@
 ;; *** TO BE DONE ***
 
 )
-
 ;;=====================================================================
 ; THE PARSER - test all files
 ;;=====================================================================
@@ -342,7 +436,7 @@
 ; THE PARSER - test a single file
 ;;=====================================================================
 
-;;(parse "testfiles/testok1.pas")
+(parse "testfiles/testok1.pas")
 
 ;;=====================================================================
 ; THE PARSER - end of code
