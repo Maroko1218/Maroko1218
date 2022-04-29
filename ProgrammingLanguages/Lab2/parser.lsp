@@ -99,17 +99,16 @@
          ((string=   lexeme "boolean")  'BOOLEAN  )
          ((string=   lexeme "integer")  'INTEGER  )
          ((string=   lexeme "real"   )  'REAL     )
-;; etc,  *** TO BE DONE ***
          ((string=   lexeme ":="     )  'ASSIGN   )
          ((string=   lexeme "+"      )  'ADDOP    )
          ((string=   lexeme "*"      )  'MULOP    )
          ((string=   lexeme ","      )  'COMMA    )
-         ((string=   lexeme "."      )  'DOT      )
+         ((string=   lexeme "."      )  'FSTOP    )
          ((string=   lexeme ":"      )  'COLON    )
-         ((string=   lexeme ";"      )  'SEMICOLON)
+         ((string=   lexeme ";"      )  'SCOLON   )
          ((string=   lexeme "="      )  'EQUALS   )
-         ((string=   lexeme "("      )  'OPENPAR  )
-         ((string=   lexeme ")"      )  'CLOSEPAR )
+         ((string=   lexeme "("      )  'LP       )
+         ((string=   lexeme ")"      )  'RP       )
          
          ((string=   lexeme ""       )	 'EOF      )
          ((is-id     lexeme          )  'ID       )
@@ -123,13 +122,13 @@
 ; ID is [A-Z,a-z][A-Z,a-z,0-9]*          number is [0-9][0-9]*
 ;;=====================================================================
 
-(defun is-id (str) ;; MIGHT need to be changed to recursion
+(defun is-id (str)
    (cond
       ((alpha-char-p (first (coerce str 'list))) (every #'alphanumericp (rest (coerce str 'list))))                          
    )
 )
 
-(defun is-number (str) ;; MIGHT need to be changed to recursion
+(defun is-number (str)
    (every #'digit-char-p (coerce str 'list))
 )
 
@@ -179,10 +178,11 @@
 ; lexeme - returns the lexeme from (token lexeme)(reader)
 ;;=====================================================================
 
-(defun token  (state) ;; *** TO BE DONE ***
+(defun token  (state) 
    (first (pstate-lookahead state))
 )
-(defun lexeme (state) ;; *** TO BE DONE *** 
+
+(defun lexeme (state)
    (second (pstate-lookahead state))
 )
 
@@ -191,11 +191,14 @@
 ;;=====================================================================
 
 (defun symtab-add (state id)
-;; *** TO BE DONE ***
+   (if (symtab-member state (lexeme state))
+      (semerr1 state)
+      (setf (pstate-symtab state) (append (pstate-symtab state) (list id)))
+   )
 )
 
 (defun symtab-member (state id)
-;; *** TO BE DONE ***
+   (member id (pstate-symtab state) :test #'string=)
 )
 
 (defun symtab-display (state)
@@ -279,25 +282,29 @@
 
 (defun operand (state)
    (cond
-      ((eq (token state) 'ID)  (match state 'ID))
+      ((eq (token state) 'ID) 
+         (unless (symtab-member state (lexeme state))
+            (semerr2 state)
+         )
+         (match state 'ID)
+      )
       ((eq (token state) 'NUM) (match state 'NUM))
       (t (synerr3 state))
    )
 )
 
 (defun factor (state)
-   (when (eq (token state) 'OPENPAR)
-      (expr state) (match state 'CLOSEPAR)       ;; might fuck up because expr state might be interpreted as a function
-   )
-   (unless (eq (token state) 'OPENPAR)
-      (operand state)
+   (cond 
+      ((eq (token state) 'LP)
+           (match state 'LP)      (expr state) (match state 'RP))
+      (t (operand state))
    )
 )
 
 (defun term (state)
    (factor state)
    (when (eq (token state) 'MULOP)
-      (match state' MULOP)
+      (match state 'MULOP)
       (factor state)
    )
 )
@@ -311,19 +318,28 @@
 )
 
 (defun stat (state) ;;Identical to assign-stat hence we won't make an assign-stat function.
+   (when (eq (token state) 'ID)
+      (unless (symtab-member state (lexeme state))   
+         (semerr2 state)
+      )
+   )
    (match state 'ID) (match state 'ASSIGN) (expr state)
 )
 
 (defun stat-list (state)
    (stat state) 
-   (when (eq (token state) 'SEMICOLON)
-      (match state 'SEMICOLON)
+
+ 
+   
+
+   (when (eq (token state) 'SCOLON)
+      (match state 'SCOLON)
       (stat-list state)
    )
 )
 
 (defun stat-part (state)
-   (match state 'BEGIN) (stat-list state) (match state 'END) (match state 'DOT) 
+   (match state 'BEGIN) (stat-list state) (match state 'END) (match state 'FSTOP) 
 )
 
 ;;=====================================================================
@@ -344,6 +360,9 @@
 )
 
 (defun id-list (state)
+   (when (eq (token state) 'ID)
+      (symtab-add state (lexeme state))
+   )
    (match state 'ID)
    (when (eq (token state) 'COMMA)
       (match state 'COMMA)
@@ -355,7 +374,7 @@
    (id-list state) 
    (match state 'COLON)
    (typ state)
-   (match state 'SEMICOLON)
+   (match state 'SCOLON)
 )
 
 (defun var-dec-list (state)
@@ -374,7 +393,7 @@
 ;;=====================================================================
 
 (defun program-header (state)
-   (match state 'PROGRAM) (match state 'ID) (match state 'OPENPAR) (match state 'INPUT) (match state 'COMMA) (match state 'OUTPUT) (match state 'CLOSEPAR) (match state 'SEMICOLON)
+   (match state 'PROGRAM) (match state 'ID) (match state 'LP)      (match state 'INPUT) (match state 'COMMA) (match state 'OUTPUT) (match state 'RP) (match state 'SCOLON)
 )
 
 ;;=====================================================================
@@ -391,7 +410,11 @@
 ;;=====================================================================
 
 (defun check-end (state)
-;; *** TO BE DONE ***
+   (unless (eq (token state) 'EOF)
+      (semerr3 state)
+      (get-token state)
+      (check-end state)
+   )
 )
 
 ;;=====================================================================
@@ -421,22 +444,90 @@
 ; THE PARSER - parse all the test files
 ;;=====================================================================
 
+(defun scuff-parse()
+   (parse "testfiles/testa.pas")
+   (parse "testfiles/testb.pas")
+   (parse "testfiles/testc.pas")
+   (parse "testfiles/testd.pas")
+   (parse "testfiles/teste.pas")
+   (parse "testfiles/testf.pas")
+   (parse "testfiles/testg.pas")
+   (parse "testfiles/testh.pas")
+   (parse "testfiles/testi.pas")
+   (parse "testfiles/testj.pas")
+   (parse "testfiles/testk.pas")
+   (parse "testfiles/testl.pas")
+   (parse "testfiles/testm.pas")
+   (parse "testfiles/testn.pas")
+   (parse "testfiles/testo.pas")
+   (parse "testfiles/testp.pas")
+   (parse "testfiles/testq.pas")
+   (parse "testfiles/testr.pas")
+   (parse "testfiles/tests.pas")
+   (parse "testfiles/testt.pas")
+   (parse "testfiles/testu.pas")
+   (parse "testfiles/testv.pas")
+   (parse "testfiles/testw.pas")
+   (parse "testfiles/testx.pas")
+   (parse "testfiles/testy.pas")
+   (parse "testfiles/testz.pas")
+   (parse "testfiles/testok1.pas")
+   (parse "testfiles/testok2.pas")
+   (parse "testfiles/testok3.pas")
+   (parse "testfiles/testok4.pas")
+   (parse "testfiles/testok5.pas")
+   (parse "testfiles/testok6.pas")
+   (parse "testfiles/testok7.pas")
+   (parse "testfiles/fun1.pas")
+   (parse "testfiles/fun2.pas")
+   (parse "testfiles/fun3.pas")
+   (parse "testfiles/fun4.pas")
+   (parse "testfiles/fun5.pas")
+   (parse "testfiles/sem1.pas")
+   (parse "testfiles/sem2.pas")
+   (parse "testfiles/sem3.pas")
+   (parse "testfiles/sem4.pas")
+   (parse "testfiles/sem5.pas")
+)
+
+(defun the-scuffest-parse ()   
+   (parse "testfiles/notok.pas")
+   (parse "testfiles/test1.pas")
+   (parse "testfiles/test2.pas")
+   (parse "testfiles/test3.pas")
+   (parse "testfiles/testaa.pas")
+   (parse "testfiles/testok11.pas")
+)
+
+
+
+(defun parse-all-aux (files)
+   (unless (equal files '())
+      (parse (first files))
+      (parse-all-aux (rest files))
+   )
+)
+
+
+
 (defun parse-all ()
-
-;; *** TO BE DONE ***
-
+   (wild-pathname-p (pathname "*.pas"))
+   (make-pathname :name :wild :type "pas")
+   (setf filenames (directory "testfiles/*.pas"))
+   (parse-all-aux filenames)
 )
 ;;=====================================================================
 ; THE PARSER - test all files
 ;;=====================================================================
 
-;; (parse-all)
+(parse-all) ;; original parse all where results are not aligned with expected output file
+;;(scuff-parse) ;; Sorted parse all in order of expected output file
+;;(the-scuffest-parse) ;; Files in the testfile zip that aren't included in the expected output file
 
 ;;=====================================================================
 ; THE PARSER - test a single file
 ;;=====================================================================
 
-(parse "testfiles/testok1.pas")
 
 ;;=====================================================================
 ; THE PARSER - end of code

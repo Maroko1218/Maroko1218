@@ -1,0 +1,1856 @@
+  i i i i i i i       ooooo    o        ooooooo   ooooo   ooooo
+  I I I I I I I      8     8   8           8     8     o  8    8
+  I  \ `+' /  I      8         8           8     8        8    8
+   \  `-+-'  /       8         8           8      ooooo   8oooo
+    `-__|__-'        8         8           8           8  8
+        |            8     o   8           8     o     8  8
+  ------+------       ooooo    8oooooo  ooo8ooo   ooooo   8
+
+Welcome to GNU CLISP 2.49 (2010-07-07) <http://clisp.cons.org/>
+
+Copyright (c) Bruno Haible, Michael Stoll 1992, 1993
+Copyright (c) Bruno Haible, Marcus Daniels 1994-1997
+Copyright (c) Bruno Haible, Pierpaolo Bernardi, Sam Steingold 1998
+Copyright (c) Bruno Haible, Sam Steingold 1999-2000
+Copyright (c) Sam Steingold, Bruno Haible 2001-2010
+
+Type :h and hit Enter for context help.
+
+CTOS
+STR-CON
+WHITESPACE
+GET-WSPACE
+GET-NAME
+GET-NUMBER
+GET-SYMBOL
+GET-LEX
+MAP-LEXEME
+IS-ID
+IS-NUMBER
+PSTATE
+CREATE-PARSER-STATE
+TOKEN
+LEXEME
+SYMTAB-ADD
+SYMTAB-MEMBER
+SYMTAB-DISPLAY
+SYNERR1
+SYNERR2
+SYNERR3
+SEMERR1
+SEMERR2
+SEMERR3
+GET-TOKEN
+MATCH
+STAT-PART
+STAT-LIST-AUX
+STAT-LIST
+STAT
+ID-CHECK
+ASSIGN-STAT
+EXPR-AUX
+EXPR
+TERM-AUX
+TERM
+PEXPR
+FACTOR
+OPERAND-ID
+OPERAND
+VAR-PART
+VAR-DEC-LIST
+VAR-DEC
+CHECK-ID
+ID-LIST-AUX
+ID-LIST
+TYP
+PROGRAM-HEADER
+PROGRAM
+CHECK-END
+PARSE
+PARSE-ALL
+PARSING-OUTPUT
+------------------------------------------------------
+--- Parsing program: "testfiles/testa.pas" 
+------------------------------------------------------
+Symbol: "" 
+*** Syntax error:   Expected PROGRAM  found ""       
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected LP       found ""       
+*** Syntax error:   Expected INPUT    found ""       
+*** Syntax error:   Expected COMMA    found ""       
+*** Syntax error:   Expected OUTPUT   found ""       
+*** Syntax error:   Expected RP       found ""       
+*** Syntax error:   Expected SCOLON   found ""       
+*** Syntax error:   Expected VAR      found ""       
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected COLON    found ""       
+*** Syntax error:   Expected TYPE     found "" 
+*** Syntax error:   Expected SCOLON   found ""       
+*** Syntax error:   Expected BEGIN    found ""       
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected ASSIGN   found ""       
+*** Syntax error:   Expected OPERAND  found "" 
+*** Syntax error:   Expected END      found ""       
+*** Syntax error:   Expected FSTOP    found ""       
+------------------------------------------------------
+Symbol Table is: NIL 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testb.pas" 
+------------------------------------------------------
+Symbol: "testb" 
+*** Syntax error:   Expected PROGRAM  found "testb"  
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testc.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "(" 
+*** Syntax error:   Expected ID       found "("      
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testd.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testd" 
+Symbol: "input" 
+*** Syntax error:   Expected LP       found "input"  
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/teste.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "teste" 
+Symbol: "(" 
+Symbol: "," 
+*** Syntax error:   Expected INPUT    found ","      
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testf.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testf" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "output" 
+*** Syntax error:   Expected COMMA    found "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testg.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testg" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: ")" 
+*** Syntax error:   Expected OUTPUT   found ")"      
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testh.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testh" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ";" 
+*** Syntax error:   Expected RP       found ";"      
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testi.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testi" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: "var" 
+*** Syntax error:   Expected SCOLON   found "var"    
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testj.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testj" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "A" 
+*** Syntax error:   Expected VAR      found "A"      
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testk.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testk" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "," 
+*** Syntax error:   Expected ID       found ","      
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+*** Semantic error: "A" not declared.
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testl.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testl" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "B" 
+*** Syntax error:   Expected COLON    found "B"      
+*** Syntax error:   Expected TYPE     found "B" 
+*** Syntax error:   Expected SCOLON   found "B"      
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testm.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testm" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: "integer" 
+*** Syntax error:   Expected COLON    found "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testn.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testn" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: ";" 
+*** Syntax error:   Expected TYPE     found ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testo.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testo" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: "begin" 
+*** Syntax error:   Expected SCOLON   found "begin"  
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testp.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testp" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "A" 
+*** Semantic error: "A" already declared.
+Symbol: ":=" 
+*** Syntax error:   Expected COLON    found ":="     
+*** Syntax error:   Expected TYPE     found ":=" 
+*** Syntax error:   Expected SCOLON   found ":="     
+*** Syntax error:   Expected BEGIN    found ":="     
+*** Syntax error:   Expected ID       found ":="     
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testq.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testq" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: ":=" 
+*** Syntax error:   Expected ID       found ":="     
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testr.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testr" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: "=" 
+*** Syntax error:   Expected ASSIGN   found "="      
+*** Syntax error:   Expected OPERAND  found "=" 
+*** Syntax error:   Expected END      found "="      
+*** Syntax error:   Expected FSTOP    found "="      
+*** Semantic error: found "="      expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/tests.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "tests" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":" 
+*** Syntax error:   Expected ASSIGN   found ":"      
+*** Syntax error:   Expected OPERAND  found ":" 
+*** Syntax error:   Expected END      found ":"      
+*** Syntax error:   Expected FSTOP    found ":"      
+*** Semantic error: found ":"      expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testt.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testt" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: "B" 
+*** Syntax error:   Expected ASSIGN   found "B"      
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testu.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testu" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "+" 
+*** Syntax error:   Expected OPERAND  found "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testv.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testv" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "C" 
+*** Syntax error:   Expected END      found "C"      
+*** Syntax error:   Expected FSTOP    found "C"      
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testw.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testw" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "-" 
+*** Syntax error:   Expected END      found "-"      
+*** Syntax error:   Expected FSTOP    found "-"      
+*** Semantic error: found "-"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testx.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testx" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: ";" 
+Symbol: "end" 
+*** Syntax error:   Expected ID       found "end"    
+*** Syntax error:   Expected ASSIGN   found "end"    
+*** Syntax error:   Expected OPERAND  found "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testy.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testy" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "." 
+*** Syntax error:   Expected END      found "."      
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testz.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testz" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "" 
+*** Syntax error:   Expected FSTOP    found ""       
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok2" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "G" 
+Symbol: "," 
+Symbol: "H" 
+Symbol: "," 
+Symbol: "I" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: ":=" 
+Symbol: "E" 
+Symbol: "+" 
+Symbol: "F" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: ";" 
+Symbol: "G" 
+Symbol: ":=" 
+Symbol: "H" 
+Symbol: "+" 
+Symbol: "I" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F" "G" "H" "I") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok3" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "2" 
+Symbol: "+" 
+Symbol: "6" 
+Symbol: "*" 
+Symbol: "8" 
+Symbol: ";" 
+Symbol: "B" 
+Symbol: ":=" 
+Symbol: "3" 
+Symbol: "+" 
+Symbol: "9" 
+Symbol: "*" 
+Symbol: "1" 
+Symbol: ";" 
+Symbol: "C" 
+Symbol: ":=" 
+Symbol: "4" 
+Symbol: "+" 
+Symbol: "1" 
+Symbol: "*" 
+Symbol: "1" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok4.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok4" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "DD" 
+Symbol: "," 
+Symbol: "EE" 
+Symbol: "," 
+Symbol: "FF" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "DD" "EE" "FF") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok5.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok5" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "x" 
+Symbol: "," 
+Symbol: "y" 
+Symbol: "," 
+Symbol: "z" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "A" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "B" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "x" 
+Symbol: ":=" 
+Symbol: "y" 
+Symbol: "+" 
+Symbol: "z" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: ";" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("x" "y" "z" "A" "B" "C") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok6.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok6" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "id" 
+Symbol: "," 
+Symbol: "number" 
+Symbol: "," 
+Symbol: "assign" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "id" 
+Symbol: ":=" 
+Symbol: "(" 
+Symbol: "number" 
+Symbol: "+" 
+Symbol: "assign" 
+Symbol: ")" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("id" "number" "assign") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/testok7.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok7" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "B" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/fun1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "A" 
+*** Semantic error: "A" already declared.
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+*** Semantic error: "C" not declared.
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/fun2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun2" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "3" 
+*** Syntax error:   Expected ID       found "3"      
+*** Syntax error:   Expected ASSIGN   found "3"      
+Symbol: "A" 
+*** Syntax error:   Expected END      found "A"      
+*** Syntax error:   Expected FSTOP    found "A"      
+*** Semantic error: found "A"      expected EOF.
+Symbol: ":=" 
+*** Semantic error: found ":="     expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/fun3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun3" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":" 
+*** Syntax error:   Expected ASSIGN   found ":"      
+*** Syntax error:   Expected OPERAND  found ":" 
+*** Syntax error:   Expected END      found ":"      
+*** Syntax error:   Expected FSTOP    found ":"      
+*** Semantic error: found ":"      expected EOF.
+Symbol: "=" 
+*** Semantic error: found "="      expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/fun4.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun4" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/fun5.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun5" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "OOOOPS" 
+*** Semantic error: found "OOOOPS" expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/sem1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "D" 
+*** Semantic error: "D" not declared.
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/sem2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem2" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "A" 
+*** Semantic error: "A" already declared.
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+*** Semantic error: "C" not declared.
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/sem3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem3" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "double" 
+*** Syntax error:   Expected TYPE     found "double" 
+*** Syntax error:   Expected SCOLON   found "double" 
+Symbol: ";" 
+*** Syntax error:   Expected COLON    found ";"      
+*** Syntax error:   Expected TYPE     found ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "double") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/sem4.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem4" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "real" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "F" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: "testfiles/sem5.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem5" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "real" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "D" 
+Symbol: "+" 
+Symbol: "E" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
+ NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
+ NIL NIL NIL NIL NIL)
+Bye.
