@@ -6,13 +6,13 @@
         |            8     o   8           8     o     8  8
   ------+------       ooooo    8oooooo  ooo8ooo   ooooo   8
 
-Welcome to GNU CLISP 2.49 (2010-07-07) <http://clisp.cons.org/>
+Welcome to GNU CLISP 2.49.92 (2018-02-18) <http://clisp.org/>
 
-Copyright (c) Bruno Haible, Michael Stoll 1992, 1993
+Copyright (c) Bruno Haible, Michael Stoll 1992-1993
 Copyright (c) Bruno Haible, Marcus Daniels 1994-1997
 Copyright (c) Bruno Haible, Pierpaolo Bernardi, Sam Steingold 1998
 Copyright (c) Bruno Haible, Sam Steingold 1999-2000
-Copyright (c) Sam Steingold, Bruno Haible 2001-2010
+Copyright (c) Sam Steingold, Bruno Haible 2001-2018
 
 Type :h and hit Enter for context help.
 
@@ -42,35 +42,642 @@ SEMERR2
 SEMERR3
 GET-TOKEN
 MATCH
-STAT-PART
-STAT-LIST-AUX
-STAT-LIST
-STAT
-ID-CHECK
-ASSIGN-STAT
-EXPR-AUX
-EXPR
-TERM-AUX
-TERM
-PEXPR
-FACTOR
-OPERAND-ID
 OPERAND
-VAR-PART
-VAR-DEC-LIST
-VAR-DEC
-CHECK-ID
-ID-LIST-AUX
-ID-LIST
+FACTOR
+TERM
+EXPR
+STAT
+STAT-LIST
+STAT-PART
 TYP
+ID-LIST
+VAR-DEC
+VAR-DEC-LIST
+VAR-PART
 PROGRAM-HEADER
 PROGRAM
 CHECK-END
 PARSE
+SCUFF-PARSE
+THE-SCUFFEST-PARSE
+PARSE-ALL-AUX
 PARSE-ALL
-PARSING-OUTPUT
 ------------------------------------------------------
---- Parsing program: "testfiles/testa.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/fun1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "A" 
+*** Semantic error: "A" already declared.
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+*** Semantic error: "C" not declared.
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/fun2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun2" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "3" 
+*** Syntax error:   Expected ID       found "3"      
+*** Syntax error:   Expected ASSIGN   found "3"      
+Symbol: "A" 
+*** Syntax error:   Expected END      found "A"      
+*** Syntax error:   Expected FSTOP    found "A"      
+*** Semantic error: found "A"      expected EOF.
+Symbol: ":=" 
+*** Semantic error: found ":="     expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/fun3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun3" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":" 
+*** Syntax error:   Expected ASSIGN   found ":"      
+*** Syntax error:   Expected OPERAND  found ":" 
+*** Syntax error:   Expected END      found ":"      
+*** Syntax error:   Expected FSTOP    found ":"      
+*** Semantic error: found ":"      expected EOF.
+Symbol: "=" 
+*** Semantic error: found "="      expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/fun4.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun4" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/fun5.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "fun5" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "OOOOPS" 
+*** Semantic error: found "OOOOPS" expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "!" 
+*** Semantic error: found "!"      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/notok.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "Z" 
+*** Semantic error: "Z" not declared.
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/sem1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "D" 
+*** Semantic error: "D" not declared.
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/sem2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem2" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "A" 
+*** Semantic error: "A" already declared.
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+*** Semantic error: "C" not declared.
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/sem3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem3" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "double" 
+*** Syntax error:   Expected TYPE     found "double" 
+*** Syntax error:   Expected SCOLON   found "double" 
+Symbol: ";" 
+*** Syntax error:   Expected COLON    found ";"      
+*** Syntax error:   Expected TYPE     found ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "double") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/sem4.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem4" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "real" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "F" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/sem5.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "sem5" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "D" 
+Symbol: "," 
+Symbol: "E" 
+Symbol: "," 
+Symbol: "F" 
+Symbol: ":" 
+Symbol: "real" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "D" 
+Symbol: "+" 
+Symbol: "E" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/test1.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "/" 
+*** Syntax error:   Expected END      found "/"      
+*** Syntax error:   Expected FSTOP    found "/"      
+*** Semantic error: found "/"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/test2.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "3" 
+*** Syntax error:   Expected ID       found "3"      
+*** Syntax error:   Expected ASSIGN   found "3"      
+Symbol: ":=" 
+*** Syntax error:   Expected END      found ":="     
+*** Syntax error:   Expected FSTOP    found ":="     
+*** Semantic error: found ":="     expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/test3.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "real" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "3" 
+*** Syntax error:   Expected ID       found "3"      
+*** Syntax error:   Expected ASSIGN   found "3"      
+Symbol: ":=" 
+*** Syntax error:   Expected END      found ":="     
+*** Syntax error:   Expected FSTOP    found ":="     
+*** Semantic error: found ":="     expected EOF.
+Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
+Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
+Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
+Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
+Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
+Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
+Symbol: "." 
+*** Semantic error: found "."      expected EOF.
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testa.pas" 
 ------------------------------------------------------
 Symbol: "" 
 *** Syntax error:   Expected PROGRAM  found ""       
@@ -99,7 +706,36 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testb.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testaa.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "" 
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected LP       found ""       
+*** Syntax error:   Expected INPUT    found ""       
+*** Syntax error:   Expected COMMA    found ""       
+*** Syntax error:   Expected OUTPUT   found ""       
+*** Syntax error:   Expected RP       found ""       
+*** Syntax error:   Expected SCOLON   found ""       
+*** Syntax error:   Expected VAR      found ""       
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected COLON    found ""       
+*** Syntax error:   Expected TYPE     found "" 
+*** Syntax error:   Expected SCOLON   found ""       
+*** Syntax error:   Expected BEGIN    found ""       
+*** Syntax error:   Expected ID       found ""       
+*** Syntax error:   Expected ASSIGN   found ""       
+*** Syntax error:   Expected OPERAND  found "" 
+*** Syntax error:   Expected END      found ""       
+*** Syntax error:   Expected FSTOP    found ""       
+------------------------------------------------------
+Symbol Table is: NIL 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testb.pas" 
 ------------------------------------------------------
 Symbol: "testb" 
 *** Syntax error:   Expected PROGRAM  found "testb"  
@@ -136,7 +772,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testc.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testc.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "(" 
@@ -173,7 +809,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testd.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testd.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testd" 
@@ -210,7 +846,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/teste.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/teste.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "teste" 
@@ -247,7 +883,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testf.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testf.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testf" 
@@ -284,7 +920,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testg.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testg.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testg" 
@@ -321,7 +957,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testh.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testh.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testh" 
@@ -358,7 +994,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testi.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testi.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testi" 
@@ -395,7 +1031,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testj.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testj.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testj" 
@@ -432,7 +1068,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testk.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testk.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testk" 
@@ -470,7 +1106,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testl.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testl.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testl" 
@@ -509,7 +1145,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testm.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testm.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testm" 
@@ -546,7 +1182,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testn.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testn.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testn" 
@@ -583,7 +1219,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testo.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testo.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testo" 
@@ -620,459 +1256,7 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testp.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testp" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "A" 
-*** Semantic error: "A" already declared.
-Symbol: ":=" 
-*** Syntax error:   Expected COLON    found ":="     
-*** Syntax error:   Expected TYPE     found ":=" 
-*** Syntax error:   Expected SCOLON   found ":="     
-*** Syntax error:   Expected BEGIN    found ":="     
-*** Syntax error:   Expected ID       found ":="     
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testq.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testq" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: ":=" 
-*** Syntax error:   Expected ID       found ":="     
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testr.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testr" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: "=" 
-*** Syntax error:   Expected ASSIGN   found "="      
-*** Syntax error:   Expected OPERAND  found "=" 
-*** Syntax error:   Expected END      found "="      
-*** Syntax error:   Expected FSTOP    found "="      
-*** Semantic error: found "="      expected EOF.
-Symbol: "B" 
-*** Semantic error: found "B"      expected EOF.
-Symbol: "+" 
-*** Semantic error: found "+"      expected EOF.
-Symbol: "C" 
-*** Semantic error: found "C"      expected EOF.
-Symbol: "*" 
-*** Semantic error: found "*"      expected EOF.
-Symbol: "2" 
-*** Semantic error: found "2"      expected EOF.
-Symbol: "end" 
-*** Semantic error: found "end"    expected EOF.
-Symbol: "." 
-*** Semantic error: found "."      expected EOF.
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/tests.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "tests" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":" 
-*** Syntax error:   Expected ASSIGN   found ":"      
-*** Syntax error:   Expected OPERAND  found ":" 
-*** Syntax error:   Expected END      found ":"      
-*** Syntax error:   Expected FSTOP    found ":"      
-*** Semantic error: found ":"      expected EOF.
-Symbol: "B" 
-*** Semantic error: found "B"      expected EOF.
-Symbol: "+" 
-*** Semantic error: found "+"      expected EOF.
-Symbol: "C" 
-*** Semantic error: found "C"      expected EOF.
-Symbol: "*" 
-*** Semantic error: found "*"      expected EOF.
-Symbol: "2" 
-*** Semantic error: found "2"      expected EOF.
-Symbol: "end" 
-*** Semantic error: found "end"    expected EOF.
-Symbol: "." 
-*** Semantic error: found "."      expected EOF.
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testt.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testt" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: "B" 
-*** Syntax error:   Expected ASSIGN   found "B"      
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testu.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testu" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "+" 
-*** Syntax error:   Expected OPERAND  found "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testv.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testv" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "C" 
-*** Syntax error:   Expected END      found "C"      
-*** Syntax error:   Expected FSTOP    found "C"      
-*** Semantic error: found "C"      expected EOF.
-Symbol: "*" 
-*** Semantic error: found "*"      expected EOF.
-Symbol: "2" 
-*** Semantic error: found "2"      expected EOF.
-Symbol: "end" 
-*** Semantic error: found "end"    expected EOF.
-Symbol: "." 
-*** Semantic error: found "."      expected EOF.
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testw.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testw" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "-" 
-*** Syntax error:   Expected END      found "-"      
-*** Syntax error:   Expected FSTOP    found "-"      
-*** Semantic error: found "-"      expected EOF.
-Symbol: "2" 
-*** Semantic error: found "2"      expected EOF.
-Symbol: "end" 
-*** Semantic error: found "end"    expected EOF.
-Symbol: "." 
-*** Semantic error: found "."      expected EOF.
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testx.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testx" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: ";" 
-Symbol: "end" 
-*** Syntax error:   Expected ID       found "end"    
-*** Syntax error:   Expected ASSIGN   found "end"    
-*** Syntax error:   Expected OPERAND  found "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testy.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testy" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "." 
-*** Syntax error:   Expected END      found "."      
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testz.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "testz" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "" 
-*** Syntax error:   Expected FSTOP    found ""       
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/testok1.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok1.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok1" 
@@ -1109,7 +1293,44 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok2.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok11.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testok1" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Successful. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok2.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok2" 
@@ -1178,7 +1399,7 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok3.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok3.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok3" 
@@ -1231,7 +1452,7 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok4.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok4.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok4" 
@@ -1276,7 +1497,7 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok5.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok5.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok5" 
@@ -1333,7 +1554,7 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok6.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok6.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok6" 
@@ -1372,7 +1593,7 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/testok7.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testok7.pas" 
 ------------------------------------------------------
 Symbol: "program" 
 Symbol: "testok7" 
@@ -1413,10 +1634,10 @@ Parse Successful.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/fun1.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testp.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "fun1" 
+Symbol: "testp" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1428,73 +1649,25 @@ Symbol: "A"
 Symbol: "," 
 Symbol: "B" 
 Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
 Symbol: "A" 
 *** Semantic error: "A" already declared.
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
 Symbol: ":=" 
+*** Syntax error:   Expected COLON    found ":="     
+*** Syntax error:   Expected TYPE     found ":=" 
+*** Syntax error:   Expected SCOLON   found ":="     
+*** Syntax error:   Expected BEGIN    found ":="     
+*** Syntax error:   Expected ID       found ":="     
 Symbol: "B" 
 Symbol: "+" 
 Symbol: "C" 
-*** Semantic error: "C" not declared.
 Symbol: "*" 
 Symbol: "2" 
 Symbol: "end" 
 Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B") 
-------------------------------------------------------
-Parse Fail. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/fun2.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "fun2" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "3" 
-*** Syntax error:   Expected ID       found "3"      
-*** Syntax error:   Expected ASSIGN   found "3"      
-Symbol: "A" 
-*** Syntax error:   Expected END      found "A"      
-*** Syntax error:   Expected FSTOP    found "A"      
-*** Semantic error: found "A"      expected EOF.
-Symbol: ":=" 
-*** Semantic error: found ":="     expected EOF.
-Symbol: "B" 
-*** Semantic error: found "B"      expected EOF.
-Symbol: "+" 
-*** Semantic error: found "+"      expected EOF.
-Symbol: "C" 
-*** Semantic error: found "C"      expected EOF.
-Symbol: "*" 
-*** Semantic error: found "*"      expected EOF.
-Symbol: "2" 
-*** Semantic error: found "2"      expected EOF.
-Symbol: "end" 
-*** Semantic error: found "end"    expected EOF.
-Symbol: "." 
-*** Semantic error: found "."      expected EOF.
 Symbol: "" 
 ------------------------------------------------------
 Symbol Table is: ("A" "B" "C") 
@@ -1503,10 +1676,47 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/fun3.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testq.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "fun3" 
+Symbol: "testq" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: ":=" 
+*** Syntax error:   Expected ID       found ":="     
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testr.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testr" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1524,13 +1734,11 @@ Symbol: "integer"
 Symbol: ";" 
 Symbol: "begin" 
 Symbol: "A" 
-Symbol: ":" 
-*** Syntax error:   Expected ASSIGN   found ":"      
-*** Syntax error:   Expected OPERAND  found ":" 
-*** Syntax error:   Expected END      found ":"      
-*** Syntax error:   Expected FSTOP    found ":"      
-*** Semantic error: found ":"      expected EOF.
 Symbol: "=" 
+*** Syntax error:   Expected ASSIGN   found "="      
+*** Syntax error:   Expected OPERAND  found "=" 
+*** Syntax error:   Expected END      found "="      
+*** Syntax error:   Expected FSTOP    found "="      
 *** Semantic error: found "="      expected EOF.
 Symbol: "B" 
 *** Semantic error: found "B"      expected EOF.
@@ -1554,55 +1762,10 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/fun4.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/tests.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "fun4" 
-Symbol: "(" 
-Symbol: "input" 
-Symbol: "," 
-Symbol: "output" 
-Symbol: ")" 
-Symbol: ";" 
-Symbol: "var" 
-Symbol: "A" 
-Symbol: "," 
-Symbol: "B" 
-Symbol: "," 
-Symbol: "C" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "D" 
-Symbol: "," 
-Symbol: "E" 
-Symbol: "," 
-Symbol: "F" 
-Symbol: ":" 
-Symbol: "integer" 
-Symbol: ";" 
-Symbol: "begin" 
-Symbol: "A" 
-Symbol: ":=" 
-Symbol: "B" 
-Symbol: "+" 
-Symbol: "C" 
-Symbol: "*" 
-Symbol: "2" 
-Symbol: "end" 
-Symbol: "." 
-Symbol: "" 
-------------------------------------------------------
-Symbol Table is: ("A" "B" "C" "D" "E" "F") 
-------------------------------------------------------
-Parse Successful. 
-------------------------------------------------------
-
-------------------------------------------------------
---- Parsing program: "testfiles/fun5.pas" 
-------------------------------------------------------
-Symbol: "program" 
-Symbol: "fun5" 
+Symbol: "tests" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1620,22 +1783,26 @@ Symbol: "integer"
 Symbol: ";" 
 Symbol: "begin" 
 Symbol: "A" 
-Symbol: ":=" 
+Symbol: ":" 
+*** Syntax error:   Expected ASSIGN   found ":"      
+*** Syntax error:   Expected OPERAND  found ":" 
+*** Syntax error:   Expected END      found ":"      
+*** Syntax error:   Expected FSTOP    found ":"      
+*** Semantic error: found ":"      expected EOF.
 Symbol: "B" 
+*** Semantic error: found "B"      expected EOF.
 Symbol: "+" 
+*** Semantic error: found "+"      expected EOF.
 Symbol: "C" 
+*** Semantic error: found "C"      expected EOF.
 Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
 Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
 Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
 Symbol: "." 
-Symbol: "OOOOPS" 
-*** Semantic error: found "OOOOPS" expected EOF.
-Symbol: "!" 
-*** Semantic error: found "!"      expected EOF.
-Symbol: "!" 
-*** Semantic error: found "!"      expected EOF.
-Symbol: "!" 
-*** Semantic error: found "!"      expected EOF.
+*** Semantic error: found "."      expected EOF.
 Symbol: "" 
 ------------------------------------------------------
 Symbol Table is: ("A" "B" "C") 
@@ -1644,10 +1811,10 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/sem1.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testt.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "sem1" 
+Symbol: "testt" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1665,9 +1832,8 @@ Symbol: "integer"
 Symbol: ";" 
 Symbol: "begin" 
 Symbol: "A" 
-Symbol: ":=" 
-Symbol: "D" 
-*** Semantic error: "D" not declared.
+Symbol: "B" 
+*** Syntax error:   Expected ASSIGN   found "B"      
 Symbol: "+" 
 Symbol: "C" 
 Symbol: "*" 
@@ -1682,10 +1848,10 @@ Parse Fail.
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/sem2.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testu.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "sem2" 
+Symbol: "testu" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1697,34 +1863,32 @@ Symbol: "A"
 Symbol: "," 
 Symbol: "B" 
 Symbol: "," 
-Symbol: "A" 
-*** Semantic error: "A" already declared.
+Symbol: "C" 
 Symbol: ":" 
 Symbol: "integer" 
 Symbol: ";" 
 Symbol: "begin" 
 Symbol: "A" 
 Symbol: ":=" 
-Symbol: "B" 
 Symbol: "+" 
+*** Syntax error:   Expected OPERAND  found "+" 
 Symbol: "C" 
-*** Semantic error: "C" not declared.
 Symbol: "*" 
 Symbol: "2" 
 Symbol: "end" 
 Symbol: "." 
 Symbol: "" 
 ------------------------------------------------------
-Symbol Table is: ("A" "B") 
+Symbol Table is: ("A" "B" "C") 
 ------------------------------------------------------
 Parse Fail. 
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/sem3.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testv.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "sem3" 
+Symbol: "testv" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1738,34 +1902,36 @@ Symbol: "B"
 Symbol: "," 
 Symbol: "C" 
 Symbol: ":" 
-Symbol: "double" 
-*** Syntax error:   Expected TYPE     found "double" 
-*** Syntax error:   Expected SCOLON   found "double" 
+Symbol: "integer" 
 Symbol: ";" 
-*** Syntax error:   Expected COLON    found ";"      
-*** Syntax error:   Expected TYPE     found ";" 
 Symbol: "begin" 
 Symbol: "A" 
 Symbol: ":=" 
 Symbol: "B" 
-Symbol: "+" 
 Symbol: "C" 
+*** Syntax error:   Expected END      found "C"      
+*** Syntax error:   Expected FSTOP    found "C"      
+*** Semantic error: found "C"      expected EOF.
 Symbol: "*" 
+*** Semantic error: found "*"      expected EOF.
 Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
 Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
 Symbol: "." 
+*** Semantic error: found "."      expected EOF.
 Symbol: "" 
 ------------------------------------------------------
-Symbol Table is: ("A" "B" "C" "double") 
+Symbol Table is: ("A" "B" "C") 
 ------------------------------------------------------
 Parse Fail. 
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/sem4.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testw.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "sem4" 
+Symbol: "testw" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1781,36 +1947,34 @@ Symbol: "C"
 Symbol: ":" 
 Symbol: "integer" 
 Symbol: ";" 
-Symbol: "D" 
-Symbol: "," 
-Symbol: "E" 
-Symbol: "," 
-Symbol: "F" 
-Symbol: ":" 
-Symbol: "real" 
-Symbol: ";" 
 Symbol: "begin" 
-Symbol: "F" 
+Symbol: "A" 
 Symbol: ":=" 
 Symbol: "B" 
 Symbol: "+" 
 Symbol: "C" 
-Symbol: "*" 
+Symbol: "-" 
+*** Syntax error:   Expected END      found "-"      
+*** Syntax error:   Expected FSTOP    found "-"      
+*** Semantic error: found "-"      expected EOF.
 Symbol: "2" 
+*** Semantic error: found "2"      expected EOF.
 Symbol: "end" 
+*** Semantic error: found "end"    expected EOF.
 Symbol: "." 
+*** Semantic error: found "."      expected EOF.
 Symbol: "" 
 ------------------------------------------------------
-Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+Symbol Table is: ("A" "B" "C") 
 ------------------------------------------------------
-Parse Successful. 
+Parse Fail. 
 ------------------------------------------------------
 
 ------------------------------------------------------
---- Parsing program: "testfiles/sem5.pas" 
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testx.pas" 
 ------------------------------------------------------
 Symbol: "program" 
-Symbol: "sem5" 
+Symbol: "testx" 
 Symbol: "(" 
 Symbol: "input" 
 Symbol: "," 
@@ -1826,31 +1990,99 @@ Symbol: "C"
 Symbol: ":" 
 Symbol: "integer" 
 Symbol: ";" 
-Symbol: "D" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: ";" 
+Symbol: "end" 
+*** Syntax error:   Expected ID       found "end"    
+*** Syntax error:   Expected ASSIGN   found "end"    
+*** Syntax error:   Expected OPERAND  found "end" 
+Symbol: "." 
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testy.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testy" 
+Symbol: "(" 
+Symbol: "input" 
 Symbol: "," 
-Symbol: "E" 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
 Symbol: "," 
-Symbol: "F" 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
 Symbol: ":" 
-Symbol: "real" 
+Symbol: "integer" 
 Symbol: ";" 
 Symbol: "begin" 
 Symbol: "A" 
 Symbol: ":=" 
-Symbol: "D" 
+Symbol: "B" 
 Symbol: "+" 
-Symbol: "E" 
+Symbol: "C" 
+Symbol: "*" 
+Symbol: "2" 
+Symbol: "." 
+*** Syntax error:   Expected END      found "."      
+Symbol: "" 
+------------------------------------------------------
+Symbol Table is: ("A" "B" "C") 
+------------------------------------------------------
+Parse Fail. 
+------------------------------------------------------
+
+------------------------------------------------------
+--- Parsing program: #P"/mnt/c/Users/Maroko1218/Desktop/Maroko1218/ProgrammingLanguages/Lab2/testfiles/testz.pas" 
+------------------------------------------------------
+Symbol: "program" 
+Symbol: "testz" 
+Symbol: "(" 
+Symbol: "input" 
+Symbol: "," 
+Symbol: "output" 
+Symbol: ")" 
+Symbol: ";" 
+Symbol: "var" 
+Symbol: "A" 
+Symbol: "," 
+Symbol: "B" 
+Symbol: "," 
+Symbol: "C" 
+Symbol: ":" 
+Symbol: "integer" 
+Symbol: ";" 
+Symbol: "begin" 
+Symbol: "A" 
+Symbol: ":=" 
+Symbol: "B" 
+Symbol: "+" 
+Symbol: "C" 
 Symbol: "*" 
 Symbol: "2" 
 Symbol: "end" 
-Symbol: "." 
 Symbol: "" 
+*** Syntax error:   Expected FSTOP    found ""       
 ------------------------------------------------------
-Symbol Table is: ("A" "B" "C" "D" "E" "F") 
+Symbol Table is: ("A" "B" "C") 
 ------------------------------------------------------
-Parse Successful. 
+Parse Fail. 
 ------------------------------------------------------
-(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
- NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
- NIL NIL NIL NIL NIL)
+NIL
 Bye.

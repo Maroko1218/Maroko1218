@@ -513,7 +513,7 @@
 (defun parse-all ()
    (wild-pathname-p (pathname "*.pas"))
    (make-pathname :name :wild :type "pas")
-   (setf filenames (directory "testfiles/*.pas"))
+   (setf filenames (reverse (directory "testfiles/*.pas")))
    (parse-all-aux filenames)
 )
 ;;=====================================================================
