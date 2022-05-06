@@ -144,7 +144,7 @@ prog --> header, var_part, stat_part.
 parser(Tokens, Result) :- (prog(Tokens, Result), Result=[], write('Parse Succeed!')); write('Parse Fail!').
 lab2(File, Result) :- read_in(File, L), lexer(L, Tokens), parser(Tokens, Result).
 
-testall :- working_directory(_, 'testfiles'), testokfiles, testfunfiles, testazfiles, testsemfiles.
+testall :- working_directory(_, 'testfiles'), testokfiles, testazfiles, testfunfiles, testsemfiles.
 
 testokfiles :- write('Testing OK programs'), nl, nl, parseFiles(['testok1.pas', 'testok2.pas', 'testok3.pas','testok4.pas','testok5.pas','testok6.pas','testok7.pas']).
 testfunfiles :- write('Testing fun programs'), nl, nl, parseFiles(['fun1.pas', 'fun2.pas', 'fun3.pas', 'fun4.pas', 'fun5.pas']).
