@@ -328,10 +328,6 @@
 
 (defun stat-list (state)
    (stat state) 
-
- 
-   
-
    (when (eq (token state) 'SCOLON)
       (match state 'SCOLON)
       (stat-list state)
@@ -399,6 +395,7 @@
 ;;=====================================================================
 ; <program> --> <program-header><var-part><stat-part>
 ;;=====================================================================
+
 (defun program (state)
    (program-header state)
    (var-part       state)
@@ -444,7 +441,7 @@
 ; THE PARSER - parse all the test files
 ;;=====================================================================
 
-(defun scuff-parse()
+(defun testrun-parse()
    (parse "testfiles/testa.pas")
    (parse "testfiles/testb.pas")
    (parse "testfiles/testc.pas")
@@ -490,7 +487,7 @@
    (parse "testfiles/sem5.pas")
 )
 
-(defun the-scuffest-parse ()   
+(defun extra-parse ()   
    (parse "testfiles/notok.pas")
    (parse "testfiles/test1.pas")
    (parse "testfiles/test2.pas")
@@ -499,16 +496,12 @@
    (parse "testfiles/testok11.pas")
 )
 
-
-
 (defun parse-all-aux (files)
    (unless (equal files '())
       (parse (first files))
       (parse-all-aux (rest files))
    )
 )
-
-
 
 (defun parse-all ()
    (wild-pathname-p (pathname "*.pas"))
@@ -520,14 +513,11 @@
 ; THE PARSER - test all files
 ;;=====================================================================
 
-(parse-all) ;; original parse all where results are not aligned with expected output file
-;;(scuff-parse) ;; Sorted parse all in order of expected output file
-;;(the-scuffest-parse) ;; Files in the testfile zip that aren't included in the expected output file
+;;(parse-all) ;; original parse all where results are not aligned with expected output file
 
-;;=====================================================================
-; THE PARSER - test a single file
-;;=====================================================================
+(testrun-parse) ;; Parses all the files in expected output in the correct order to make diffchecker easy to use.
 
+;;(extra-parse) ;; Parses the files that are not in the expected output file.
 
 ;;=====================================================================
 ; THE PARSER - end of code

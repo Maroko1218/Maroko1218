@@ -6,13 +6,13 @@
         |            8     o   8           8     o     8  8
   ------+------       ooooo    8oooooo  ooo8ooo   ooooo   8
 
-Welcome to GNU CLISP 2.49.92 (2018-02-18) <http://clisp.org/>
+Welcome to GNU CLISP 2.49 (2010-07-07) <http://clisp.cons.org/>
 
-Copyright (c) Bruno Haible, Michael Stoll 1992-1993
+Copyright (c) Bruno Haible, Michael Stoll 1992, 1993
 Copyright (c) Bruno Haible, Marcus Daniels 1994-1997
 Copyright (c) Bruno Haible, Pierpaolo Bernardi, Sam Steingold 1998
 Copyright (c) Bruno Haible, Sam Steingold 1999-2000
-Copyright (c) Sam Steingold, Bruno Haible 2001-2018
+Copyright (c) Sam Steingold, Bruno Haible 2001-2010
 
 Type :h and hit Enter for context help.
 
@@ -42,26 +42,33 @@ SEMERR2
 SEMERR3
 GET-TOKEN
 MATCH
-OPERAND
-FACTOR
-TERM
-EXPR
-STAT
-STAT-LIST
 STAT-PART
-TYP
-ID-LIST
-VAR-DEC
-VAR-DEC-LIST
+STAT-LIST-AUX
+STAT-LIST
+STAT
+ID-CHECK
+ASSIGN-STAT
+EXPR-AUX
+EXPR
+TERM-AUX
+TERM
+PEXPR
+FACTOR
+OPERAND-ID
+OPERAND
 VAR-PART
+VAR-DEC-LIST
+VAR-DEC
+CHECK-ID
+ID-LIST-AUX
+ID-LIST
+TYP
 PROGRAM-HEADER
 PROGRAM
 CHECK-END
 PARSE
-TESTRUN-PARSE
-EXTRA-PARSE
-PARSE-ALL-AUX
 PARSE-ALL
+PARSING-OUTPUT
 ------------------------------------------------------
 --- Parsing program: "testfiles/testa.pas" 
 ------------------------------------------------------
@@ -1843,5 +1850,7 @@ Symbol Table is: ("A" "B" "C" "D" "E" "F")
 ------------------------------------------------------
 Parse Successful. 
 ------------------------------------------------------
-NIL
+(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
+ NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL
+ NIL NIL NIL NIL NIL)
 Bye.
