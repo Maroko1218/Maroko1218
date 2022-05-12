@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys
+
+class Reader: 
+    def __init__(self, filename):
+        try:
+            with open(filename) as infile:
+                self.buffer = infile.read()
+        except OSError:
+            print("Error:", filename, "Not Found")
+            sys.exit()
+
+
+class Lexer: 
+    def __init__(self, reader):
+        self.reader = reader
+
+
+class Parser:
+    def parse(self, filename):
+        lexer = Lexer(Reader(filename))
+        
+
+def main():
+    parser = Parser()
+    parser.parse()    
+if __name__ == "__main__":
+    main()
