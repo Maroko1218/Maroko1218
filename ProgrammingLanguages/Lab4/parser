@@ -273,7 +273,8 @@ class Parser:
 
 def main():
     parser = Parser()
-    for filename in glob("testfiles/*.pas"):
+    for filename in glob("TestSuite/*.pas"):
+        print("Testing", filename)
         parser.parse(filename)    
 
 if __name__ == "__main__":
