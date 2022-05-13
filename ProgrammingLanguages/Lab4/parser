@@ -1,15 +1,61 @@
 #!/usr/bin/env python3
+from enum import Enum
 import sys
+
+class Token(Enum):
+    tid = 258
+    number = 259
+    assign = 260
+    predef = 261
+    tempty = 262
+    undef = 263
+    error = 264
+    typ = 265
+    eof = ord("$")
+    lpar = ord("(")
+    rpar = ord(")")
+    mul = ord("*")
+    add = ord("+")
+    comma = ord(",")
+    sub = ord("-")
+    dot = ord(".")
+    div = ord("/")
+    colon = ord(":")
+    semcol = ord(";")
+    equal = ord("=")
+
+
+    program = 268
+    tinput = 269
+    output = 270
+    var = 271
+    begin = 272
+    end = 273
+    boolean = 274
+    integer = 275
+    real = 276
 
 class Reader: 
     def __init__(self, filename):
+        self.lexbufpointer = 0
+        self.bufferpointer = 0
         try:
             with open(filename) as infile:
                 self.buffer = infile.read()
         except OSError:
             print("Error:", filename, "Not Found")
             sys.exit()
+    
+    def _bufferIncrement(self):
+        temp = self.bufferpointer
+        self.bufferpointer += 1
+        return temp
+    
+    def _nextChar(self):
+        return self.buffer[self._bufferIncrement()]
 
+    def nextWord(self):
+        pass
 
 class Lexer: 
     def __init__(self, reader):
@@ -17,9 +63,110 @@ class Lexer:
 
 
 class Parser:
+
     def parse(self, filename):
-        lexer = Lexer(Reader(filename))
-        
+        self.isparseok = True
+        self.lexer = Lexer(Reader(filename))
+        self.lookahead = self.lexer.getToken()
+        if self.lookahead == "$":
+            print("SYNTAX:   Input file is empty")
+            #Symtab.printSymtab()
+            self.isparseok = False
+        else:
+            self.programHeader()
+            self.varPart()
+            self.statPart()
+            if self.isparseok:
+                print("PARSE SUCCESSFULL!")
+        #symtab.printSymtab()
+        return self.isparseok
+    
+    def match(self, token):
+        if self.lookahead == token: self.lookahead = self.lexer.getToken()
+        else:
+            self.isparseok = 0
+
+    def programHeader(self):
+        self.match(Token.program)
+        if self.lookahead != Token.tid: pass #Symtab.addProgName(???)
+        else: pass #Symtab.addProgName(Lexer.getLexeme)'
+        for token in [Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]:
+            self.match(token)
+    
+    def varPart(self):
+        self.match(Token.var)
+        self.varDecList()
+    
+    def varDecList(self):
+        self.varDec()
+        if self.lookahead == Token.tid: self.varDecList()
+
+    def varDec(self):
+        self.idList()
+        self.match(Token.colon)
+        #Symtab.setVarType(self.lookahead)
+        if self.lookahead in [Token.integer, Token.boolean, Token.real]: self.match(self.lookahead)
+        else: self.match(Token.typ)
+        self.match(Token.semcol)
+    
+    def idList(self):
+        #Symtab.decVar()
+        self.match(Token.tid)
+        if self.lookahead == Token.comma:
+            self.match(Token.comma)
+            self.idList()
+    
+    def statPart(self):
+        self.match(Token.begin)
+        self.statList()
+        self.match(Token.end)
+        self.match(Token.dot)
+    
+    def statList(self):
+        self.stat()
+        if self.lookahead == Token.semcol:
+            self.match(Token.semcol)
+            self.statList()
+    
+    def stat(self):
+        #Have to get and store token type before match
+        self.match(Token.tid)
+        self.match(Token.assign)
+        #Have to store output from expr
+        self.expr()
+        #Have to check if types match between the ID and expr
+
+    def expr(self):
+        #Have to store output from term
+        self.term()
+        if self.lookahead == Token.add:
+            self.match(Token.add)
+            #Have to store output from expr
+            self.expr()
+            #Have to compare term and expr output
+    
+    def term(self):
+        #Have to store output from factor
+        self.factor()
+        if self.lookahead == Token.mul:
+            self.match(Token.mul)
+            #Have to store output from factor
+            self.factor()
+            #Have to compare factor and factor output
+
+    def factor(self):
+        if self.lookahead == Token.lpar:
+            self.match(Token.lpar)
+            #Have to store output from expr
+            self.expr()
+            self.match(Token.rpar)
+            #return stored value
+        self.operand() #Return output from this
+    
+    def operand(self):
+        if self.lookahead == Token.tid:
+            pass #TODO
+
 
 def main():
     parser = Parser()
