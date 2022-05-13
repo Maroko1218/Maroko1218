@@ -1,0 +1,731 @@
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+
+$
+
+________________________________________________________
+SYNTAX:   Input file is empty
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+   testb(input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected program found testb
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testr (input, output);
+var A, B, C: integer;
+
+begin
+ A = B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found =
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found =
+SYNTAX:   Symbol expected . found =
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1(input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program sem1(input, output);
+var A, B, C: integer;
+
+begin
+A := D + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testz (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2
+end 
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected . found $
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1 ( input , output ) ;
+var A , B , C : real ;  
+
+begin
+3 := B + C * 2
+end .
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found 3
+SYNTAX:   Symbol expected end found :=
+SYNTAX:   Symbol expected . found :=
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program sem3(input, output);
+var A, B, C: double;
+
+begin
+A := B + C * 2
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ; found double
+SYNTAX:   Symbol expected : found ;
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun5(input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2
+end.
+
+OOOOPS!!!
+
+
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok4(input, output);
+var A, B, C: integer;  
+    DD, EE, FF: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program tests (input, output);
+var A, B, C: integer;
+
+begin
+ A : B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found :
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found :
+SYNTAX:   Symbol expected . found :
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1 ( input , output ) ;
+var A , B , C : integer ;  
+
+begin
+A := B + C / 2  
+end .
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found /
+SYNTAX:   Symbol expected . found /
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testv (input, output);
+var A, B, C: integer;
+
+begin
+ A := B  C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found C
+SYNTAX:   Symbol expected . found C
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1(input, output);  
+var A, B, C: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok5(input, output);
+var x, y, z: integer;
+    A: integer;
+    B: integer;
+    C: integer;
+
+begin
+x := y + z * 2;
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun1(input, output);
+var A, B, A: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program (input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun2(input, output);
+var A, B, C: integer;
+
+begin
+3A := B + C * 2
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found 3
+SYNTAX:   Symbol expected end found A
+SYNTAX:   Symbol expected . found A
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program sem2(input, output);
+var A, B, A: integer;
+
+begin
+A := B + C * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun4(input, output);
+var A, B, C: integer;
+    D, E, F: integer;
+
+begin
+A := B + C * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok2(input, output);
+var A, B, C: integer;  
+    D, E, F: integer;
+    G, H, I: integer;
+
+begin
+A := B + C * 2;
+D := E + F * 2;
+G := H + I * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program fun3(input, output);
+var A, B, C: integer;
+
+begin
+A : = B + C * 2
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found :
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found :
+SYNTAX:   Symbol expected . found :
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testu (input, output);
+var A, B, C: integer;
+
+begin
+ A := + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Operand Expected
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testy (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2
+.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found .
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testf (input  output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected , found output
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testw (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C - 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found -
+SYNTAX:   Symbol expected . found -
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testg (input, );
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected output found )
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program sem5(input, output);
+var A, B, C: integer;
+    D, E, F: real;
+
+begin
+A := D + E * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ( found $
+SYNTAX:   Symbol expected input found $
+SYNTAX:   Symbol expected , found $
+SYNTAX:   Symbol expected output found $
+SYNTAX:   Symbol expected ) found $
+SYNTAX:   Symbol expected ; found $
+SYNTAX:   Symbol expected var found $
+SYNTAX:   Symbol expected : found $
+SYNTAX:   Symbol expected ; found $
+SYNTAX:   Symbol expected begin found $
+SYNTAX:   Symbol expected := found $
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found $
+SYNTAX:   Symbol expected . found $
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok3(input, output);
+var A, B, C: integer;  
+
+begin
+A := 2 + 6 * 8;
+B := 3 + 9 * 1;
+C := 4 + 1 * 1
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok6(input, output);
+var id, number, assign: integer;
+
+begin
+id := (number + assign) * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Operand Expected
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testm (input, output);
+var A, B, C  integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected : found integer
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testl (input, output);
+var A  B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected : found B
+SYNTAX:   Symbol expected ; found B
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testd input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ( found input
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testh (input, output ;
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ) found ;
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testj (input, output);
+  A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected var found A
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testi (input, output) 
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ; found var
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program teste ( , output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected input found ,
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testp ( input , output ) ;
+var A , B , C : integer ;
+
+
+A := B + C * 2  
+end .
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected : found :=
+SYNTAX:   Symbol expected ; found :=
+SYNTAX:   Symbol expected begin found :=
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program sem4(input, output);
+var A, B, C: integer;
+    D, E, F: real;
+
+begin
+F := B + C * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testx (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2 ;  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found end
+SYNTAX:   Operand Expected
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1 ( input , output ) ;
+var A , B , C : integer ;  
+
+begin
+3 := B + C * 2  
+end .
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found 3
+SYNTAX:   Symbol expected end found :=
+SYNTAX:   Symbol expected . found :=
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testt (input, output);
+var A, B, C: integer;
+
+begin
+ A  B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found B
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testn (input, output);
+var A, B, C: ;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testq (input, output);
+var A, B, C: integer;
+
+begin
+ := B + C * 2  
+end.
+$
+
+________________________________________________________
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testk (input, output);
+var , B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok7(input, output);
+var
+    A: integer;
+    B: integer;
+    C: integer;
+
+begin
+A := B + C * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testok1(input, output);  
+var A, B, C: integer;  
+
+begin
+A :=  Z 
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+
+________________________________________________________
+ THE PROGRAM TEXT
+________________________________________________________
+program testo (input, output);
+var A, B, C: integer
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ; found begin

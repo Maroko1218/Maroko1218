@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 from enum import Enum
 import sys
+from glob import glob
 
-class Token(Enum):
+
+class Token(Enum): #Key/Token enum
     tid = 258
     number = 259
     assign = 260
@@ -24,7 +26,6 @@ class Token(Enum):
     semcol = ord(";")
     equal = ord("=")
 
-
     program = 268
     tinput = 269
     output = 270
@@ -35,141 +36,245 @@ class Token(Enum):
     integer = 275
     real = 276
 
+
+class KeyTokTab():
+    tokentab = {
+        "id":     Token.tid,
+        "number": Token.number,
+        ":=": 	  Token.assign,
+        "undef":  Token.undef,
+        "predef": Token.predef,
+        "tempty": Token.tempty,
+        "error":  Token.error,
+        "type":   Token.typ,
+        "$":      Token.eof,
+        "(":      Token.lpar,
+        ")":      Token.rpar,
+        "*":      Token.mul,
+        "+":      Token.add,
+        ",":      Token.comma,
+        "-":      Token.sub,
+        ".":      Token.dot,
+        "/":      Token.div,
+        ":":      Token.colon,
+        ";":      Token.semcol,
+        "=":      Token.equal
+    }
+
+    keywordtab = {
+        "program": Token.program,
+        "input":   Token.tinput,
+        "output":  Token.output,
+        "var": 	   Token.var,
+        "begin":   Token.begin,
+        "end": 	   Token.end,
+        "boolean": Token.boolean,
+        "integer": Token.integer,
+        "real":    Token.real,
+    }
+    
+    @staticmethod
+    def lex2tok(lexeme):
+        if lexeme in KeyTokTab.tokentab.keys(): #Might have to be tokentab.keys()
+            return KeyTokTab.tokentab[lexeme]
+        return KeyTokTab.key2tok(lexeme)
+
+    @staticmethod
+    def key2tok(lexeme):
+        if lexeme in KeyTokTab.keywordtab.keys(): #Might have to be keywordtab.keys()
+            return KeyTokTab.keywordtab[lexeme]
+        return Token.tid
+
+    @staticmethod
+    def tok2lex(token):
+        keys = [key for key, value in KeyTokTab.tokentab.items() if value == token]
+        if len(keys) == 1:
+            return keys[0]
+        keys = [key for key, value in KeyTokTab.keywordtab.items() if value == token]
+        if len(keys) == 1:
+            return keys[0]
+
+
 class Reader: 
     def __init__(self, filename):
-        self.lexbufpointer = 0
-        self.bufferpointer = 0
         try:
             with open(filename) as infile:
-                self.buffer = infile.read()
+                self.buffer = infile.read() + "$"
         except OSError:
             print("Error:", filename, "Not Found")
             sys.exit()
-    
-    def _bufferIncrement(self):
-        temp = self.bufferpointer
-        self.bufferpointer += 1
-        return temp
-    
-    def _nextChar(self):
-        return self.buffer[self._bufferIncrement()]
 
-    def nextWord(self):
-        pass
+    def getProg(self):
+        return self.buffer
+
 
 class Lexer: 
     def __init__(self, reader):
-        self.reader = reader
+        self.pbuffer = reader.getProg()
+        print("\n________________________________________________________\n THE PROGRAM TEXT\n________________________________________________________");
+        print(self.pbuffer)
+        print("\n________________________________________________________")
+        self.lbuffer = ""
+        self.pbuffpointer = 0
+    #Public methods
+    def getToken(self):
+        self._skipWhitespace()
+        self._readLex()
+        if self.lbuffer.isnumeric():
+            return KeyTokTab.lex2tok("number")
+        if KeyTokTab.lex2tok(self.lbuffer) in [Token.number, Token.undef, Token.predef, Token.tempty, Token.error, Token.typ]:
+            return KeyTokTab.key2tok(self.lbuffer)
+        return KeyTokTab.lex2tok(self.lbuffer)
+    
+    def getLex(self):
+        return self.lbuffer
+    #Private methods
+    def _incPbuff(self):
+        temp = self.pbuffpointer + 0
+        self.pbuffpointer += 1
+        return temp
 
+    def _getChar(self):
+        self.lbuffer += self.pbuffer[self._incPbuff()]
+
+    def _skipWhitespace(self):
+        while self.pbuffer[self.pbuffpointer].isspace():
+            self._incPbuff()
+    
+    def _readLex(self):
+        self.lbuffer = ""
+        while not self.pbuffer[self.pbuffpointer].isspace() and self.pbuffer[self.pbuffpointer] not in [ "(", ")", ",", ".", ":", ";"] and self.pbuffpointer < len(self.pbuffer) - 1:
+            self._getChar()
+            if self.lbuffer.isnumeric() and not self.pbuffer[self.pbuffpointer].isnumeric():
+                break
+        if len(self.lbuffer) < 1:
+            self._getChar()
+            if self.lbuffer == ":" and self.pbuffer[self.pbuffpointer] == "=":
+                self._getChar()
+        
 
 class Parser:
-
+    #Public methods
     def parse(self, filename):
         self.isparseok = True
         self.lexer = Lexer(Reader(filename))
         self.lookahead = self.lexer.getToken()
-        if self.lookahead == "$":
+        if self.lookahead == Token.eof:
             print("SYNTAX:   Input file is empty")
             #Symtab.printSymtab()
             self.isparseok = False
         else:
-            self.programHeader()
-            self.varPart()
-            self.statPart()
+            self._programHeader()
+            self._varPart()
+            self._statPart()
             if self.isparseok:
                 print("PARSE SUCCESSFULL!")
         #symtab.printSymtab()
         return self.isparseok
-    
-    def match(self, token):
+    #Private methods
+    def _match(self, token):
         if self.lookahead == token: self.lookahead = self.lexer.getToken()
         else:
             self.isparseok = 0
+            if token == Token.typ:
+                pass
+            elif token == Token.tid:
+                pass
+            else:
+                print("SYNTAX:   Symbol expected", KeyTokTab.tok2lex(token), "found", self.lexer.getLex())
 
-    def programHeader(self):
-        self.match(Token.program)
+    def _programHeader(self):
+        self._match(Token.program)
         if self.lookahead != Token.tid: pass #Symtab.addProgName(???)
         else: pass #Symtab.addProgName(Lexer.getLexeme)'
-        for token in [Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]:
-            self.match(token)
+        for token in [Token.tid, Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]:
+            self._match(token)
     
-    def varPart(self):
-        self.match(Token.var)
-        self.varDecList()
+    def _varPart(self):
+        self._match(Token.var)
+        self._varDecList()
     
-    def varDecList(self):
-        self.varDec()
-        if self.lookahead == Token.tid: self.varDecList()
+    def _varDecList(self):
+        self._varDec()
+        if self.lookahead == Token.tid: self._varDecList()
 
-    def varDec(self):
-        self.idList()
-        self.match(Token.colon)
+    def _varDec(self):
+        self._idList()
+        self._match(Token.colon)
         #Symtab.setVarType(self.lookahead)
-        if self.lookahead in [Token.integer, Token.boolean, Token.real]: self.match(self.lookahead)
-        else: self.match(Token.typ)
-        self.match(Token.semcol)
+        if self.lookahead in [Token.integer, Token.boolean, Token.real]: self._match(self.lookahead)
+        else: self._match(Token.typ)
+        self._match(Token.semcol)
     
-    def idList(self):
+    def _idList(self):
         #Symtab.decVar()
-        self.match(Token.tid)
+        self._match(Token.tid)
         if self.lookahead == Token.comma:
-            self.match(Token.comma)
-            self.idList()
+            self._match(Token.comma)
+            self._idList()
     
-    def statPart(self):
-        self.match(Token.begin)
-        self.statList()
-        self.match(Token.end)
-        self.match(Token.dot)
+    def _statPart(self):
+        self._match(Token.begin)
+        self._statList()
+        self._match(Token.end)
+        self._match(Token.dot)
     
-    def statList(self):
-        self.stat()
+    def _statList(self):
+        self._stat()
         if self.lookahead == Token.semcol:
-            self.match(Token.semcol)
-            self.statList()
+            self._match(Token.semcol)
+            self._statList()
     
-    def stat(self):
+    def _stat(self):
         #Have to get and store token type before match
-        self.match(Token.tid)
-        self.match(Token.assign)
+        self._match(Token.tid)
+        self._match(Token.assign)
         #Have to store output from expr
-        self.expr()
+        self._expr()
         #Have to check if types match between the ID and expr
 
-    def expr(self):
+    def _expr(self):
         #Have to store output from term
-        self.term()
+        self._term()
         if self.lookahead == Token.add:
-            self.match(Token.add)
+            self._match(Token.add)
             #Have to store output from expr
-            self.expr()
+            self._expr()
             #Have to compare term and expr output
     
-    def term(self):
+    def _term(self):
         #Have to store output from factor
-        self.factor()
+        self._factor()
         if self.lookahead == Token.mul:
-            self.match(Token.mul)
+            self._match(Token.mul)
             #Have to store output from factor
-            self.factor()
+            self._factor()
             #Have to compare factor and factor output
 
-    def factor(self):
+    def _factor(self):
         if self.lookahead == Token.lpar:
-            self.match(Token.lpar)
+            self._match(Token.lpar)
             #Have to store output from expr
-            self.expr()
-            self.match(Token.rpar)
+            self._expr()
+            self._match(Token.rpar)
             #return stored value
-        self.operand() #Return output from this
+        self._operand() #Return output from this
     
-    def operand(self):
+    def _operand(self):
         if self.lookahead == Token.tid:
-            pass #TODO
-
+            #Symtab.getvariable
+            self._match(Token.tid)
+        elif self.lookahead == Token.number:
+            self._match(Token.number)
+            return Token.integer
+        else:
+            print("SYNTAX:   Operand Expected")
+            return Token.error
 
 def main():
     parser = Parser()
-    parser.parse()    
+    for filename in glob("testfiles/*.pas"):
+        parser.parse(filename)    
+
 if __name__ == "__main__":
     main()
