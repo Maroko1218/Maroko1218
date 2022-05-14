@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from enum import Enum
-import sys
-from glob import glob
-
+from enum import Enum #Class which makes it easier to handle Tokens
+import sys #used to gracefully exit if the file couldn't be opened
+from glob import glob #used to grab all the *.pas files in the folder TestSuite/
+from dataclasses import dataclass #To allow the making of a "struct"-like class
 
 class Token(Enum): #Key/Token enum
     tid = 258
@@ -13,18 +13,18 @@ class Token(Enum): #Key/Token enum
     undef = 263
     error = 264
     typ = 265
-    eof = ord("$")
+    eof = ord("$") #unlike C python won't turn single characters into numbers for comparisons. ord(x) turns the character into its value
     lpar = ord("(")
-    rpar = ord(")")
-    mul = ord("*")
-    add = ord("+")
-    comma = ord(",")
-    sub = ord("-")
-    dot = ord(".")
-    div = ord("/")
-    colon = ord(":")
+    rpar = ord(")")  
+    mul = ord("*")   
+    add = ord("+")   
+    comma = ord(",") 
+    sub = ord("-")   
+    dot = ord(".")   
+    div = ord("/")   
+    colon = ord(":") 
     semcol = ord(";")
-    equal = ord("=")
+    equal = ord("=") 
 
     program = 268
     tinput = 269
@@ -36,8 +36,9 @@ class Token(Enum): #Key/Token enum
     integer = 275
     real = 276
 
+
 class Optab:
-    optab = [
+    _optab = [ #There is no public/private in python. However a normal naming convention is to put a _ in the front of all things "private" and this will be followed going forward for both variables/attributes and methods
         [Token.add, Token.integer, Token.integer, Token.integer],
         [Token.add, Token.real,    Token.real,    Token.real],
         [Token.add, Token.integer, Token.real,    Token.real],
@@ -48,17 +49,16 @@ class Optab:
         [Token.mul, Token.real,    Token.integer, Token.real]
     ] 
 
-    @staticmethod
-    def getOType(op, left, right):
-        for row in Optab.optab:
+    @staticmethod #Static method decorator means this is a *class* function not an *instance* function
+    def getOType(op, left, right): #returns the resulting type from the operation
+        for row in Optab._optab:
             if op == row[0] and left == row[1] and right == row[2]:
                 return row[3]
-        return Token.undef
-
+        return Token.undef #If no valid operation was found return Token.undef
 
 
 class KeyTokTab:
-    tokentab = {
+    _tokentab = {
         "id":     Token.tid,
         "number": Token.number,
         ":=": 	  Token.assign,
@@ -81,7 +81,7 @@ class KeyTokTab:
         "=":      Token.equal
     }
 
-    keywordtab = {
+    _keywordtab = {
         "program": Token.program,
         "input":   Token.tinput,
         "output":  Token.output,
@@ -95,208 +95,221 @@ class KeyTokTab:
     
     @staticmethod
     def lex2tok(lexeme):
-        if lexeme in KeyTokTab.tokentab.keys(): #Might have to be tokentab.keys()
-            return KeyTokTab.tokentab[lexeme]
+        if lexeme in KeyTokTab._tokentab.keys(): #Might have to be tokentab.keys()
+            return KeyTokTab._tokentab[lexeme]
         return KeyTokTab.key2tok(lexeme)
 
     @staticmethod
     def key2tok(lexeme):
-        if lexeme in KeyTokTab.keywordtab.keys(): #Might have to be keywordtab.keys()
-            return KeyTokTab.keywordtab[lexeme]
+        if lexeme in KeyTokTab._keywordtab.keys(): #Might have to be keywordtab.keys()
+            return KeyTokTab._keywordtab[lexeme]
         return Token.tid
 
     @staticmethod
     def tok2lex(token):
-        keys = [key for key, value in KeyTokTab.tokentab.items() if value == token]
+        keys = [key for key, value in KeyTokTab._tokentab.items() if value == token]
         if len(keys) == 1:
             return keys[0]
-        keys = [key for key, value in KeyTokTab.keywordtab.items() if value == token]
+        keys = [key for key, value in KeyTokTab._keywordtab.items() if value == token]
         if len(keys) == 1:
             return keys[0]
 
-class Symbol:
-    def __init__(self, name, role, type, size, addr):
-        self.name = name
-        self.role = role
-        self.type = type
-        self.size = size
-        self.addr = addr
+@dataclass
+class Symbol: #Struct which will be used in Symtab
+    name: str
+    role: Token
+    type: Token
+    size: int
+    addr: int
 
 
 class Symtab:
     NOTFOUND = -1
     def __init__(self):
-        self.table = list()
-        self.addRow(KeyTokTab.tok2lex(Token.predef), Token.typ, Token.predef, 0, 0)
-        self.addRow(KeyTokTab.tok2lex(Token.undef), Token.typ, Token.predef, 0, 0)
-        self.addRow(KeyTokTab.tok2lex(Token.error), Token.typ, Token.predef, 0, 0)
-        self.addRow(KeyTokTab.tok2lex(Token.integer), Token.typ, Token.predef, 4, 0)
-        self.addRow(KeyTokTab.tok2lex(Token.boolean), Token.typ, Token.predef, 4, 0)
-        self.addRow(KeyTokTab.tok2lex(Token.real), Token.typ, Token.predef, 8, 0)
-        self.startP = len(self.table)
+        self._table = list()
+        self._addRow(KeyTokTab.tok2lex(Token.predef), Token.typ, Token.predef, 0, 0)
+        self._addRow(KeyTokTab.tok2lex(Token.undef), Token.typ, Token.predef, 0, 0)
+        self._addRow(KeyTokTab.tok2lex(Token.error), Token.typ, Token.predef, 0, 0)
+        self._addRow(KeyTokTab.tok2lex(Token.integer), Token.typ, Token.predef, 4, 0)
+        self._addRow(KeyTokTab.tok2lex(Token.boolean), Token.typ, Token.predef, 4, 0)
+        self._addRow(KeyTokTab.tok2lex(Token.real), Token.typ, Token.predef, 8, 0)
+        self._startP = len(self._table)
     
-    def addRow(self, name, role, type, size, addr):
-        self.table.append(Symbol(name, role, type, size, addr))
-
-    def getName(self, index):
-        return self.table[index].name        
-    def getRole(self, index):
-        return self.table[index].role        
-    def getType(self, index):
-        return self.table[index].type    
-    def getSize(self, index):
-        return self.table[index].size    
-    def getAddr(self, index):
-        return self.table[index].addr
-    def setSize(self, index, size):
-        self.table[index].size = size
-
-
-
+    #public methods
     def pSymtab(self):
         print("________________________________________________________ ")
         print("________________________________________________________ \n THE SYMBOL TABLE\n________________________________________________________ ")
         print("       NAME       ROLE       TYPE      SIZE      ADDR     \n________________________________________________________ ")
-        for i in range(self.startP, len(self.table)):
-            print("{:>11s} {:>10s} {:>10s} {:9d} {:9d} ".format(self.getName(i), KeyTokTab.tok2lex(self.getRole(i)), KeyTokTab.tok2lex(self.getType(i)), self.getSize(i), self.getAddr(i)))
-        print("________________________________________________________ \n STATIC STORAGE REQUIRED is", self.getSize(self.startP) if self.startP != len(self.table) else 0, "BYTES\n________________________________________________________ ")
+        for i in range(self._startP, len(self._table)):
+            print("{:>11s} {:>10s} {:>10s} {:9d} {:9d} ".format(self._getName(i), KeyTokTab.tok2lex(self._getRole(i)), KeyTokTab.tok2lex(self._getType(i)), self._getSize(i), self._getAddr(i)))
+        print("________________________________________________________ \n STATIC STORAGE REQUIRED is", self._getSize(self._startP) if self._startP != len(self._table) else 0, "BYTES\n________________________________________________________ ")
         
     def addProgName(self, name):
-        self.startP = len(self.table)
-        self.addRow(name, Token.program, Token.program, 0, 0)
+        self._startP = len(self._table)
+        self._addRow(name, Token.program, Token.program, 0, 0)
     
     def addVarName(self, name):
-        self.addRow(name, Token.var, Token.undef, 0, 0)
+        self._addRow(name, Token.var, Token.undef, 0, 0)
     
     def findName(self, name):
-        for symbol in self.table:
+        for symbol in self._table:
             if name == symbol.name:
                 return True
         return False
 
     def setVarTyp(self, type):
-        for i, symbol in enumerate(self.table):
+        for i, symbol in enumerate(self._table):
             if symbol.role == Token.var and symbol.type == Token.undef:
                 symbol.type = type
                 if type not in [Token.integer, Token.boolean, Token.real]:
                     symbol.type = Token.error
-                symbol.size = self.getSize(self.getRef(KeyTokTab.tok2lex(type)))
-                symbol.addr = self.getSize(i-1) + self.getAddr(i-1)
-        self.setSize(self.startP, self.getSize(-1) + self.getAddr(-1)) # -1 on the index will grab the last item in the list
+                symbol.size = self._getSize(self._getRef(KeyTokTab.tok2lex(type)))
+                symbol.addr = self._getSize(i-1) + self._getAddr(i-1)
+        self._setSize(self._startP, self._getSize(-1) + self._getAddr(-1)) # -1 on the index will grab the last item in the list
     
     def getNameType(self, name):
-        return self.getType(self.getRef(name)) if self.getRef(name) != -1 else Token.undef
+        return self._getType(self._getRef(name)) if self._getRef(name) != -1 else Token.undef #Python will gladly accept -1 as an index so this manualy handles NOTFOUND from getRef
 
-    def getRef(self, name):
-        for i, symbol in enumerate(self.table):
-            if symbol.name == name:
-                return i
+    #private methods
+    def _addRow(self, name, role, type, size, addr): #Adds a new Symbol to the table
+        self._table.append(Symbol(name, role, type, size, addr))
+
+    def _getRef(self, name): #Finds the index of a Symbol with the given name.
+        for i, symbol in enumerate(self._table): 
+            if symbol.name == name: return i
         return Symtab.NOTFOUND
+
+    def _getName(self, index):
+        return self._table[index].name
+
+    def _getRole(self, index):
+        return self._table[index].role
+
+    def _getType(self, index):
+        return self._table[index].type
+
+    def _getSize(self, index):
+        return self._table[index].size
+
+    def _getAddr(self, index):
+        return self._table[index].addr
+
+    def _setSize(self, index, size):
+        self._table[index].size = size
 
 
 class Reader: 
     def __init__(self, filename):
         try:
             with open(filename) as infile:
-                self.buffer = infile.read() + "$"
+                self._buffer = infile.read() + "$"
         except OSError:
             print("Error:", filename, "Not Found")
             sys.exit()
 
     def getProg(self):
-        return self.buffer
+        return self._buffer
 
 
 class Lexer: 
     def __init__(self, reader):
-        self.pbuffer = reader.getProg()
-        print("\n________________________________________________________ \n THE PROGRAM TEXT\n________________________________________________________ ");
-        print(self.pbuffer,)
+        self._pbuffer = reader.getProg()
+        print("________________________________________________________ \n THE PROGRAM TEXT\n________________________________________________________ ")
+        print(self._pbuffer,)
         print("________________________________________________________ ")
-        self.lbuffer = ""
-        self.pbuffpointer = 0
+        self._lbuffer = ""
+        self._pbuffpointer = 0
+    
     #Public methods
     def getToken(self):
         self._skipWhitespace()
         self._readLex()
-        if self.lbuffer.isnumeric():
-            return KeyTokTab.lex2tok("number")
-        if KeyTokTab.lex2tok(self.lbuffer) in [Token.number, Token.undef, Token.predef, Token.tempty, Token.error, Token.typ]:
-            return KeyTokTab.key2tok(self.lbuffer)
-        return KeyTokTab.lex2tok(self.lbuffer)
+        if self._lbuffer.isnumeric(): return Token.number
+        if KeyTokTab.lex2tok(self._lbuffer) in [Token.number, Token.undef, Token.predef, Token.tempty, Token.error, Token.typ]: return KeyTokTab.key2tok(self._lbuffer) #lex2tok will turn "number" into Token.number key2tok correctly makes it Token.tid
+        return KeyTokTab.lex2tok(self._lbuffer)
     
     def getLex(self):
-        return self.lbuffer
+        return self._lbuffer
+    
     #Private methods
     def _incPbuff(self):
-        temp = self.pbuffpointer + 0
-        self.pbuffpointer += 1
+        temp = self._pbuffpointer + 0
+        self._pbuffpointer += 1
         return temp
 
     def _getChar(self):
-        self.lbuffer += self.pbuffer[self._incPbuff()]
+        self._lbuffer += self._pbuffer[self._incPbuff()]
 
     def _skipWhitespace(self):
-        while self.pbuffer[self.pbuffpointer].isspace():
+        while self._pbuffer[self._pbuffpointer].isspace():
             self._incPbuff()
     
     def _readLex(self):
-        self.lbuffer = ""
-        while not self.pbuffer[self.pbuffpointer].isspace() and self.pbuffer[self.pbuffpointer] not in [ "(", ")", ",", ".", ":", ";"] and self.pbuffpointer < len(self.pbuffer) - 1:
+        self._lbuffer = ""
+        while not self._pbuffer[self._pbuffpointer].isspace() and self._pbuffer[self._pbuffpointer] not in [ "(", ")", ",", ".", ":", ";"] and self._pbuffpointer < len(self._pbuffer) - 1:
             self._getChar()
-            if self.lbuffer.isnumeric() and not self.pbuffer[self.pbuffpointer].isnumeric():
+            if self._lbuffer.isnumeric() and not self._pbuffer[self._pbuffpointer].isnumeric():
                 break
-        if len(self.lbuffer) < 1:
+        if len(self._lbuffer) < 1:
             self._getChar()
-            if self.lbuffer == ":" and self.pbuffer[self.pbuffpointer] == "=":
+            if self._lbuffer == ":" and self._pbuffer[self._pbuffpointer] == "=":
                 self._getChar()
         
 
 class Parser:
+    def __init__(self, filename = False):
+        if filename != False: self.parse(filename)
+
     #Public methods
     def parse(self, filename):
-        self.isparseok = True
-        self.lexer = Lexer(Reader(filename))
-        self.lookahead = self.lexer.getToken()
-        self.symtab = Symtab()
-        if self.lookahead == Token.eof:
+        self._isparseok = True
+        self._lexer = Lexer(Reader(filename))
+        self._lookahead = self._lexer.getToken()
+        self._symtab = Symtab()
+        if self._lookahead == Token.eof:
             print("SYNTAX:   Input file is empty ")
-            self.isparseok = False
+            self._isparseok = False
         else:
             self._programHeader()
             self._varPart()
             self._statPart()
             self._eof()
-            if self.isparseok:
+            if self._isparseok:
                 print("PARSE SUCCESSFUL! ")
-        self.symtab.pSymtab()
-        return self.isparseok
+        self._symtab.pSymtab()
+        return self._isparseok
     #Private methods
+
+    def _getLex(self): #Helper function replacing the need to write self.lexer.getLex()
+        return self._lexer.getLex()
+
+    def _findName(self): #Helper function replacing the need to write self.symtab.findName(self._getLex())
+        return self._symtab.findName(self._getLex())
+
     def _eof(self):
-        if self.lookahead != Token.eof:
-            self.isparseok = False
+        if self._lookahead != Token.eof:
+            self._isparseok = False
             print("SYNTAX:   Extra symbols after end of parse! \n          ", end="")
-            while self.lookahead != Token.eof:
-                print(self.lexer.getLex(), end=" ")
-                self.lookahead = self.lexer.getToken()
+            while self._lookahead != Token.eof:
+                print(self._getLex(), end=" ")
+                self._lookahead = self._lexer.getToken()
             print()
     def _match(self, token):
-        if self.lookahead == token: self.lookahead = self.lexer.getToken()
+        if self._lookahead == token: self._lookahead = self._lexer.getToken()
         else:
-            self.isparseok = 0
+            self._isparseok = False
             if token == Token.typ:
-                print("SYNTAX:   Type name expected found {} ".format(self.lexer.getLex()))
+                print("SYNTAX:   Type name expected found {} ".format(self._getLex()))
             elif token == Token.tid:
-                print("SYNTAX:   ID expected found {} ".format(self.lexer.getLex()))
+                print("SYNTAX:   ID expected found {} ".format(self._getLex()))
             else:
-                print("SYNTAX:   Symbol expected", KeyTokTab.tok2lex(token), "found {} ".format(self.lexer.getLex()))
+                print("SYNTAX:   Symbol expected", KeyTokTab.tok2lex(token), "found {} ".format(self._getLex()))
 
     def _programHeader(self):
         self._match(Token.program)
-        if self.lookahead != Token.tid: self.symtab.addProgName("???")
-        else: self.symtab.addProgName(self.lexer.getLex())
-        for token in [Token.tid, Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]:
-            self._match(token)
+        self._symtab.addProgName(self._getLex()) if self._lookahead == Token.tid else self._symtab.addProgName("???") #If the program name isn't an ID make the program name "???"
+        for token in [Token.tid, Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]: #Match all the remaining tokens in the program header
+            self._match(token) 
     
     def _varPart(self):
         self._match(Token.var)
@@ -304,24 +317,24 @@ class Parser:
     
     def _varDecList(self):
         self._varDec()
-        if self.lookahead == Token.tid: self._varDecList()
+        if self._lookahead == Token.tid: self._varDecList()
 
     def _varDec(self):
         self._idList()
         self._match(Token.colon)
-        self.symtab.setVarTyp(self.lookahead)
-        if self.lookahead in [Token.integer, Token.boolean, Token.real]: self._match(self.lookahead)
+        self._symtab.setVarTyp(self._lookahead)
+        if self._lookahead in [Token.integer, Token.boolean, Token.real]: self._match(self._lookahead)
         else: self._match(Token.typ)
         self._match(Token.semcol)
     
     def _idList(self):
-        if not self.symtab.findName(self.lexer.getLex()) and self.lookahead == Token.tid: self.symtab.addVarName(self.lexer.getLex())
+        if not self._findName() and self._lookahead == Token.tid: self._symtab.addVarName(self._getLex())
         else: 
-            if self.lookahead == Token.tid: print("SEMANTIC: ID already declared:", self.lexer.getLex())
-            self.isparseok = False
+            if self._lookahead == Token.tid: print("SEMANTIC: ID already declared:", self._getLex())
+            self._isparseok = False
 
         self._match(Token.tid)
-        if self.lookahead == Token.comma:
+        if self._lookahead == Token.comma:
             self._match(Token.comma)
             self._idList()
     
@@ -333,39 +346,37 @@ class Parser:
     
     def _statList(self):
         self._stat()
-        if self.lookahead == Token.semcol:
+        if self._lookahead == Token.semcol:
             self._match(Token.semcol)
             self._statList()
     
     def _stat(self):
-        leftside = self.symtab.getNameType(self.lexer.getLex())
-        if not self.symtab.findName(self.lexer.getLex()) and self.lookahead == Token.tid:
-            print("SEMANTIC: ID NOT declared:", self.lexer.getLex())
-            leftside = Token.error
-        if self.lookahead != Token.tid: leftside = Token.error
+        leftside = Token.error 
+        if self._findName(): leftside = self._symtab.getNameType(self._getLex())
+        elif self._lookahead == Token.tid: print("SEMANTIC: ID NOT declared:", self._getLex())
         self._match(Token.tid)
         self._match(Token.assign)
         rightside = self._expr()
         if leftside != rightside:
-            print("SEMANTIC: Assign types: {} := {}".format(KeyTokTab.tok2lex(leftside), KeyTokTab.tok2lex(rightside)))
-            self.isparseok = False
+            print("SEMANTIC: Assign types:", KeyTokTab.tok2lex(leftside), ":=", KeyTokTab.tok2lex(rightside))
+            self._isparseok = False
 
     def _expr(self):
         leftside = self._term()
-        if self.lookahead == Token.add:
+        if self._lookahead == Token.add:
             self._match(Token.add)
             return Optab.getOType(Token.add, leftside, self._expr())
         return leftside
 
     def _term(self):
         leftside = self._factor()
-        if self.lookahead == Token.mul:
+        if self._lookahead == Token.mul:
             self._match(Token.mul)
             return Optab.getOType(Token.mul, leftside, self._factor())
         return leftside
 
     def _factor(self):
-        if self.lookahead == Token.lpar:
+        if self._lookahead == Token.lpar:
             self._match(Token.lpar)
             temp = self._expr()
             self._match(Token.rpar)
@@ -373,28 +384,35 @@ class Parser:
         return self._operand()
     
     def _operand(self):
-        if self.lookahead == Token.tid:
-            temp = self.symtab.getNameType(self.lexer.getLex())
-            if not self.symtab.findName(self.lexer.getLex()):
-                print("SEMANTIC: ID NOT declared:", self.lexer.getLex())
-                self.isparseok = False
-                temp = Token.undef
+        if self._lookahead == Token.tid:
+            temp = self._symtab.getNameType(self._getLex())
+            if not self._findName():
+                print("SEMANTIC: ID NOT declared:", self._getLex())
+                self._isparseok = False
             self._match(Token.tid)
             return temp
-        if self.lookahead == Token.number:
+        if self._lookahead == Token.number:
             self._match(Token.number)
             return Token.integer
         print("SYNTAX:   Operand Expected ")
-        self.isparseok = False
+        self._isparseok = False
         return Token.error
 
 def main():
-    parser = Parser()
-    temp = glob("TestSuite/*.pas")
-    temp.sort()
-    for filename in temp:
-        print("testing", filename)
-        parser.parse(filename)    
+    files = glob("TestSuite/*.pas") #Read in all the filenames into a list
+    files.sort()
+    for filename in files: #Create a parser object for each filename
+        print("testing", filename, end="\n\n")
+        Parser(filename)
+        """
+        We're making a new Parser object on each itteration of the loop
+        All the parsing can be done using only one object as well by repeadetdly
+        calling parser.parse(filename) and not specifying a filename in the constructor
+
+        parser = Parser()
+        for filename in files:
+            parser.parse(filename)
+        """
 
 if __name__ == "__main__":
     main()

@@ -9,7 +9,6 @@ var A, B, A: integer;
 begin
 A := B + C * 2  
 end.
-
 $
 ________________________________________________________ 
 SEMANTIC: ID already declared: A
@@ -143,7 +142,7 @@ OOOOPS!!!
 $
 ________________________________________________________ 
 SYNTAX:   Extra symbols after end of parse! 
-          OOOOPS ! ! ! 
+          OOOOPS!!! 
 ________________________________________________________ 
 ________________________________________________________ 
  THE SYMBOL TABLE
@@ -365,7 +364,7 @@ A := B + C * 2
 end.
 $
 ________________________________________________________ 
-SYNTAX:   ID expected found  ( 
+SYNTAX:   ID expected found ( 
 ________________________________________________________ 
 ________________________________________________________ 
  THE SYMBOL TABLE
@@ -581,7 +580,7 @@ A := B + C * 2
 end.
 $
 ________________________________________________________ 
-SYNTAX:   ID expected found  , 
+SYNTAX:   ID expected found , 
 SEMANTIC: ID NOT declared: A
 SEMANTIC: Assign types: error := integer
 ________________________________________________________ 
@@ -875,7 +874,7 @@ program testok6(input, output);
 var id, number, assign: integer;
 
 begin
-id := number + assign * 2  
+id := (number + assign) * 2  
 end.
 $
 ________________________________________________________ 
