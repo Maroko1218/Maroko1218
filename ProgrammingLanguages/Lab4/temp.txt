@@ -1,49 +1,10 @@
+testing TestSuite/fun1.pas
 
-________________________________________________________
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-
-$
-
-________________________________________________________
-SYNTAX:   Input file is empty
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-   testb(input, output);
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected program found testb
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testr (input, output);
-var A, B, C: integer;
-
-begin
- A = B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found =
-SYNTAX:   Operand Expected
-SYNTAX:   Symbol expected end found =
-SYNTAX:   Symbol expected . found =
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok1(input, output);
-var A, B, C: integer;
+________________________________________________________ 
+program fun1(input, output);
+var A, B, A: integer;  
 
 begin
 A := B + C * 2  
@@ -52,56 +13,104 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+fun1        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+A           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/fun2.pas
 
-________________________________________________________
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program sem1(input, output);
+________________________________________________________ 
+program fun2(input, output);
 var A, B, C: integer;
 
 begin
-A := D + C * 2  
+3A := B + C * 2
 end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testz (input, output);
-var A, B, C: integer;
-
-begin
- A := B + C * 2
-end 
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected . found $
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok1 ( input , output ) ;
-var A , B , C : real ;  
-
-begin
-3 := B + C * 2
-end .
 $
 
 ________________________________________________________
 SYNTAX:   Symbol expected := found 3
-SYNTAX:   Symbol expected end found :=
-SYNTAX:   Symbol expected . found :=
+SYNTAX:   Symbol expected end found A
+SYNTAX:   Symbol expected . found A
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+fun2        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/fun3.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program fun3(input, output);
+var A, B, C: integer;
+
+begin
+A :
+   = B + C * 2
+end.
+$
 
 ________________________________________________________
- THE PROGRAM TEXT
+SYNTAX:   Symbol expected := found :
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found :
+SYNTAX:   Symbol expected . found :
 ________________________________________________________
-program sem3(input, output);
-var A, B, C: double;
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+fun3        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/fun4.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program fun4(input, output);
+var A, B, C: integer;
+    D, E, F: integer;
 
 begin
 A := B + C * 2
@@ -109,12 +118,33 @@ end.
 $
 
 ________________________________________________________
-SYNTAX:   Symbol expected ; found double
-SYNTAX:   Symbol expected : found ;
+PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+fun4        Token.program Token.program        24         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+D           Token.var  Token.integer         4        12
+E           Token.var  Token.integer         4        16
+F           Token.var  Token.integer         4        20
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/fun5.pas
 
-________________________________________________________
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
+________________________________________________________ 
 program fun5(input, output);
 var A, B, C: integer;
 
@@ -129,147 +159,62 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+fun5        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/sem1.pas
 
-________________________________________________________
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program testok4(input, output);
-var A, B, C: integer;  
-    DD, EE, FF: integer;
+________________________________________________________ 
+program sem1(input, output);
+var A, B, C: integer;
 
 begin
-A := B + C * 2  
+A := D + C * 2  
 end.
 $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
-
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+sem1        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/sem2.pas
+
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program tests (input, output);
-var A, B, C: integer;
-
-begin
- A : B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found :
-SYNTAX:   Operand Expected
-SYNTAX:   Symbol expected end found :
-SYNTAX:   Symbol expected . found :
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok1 ( input , output ) ;
-var A , B , C : integer ;  
-
-begin
-A := B + C / 2  
-end .
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected end found /
-SYNTAX:   Symbol expected . found /
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testv (input, output);
-var A, B, C: integer;
-
-begin
- A := B  C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected end found C
-SYNTAX:   Symbol expected . found C
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok1(input, output);  
-var A, B, C: integer;  
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok5(input, output);
-var x, y, z: integer;
-    A: integer;
-    B: integer;
-    C: integer;
-
-begin
-x := y + z * 2;
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program fun1(input, output);
-var A, B, A: integer;  
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program (input, output);
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program fun2(input, output);
-var A, B, C: integer;
-
-begin
-3A := B + C * 2
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found 3
-SYNTAX:   Symbol expected end found A
-SYNTAX:   Symbol expected . found A
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
+________________________________________________________ 
 program sem2(input, output);
 var A, B, A: integer;
 
@@ -280,13 +225,31 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+sem2        Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+A           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/sem3.pas
 
-________________________________________________________
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program fun4(input, output);
-var A, B, C: integer;
-    D, E, F: integer;
+________________________________________________________ 
+program sem3(input, output);
+var A, B, C: double;
 
 begin
 A := B + C * 2
@@ -294,11 +257,623 @@ end.
 $
 
 ________________________________________________________
-PARSE SUCCESSFULL!
+SYNTAX:   Symbol expected ; found double
+SYNTAX:   Symbol expected : found ;
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+sem3        Token.program Token.program         0         0
+A           Token.var  Token.tid          0         0
+B           Token.var  Token.tid          0         0
+C           Token.var  Token.tid          0         0
+double      Token.var  Token.semcol         0         0
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/sem4.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program sem4(input, output);
+var A, B, C: integer;
+    D, E, F: real;
+
+begin
+F := B + C * 2
+end.
+$
 
 ________________________________________________________
- THE PROGRAM TEXT
+PARSE SUCCESSFULL!
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+sem4        Token.program Token.program        36         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+D           Token.var  Token.real         8        12
+E           Token.var  Token.real         8        20
+F           Token.var  Token.real         8        28
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/sem5.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program sem5(input, output);
+var A, B, C: integer;
+    D, E, F: real;
+
+begin
+A := D + E * 2
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+sem5        Token.program Token.program        36         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+D           Token.var  Token.real         8        12
+E           Token.var  Token.real         8        20
+F           Token.var  Token.real         8        28
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testa.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+
+$
+
+________________________________________________________
+SYNTAX:   Input file is empty
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testb.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+   testb(input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected program found testb
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testb       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testc.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program (input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+???         Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testd.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testd input, output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ( found input
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testd       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/teste.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program teste ( , output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected input found ,
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+teste       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testf.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testf (input  output);
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected , found output
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testf       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testg.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testg (input, );
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected output found )
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testg       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testh.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testh (input, output ;
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ) found ;
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testh       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testi.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testi (input, output) 
+var A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ; found var
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testi       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testj.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testj (input, output);
+  A, B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected var found A
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testj       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testk.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testk (input, output);
+var , B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testk       Token.program Token.program        12         0
+,           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testl.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testl (input, output);
+var A  B, C: integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected : found B
+SYNTAX:   Symbol expected ; found B
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testl       Token.program Token.program         8         0
+A           Token.var  Token.tid          0         0
+B           Token.var  Token.integer         4         0
+C           Token.var  Token.integer         4         4
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testm.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testm (input, output);
+var A, B, C  integer;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected : found integer
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testm       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testn.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testn (input, output);
+var A, B, C: ;
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testn       Token.program Token.program         0         0
+A           Token.var  Token.semcol         0         0
+B           Token.var  Token.semcol         0         0
+C           Token.var  Token.semcol         0         0
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testo.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testo (input, output);
+var A, B, C: integer
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected ; found begin
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testo       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok1.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testok1(input, output);  
+var A, B, C: integer;  
+
+begin
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok1     Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok2.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
 program testok2(input, output);
 var A, B, C: integer;  
     D, E, F: integer;
@@ -313,136 +888,35 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
-
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok2     Token.program Token.program        36         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+D           Token.var  Token.integer         4        12
+E           Token.var  Token.integer         4        16
+F           Token.var  Token.integer         4        20
+G           Token.var  Token.integer         4        24
+H           Token.var  Token.integer         4        28
+I           Token.var  Token.integer         4        32
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok3.pas
+
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program fun3(input, output);
-var A, B, C: integer;
-
-begin
-A : = B + C * 2
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found :
-SYNTAX:   Operand Expected
-SYNTAX:   Symbol expected end found :
-SYNTAX:   Symbol expected . found :
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testu (input, output);
-var A, B, C: integer;
-
-begin
- A := + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Operand Expected
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testy (input, output);
-var A, B, C: integer;
-
-begin
- A := B + C * 2
-.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected end found .
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testf (input  output);
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected , found output
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testw (input, output);
-var A, B, C: integer;
-
-begin
- A := B + C - 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected end found -
-SYNTAX:   Symbol expected . found -
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testg (input, );
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected output found )
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program sem5(input, output);
-var A, B, C: integer;
-    D, E, F: real;
-
-begin
-A := D + E * 2
-end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected ( found $
-SYNTAX:   Symbol expected input found $
-SYNTAX:   Symbol expected , found $
-SYNTAX:   Symbol expected output found $
-SYNTAX:   Symbol expected ) found $
-SYNTAX:   Symbol expected ; found $
-SYNTAX:   Symbol expected var found $
-SYNTAX:   Symbol expected : found $
-SYNTAX:   Symbol expected ; found $
-SYNTAX:   Symbol expected begin found $
-SYNTAX:   Symbol expected := found $
-SYNTAX:   Operand Expected
-SYNTAX:   Symbol expected end found $
-SYNTAX:   Symbol expected . found $
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
+________________________________________________________ 
 program testok3(input, output);
 var A, B, C: integer;  
 
@@ -455,10 +929,106 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok3     Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok4.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testok4(input, output);
+var A, B, C: integer;  
+    DD, EE, FF: integer;
+
+begin
+A := B + C * 2  
+end.
+$
 
 ________________________________________________________
- THE PROGRAM TEXT
+PARSE SUCCESSFULL!
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok4     Token.program Token.program        24         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+DD          Token.var  Token.integer         4        12
+EE          Token.var  Token.integer         4        16
+FF          Token.var  Token.integer         4        20
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok5.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testok5(input, output);
+var x, y, z: integer;
+    A: integer;
+    B: integer;
+    C: integer;
+
+begin
+x := y + z * 2;
+A := B + C * 2  
+end.
+$
+
+________________________________________________________
+PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok5     Token.program Token.program        24         0
+x           Token.var  Token.integer         4         0
+y           Token.var  Token.integer         4         4
+z           Token.var  Token.integer         4         8
+A           Token.var  Token.integer         4        12
+B           Token.var  Token.integer         4        16
+C           Token.var  Token.integer         4        20
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok6.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
 program testok6(input, output);
 var id, number, assign: integer;
 
@@ -470,224 +1040,29 @@ $
 ________________________________________________________
 SYNTAX:   Operand Expected
 PARSE SUCCESSFULL!
-
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok6     Token.program Token.program        12         0
+id          Token.var  Token.integer         4         0
+number      Token.var  Token.integer         4         4
+assign      Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testok7.pas
+
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program testm (input, output);
-var A, B, C  integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected : found integer
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testl (input, output);
-var A  B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected : found B
-SYNTAX:   Symbol expected ; found B
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testd input, output);
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected ( found input
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testh (input, output ;
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected ) found ;
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testj (input, output);
-  A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected var found A
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testi (input, output) 
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected ; found var
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program teste ( , output);
-var A, B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected input found ,
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testp ( input , output ) ;
-var A , B , C : integer ;
-
-
-A := B + C * 2  
-end .
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected : found :=
-SYNTAX:   Symbol expected ; found :=
-SYNTAX:   Symbol expected begin found :=
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program sem4(input, output);
-var A, B, C: integer;
-    D, E, F: real;
-
-begin
-F := B + C * 2
-end.
-$
-
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testx (input, output);
-var A, B, C: integer;
-
-begin
- A := B + C * 2 ;  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found end
-SYNTAX:   Operand Expected
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testok1 ( input , output ) ;
-var A , B , C : integer ;  
-
-begin
-3 := B + C * 2  
-end .
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found 3
-SYNTAX:   Symbol expected end found :=
-SYNTAX:   Symbol expected . found :=
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testt (input, output);
-var A, B, C: integer;
-
-begin
- A  B + C * 2  
-end.
-$
-
-________________________________________________________
-SYNTAX:   Symbol expected := found B
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testn (input, output);
-var A, B, C: ;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testq (input, output);
-var A, B, C: integer;
-
-begin
- := B + C * 2  
-end.
-$
-
-________________________________________________________
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testk (input, output);
-var , B, C: integer;
-
-begin
-A := B + C * 2  
-end.
-$
-
-________________________________________________________
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
+________________________________________________________ 
 program testok7(input, output);
 var
     A: integer;
@@ -701,31 +1076,396 @@ $
 
 ________________________________________________________
 PARSE SUCCESSFULL!
-
 ________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testok7     Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testp.pas
+
+________________________________________________________ 
  THE PROGRAM TEXT
-________________________________________________________
-program testok1(input, output);  
-var A, B, C: integer;  
+________________________________________________________ 
+program testp (input, output);
+var A, B, C: integer;
 
-begin
-A :=  Z 
-end.
-$
 
-________________________________________________________
-PARSE SUCCESSFULL!
-
-________________________________________________________
- THE PROGRAM TEXT
-________________________________________________________
-program testo (input, output);
-var A, B, C: integer
-
-begin
 A := B + C * 2  
 end.
 $
 
 ________________________________________________________
-SYNTAX:   Symbol expected ; found begin
+SYNTAX:   Symbol expected : found :=
+SYNTAX:   Symbol expected ; found :=
+SYNTAX:   Symbol expected begin found :=
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testp       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+A           Token.var  Token.assign         0        12
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testq.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testq (input, output);
+var A, B, C: integer;
+
+begin
+ := B + C * 2  
+end.
+$
+
+________________________________________________________
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testq       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testr.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testr (input, output);
+var A, B, C: integer;
+
+begin
+ A = B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found =
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found =
+SYNTAX:   Symbol expected . found =
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testr       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/tests.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program tests (input, output);
+var A, B, C: integer;
+
+begin
+ A : B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found :
+SYNTAX:   Operand Expected
+SYNTAX:   Symbol expected end found :
+SYNTAX:   Symbol expected . found :
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+tests       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testt.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testt (input, output);
+var A, B, C: integer;
+
+begin
+ A  B + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found B
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testt       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testu.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testu (input, output);
+var A, B, C: integer;
+
+begin
+ A := + C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Operand Expected
+PARSE SUCCESSFULL!
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testu       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testv.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testv (input, output);
+var A, B, C: integer;
+
+begin
+ A := B  C * 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found C
+SYNTAX:   Symbol expected . found C
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testv       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testw.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testw (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C - 2  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found -
+SYNTAX:   Symbol expected . found -
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testw       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testx.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testx (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2 ;  
+end.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected := found end
+SYNTAX:   Operand Expected
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testx       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testy.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testy (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2
+.
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected end found .
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testy       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________
+testing TestSuite/testz.pas
+
+________________________________________________________ 
+ THE PROGRAM TEXT
+________________________________________________________ 
+program testz (input, output);
+var A, B, C: integer;
+
+begin
+ A := B + C * 2
+end 
+$
+
+________________________________________________________
+SYNTAX:   Symbol expected . found $
+________________________________________________________
+ THE SYMBOL TABLE
+________________________________________________________
+       NAME       ROLE       TYPE      SIZE      ADDR   
+________________________________________________________
+predef      Token.typ  Token.predef         0         0
+undef       Token.typ  Token.predef         0         0
+error       Token.typ  Token.predef         0         0
+integer     Token.typ  Token.predef         4         0
+boolean     Token.typ  Token.predef         4         0
+real        Token.typ  Token.predef         8         0
+testz       Token.program Token.program        12         0
+A           Token.var  Token.integer         4         0
+B           Token.var  Token.integer         4         4
+C           Token.var  Token.integer         4         8
+________________________________________________________
+ STATIC STORAGE REQUIRED is %d BYTES
+________________________________________________________

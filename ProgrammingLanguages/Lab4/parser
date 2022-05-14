@@ -94,6 +94,66 @@ class KeyTokTab():
         if len(keys) == 1:
             return keys[0]
 
+class Symbol:
+    def __init__(self, name, role, type, size, addr):
+        self.name = name
+        self.role = role
+        self.type = type
+        self.size = size
+        self.addr = addr
+
+
+class Symtab:
+    NOTFOUND = -1
+    def __init__(self):
+        self.table = list()
+        self.addRow(KeyTokTab.tok2lex(Token.predef), Token.typ, Token.predef, 0, 0)
+        self.addRow(KeyTokTab.tok2lex(Token.undef), Token.typ, Token.predef, 0, 0)
+        self.addRow(KeyTokTab.tok2lex(Token.error), Token.typ, Token.predef, 0, 0)
+        self.addRow(KeyTokTab.tok2lex(Token.integer), Token.typ, Token.predef, 4, 0)
+        self.addRow(KeyTokTab.tok2lex(Token.boolean), Token.typ, Token.predef, 4, 0)
+        self.addRow(KeyTokTab.tok2lex(Token.real), Token.typ, Token.predef, 8, 0)
+        
+    def addRow(self, name, role, type, size, addr):
+        self.table.append(Symbol(name, role, type, size, addr))
+
+    def pSymtab(self):
+        print("________________________________________________________\n THE SYMBOL TABLE\n________________________________________________________")
+        print("       NAME       ROLE       TYPE      SIZE      ADDR   \n________________________________________________________")
+        for symbol in self.table:
+            print("{:11s} {:10s} {:10s} {:9d} {:9d}".format(symbol.name, symbol.role, symbol.type, symbol.size, symbol.addr))
+        print("________________________________________________________\n STATIC STORAGE REQUIRED is %d BYTES\n________________________________________________________")
+        
+    def addProgName(self, name):
+        self.startP = len(self.table)
+        self.addRow(name, Token.program, Token.program, 0, 0)
+    
+    def addVarName(self, name):
+        self.addRow(name, Token.var, Token.undef, 0, 0)
+    
+    def findName(self, name):
+        for symbol in self.table:
+            if name == symbol.name:
+                return True
+        return False
+
+    def setVarTyp(self, type):
+        for i, symbol in enumerate(self.table):
+            if symbol.role == Token.var and symbol.type == Token.undef:
+                symbol.type = type
+                symbol.size = self.table[self.getRef(KeyTokTab.tok2lex(type))].size
+                symbol.addr = self.table[i-1].size + self.table[i-1].addr
+        self.table[self.startP].size = self.table[-1].addr + self.table[-1].size
+    
+    def getNameType(self, name):
+        return self.table[self.getRef(name)].type
+
+    def getRef(self, name):
+        for i, symbol in enumerate(self.table):
+            if symbol.name == name:
+                return i
+        return Symtab.NOTFOUND
+
 
 class Reader: 
     def __init__(self, filename):
@@ -111,7 +171,7 @@ class Reader:
 class Lexer: 
     def __init__(self, reader):
         self.pbuffer = reader.getProg()
-        print("\n________________________________________________________\n THE PROGRAM TEXT\n________________________________________________________");
+        print("\n________________________________________________________ \n THE PROGRAM TEXT\n________________________________________________________ ");
         print(self.pbuffer)
         print("\n________________________________________________________")
         self.lbuffer = ""
@@ -159,9 +219,9 @@ class Parser:
         self.isparseok = True
         self.lexer = Lexer(Reader(filename))
         self.lookahead = self.lexer.getToken()
+        self.symtab = Symtab()
         if self.lookahead == Token.eof:
             print("SYNTAX:   Input file is empty")
-            #Symtab.printSymtab()
             self.isparseok = False
         else:
             self._programHeader()
@@ -169,7 +229,7 @@ class Parser:
             self._statPart()
             if self.isparseok:
                 print("PARSE SUCCESSFULL!")
-        #symtab.printSymtab()
+        self.symtab.pSymtab()
         return self.isparseok
     #Private methods
     def _match(self, token):
@@ -185,8 +245,8 @@ class Parser:
 
     def _programHeader(self):
         self._match(Token.program)
-        if self.lookahead != Token.tid: pass #Symtab.addProgName(???)
-        else: pass #Symtab.addProgName(Lexer.getLexeme)'
+        if self.lookahead != Token.tid: self.symtab.addProgName("???")
+        else: self.symtab.addProgName(self.lexer.getLex())
         for token in [Token.tid, Token.lpar, Token.tinput, Token.comma, Token.output, Token.rpar, Token.semcol]:
             self._match(token)
     
@@ -201,13 +261,13 @@ class Parser:
     def _varDec(self):
         self._idList()
         self._match(Token.colon)
-        #Symtab.setVarType(self.lookahead)
+        self.symtab.setVarTyp(self.lookahead)
         if self.lookahead in [Token.integer, Token.boolean, Token.real]: self._match(self.lookahead)
         else: self._match(Token.typ)
         self._match(Token.semcol)
     
     def _idList(self):
-        #Symtab.decVar()
+        self.symtab.addVarName(self.lexer.getLex())
         self._match(Token.tid)
         if self.lookahead == Token.comma:
             self._match(Token.comma)
@@ -273,8 +333,10 @@ class Parser:
 
 def main():
     parser = Parser()
-    for filename in glob("TestSuite/*.pas"):
-        print("Testing", filename)
+    temp = glob("TestSuite/*.pas")
+    temp.sort()
+    for filename in temp:
+        print("testing", filename)
         parser.parse(filename)    
 
 if __name__ == "__main__":
