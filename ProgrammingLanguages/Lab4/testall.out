@@ -9,6 +9,7 @@ var A, B, A: integer;
 begin
 A := B + C * 2  
 end.
+
 $
 ________________________________________________________ 
 SEMANTIC: ID already declared: A
