@@ -221,16 +221,18 @@ class Lexer:
         self._pbuffpointer = 0
     
     #Public methods
-    def getToken(self):
+    @property #Can call getToken as just Token without ()
+    def Token(self):
         self._skipWhitespace()
         self._readLex()
         if self._lbuffer.isnumeric(): return Token.number
         if KeyTokTab.lex2tok(self._lbuffer) in [Token.number, Token.undef, Token.predef, Token.tempty, Token.error, Token.typ]: return KeyTokTab.key2tok(self._lbuffer) #lex2tok will turn "number" into Token.number key2tok correctly makes it Token.tid
         return KeyTokTab.lex2tok(self._lbuffer)
     
-    def getLex(self):
-        return self._lbuffer
-    
+    @property #Using property lets the Lexeme getter be called without () as a function call and will seem like an attribute See _getLex in parser
+    def Lexeme(self):
+        return self._lbuffer    
+
     #Private methods
     def _incPbuff(self):
         temp = self._pbuffpointer + 0
@@ -264,7 +266,7 @@ class Parser:
     def parse(self, filename):
         self._isparseok = True
         self._lexer = Lexer(Reader(filename))
-        self._lookahead = self._lexer.getToken()
+        self._lookahead = self._lexer.Token
         self._symtab = Symtab()
         if self._lookahead == Token.eof:
             print("SYNTAX:   Input file is empty ")
@@ -281,10 +283,10 @@ class Parser:
     #Private methods
 
     def _getLex(self): #Helper function replacing the need to write self.lexer.getLex()
-        return self._lexer.getLex()
+        return self._lexer.Lexeme #Able to write lexer.Lexeme even though that's a method but with a @property decorator.
 
     def _findName(self): #Helper function replacing the need to write self.symtab.findName(self._getLex())
-        return self._symtab.findName(self._getLex())
+        return self._symtab.findName(self._getLex()) #Sees if the current lexeme exists in the symbol table
 
     def _eof(self):
         if self._lookahead != Token.eof:
@@ -292,10 +294,11 @@ class Parser:
             print("SYNTAX:   Extra symbols after end of parse! \n          ", end="")
             while self._lookahead != Token.eof:
                 print(self._getLex(), end=" ")
-                self._lookahead = self._lexer.getToken()
+                self._lookahead = self._lexer.Token
             print()
+
     def _match(self, token):
-        if self._lookahead == token: self._lookahead = self._lexer.getToken()
+        if self._lookahead == token: self._lookahead = self._lexer.Token #On successful match read in next token to lookahead
         else:
             self._isparseok = False
             if token == Token.typ:
