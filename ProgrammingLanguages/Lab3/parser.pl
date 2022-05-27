@@ -170,3 +170,4 @@ testsemfiles :- write('Testing sem programs '), nl, nl, parseFiles(['testfiles/s
 parseFiles([ ]).
 parseFiles([H|T]) :- write('Testing '), write(H), nl, nl, read_in(H,L), write(L), nl, lexer(L, Tokens), write(Tokens), nl, parser(Tokens, Result), Result=[], nl, write(H), write(' end of parse'), nl, nl, parseFiles(T).
 
+parse :- testall.
