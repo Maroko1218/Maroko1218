@@ -170,7 +170,7 @@ class Symtab:
         self._setSize(self._startP, self._getSize(-1) + self._getAddr(-1)) # -1 on the index will grab the last item in the list
     
     def getNameType(self, name):
-        return self._getType(self._getRef(name)) if self._getRef(name) != -1 else Token.undef #Python will gladly accept -1 as an index so this manualy handles NOTFOUND from getRef
+        return self._getType(self._getRef(name)) if self._getRef(name) != Symtab.NOTFOUND else Token.undef #Python will gladly accept -1 as an index so this manualy handles NOTFOUND from getRef
 
     #private methods
     def _addRow(self, name, role, type, size, addr): #Adds a new Symbol to the table
