@@ -160,12 +160,12 @@ prog --> header, var_part, stat_part.
 parser(Tokens, Result) :- (prog(Tokens, Result), Result=[], write('Parse OK!')); write('Parse Fail!').
 lab2(File, Result) :- read_in(File, L), lexer(L, Tokens), parser(Tokens, Result).
 
-testall :- tell('output.out'), testokfiles, testazfiles, testfunfiles, testsemfiles, told.
+testall :- tell('parser.out'), testokfiles, testazfiles, testfunfiles, testsemfiles, told.
 
-testokfiles :- write('Testing OK programs'), nl, nl, parseFiles(['testfiles/testok1.pas', 'testfiles/testok2.pas', 'testfiles/testok3.pas','testfiles/testok4.pas','testfiles/testok5.pas','testfiles/testok6.pas','testfiles/testok7.pas']).
-testfunfiles :- write('Testing fun programs'), nl, nl, parseFiles(['testfiles/fun1.pas', 'testfiles/fun2.pas', 'testfiles/fun3.pas', 'testfiles/fun4.pas', 'testfiles/fun5.pas']).
-testazfiles :- write('Testing a-z programs'), nl, nl, parseFiles(['testfiles/testa.pas', 'testfiles/testb.pas', 'testfiles/testc.pas', 'testfiles/testd.pas', 'testfiles/teste.pas', 'testfiles/testf.pas', 'testfiles/testg.pas', 'testfiles/testh.pas', 'testfiles/testi.pas', 'testfiles/testj.pas', 'testfiles/testk.pas', 'testfiles/testl.pas', 'testfiles/testm.pas', 'testfiles/testn.pas', 'testfiles/testo.pas', 'testfiles/testp.pas', 'testfiles/testq.pas', 'testfiles/testr.pas', 'testfiles/tests.pas', 'testfiles/testt.pas', 'testfiles/testu.pas', 'testfiles/testv.pas', 'testfiles/testw.pas', 'testfiles/testx.pas', 'testfiles/testy.pas', 'testfiles/testz.pas']).
-testsemfiles :- write('Testing sem programs'), nl, nl, parseFiles(['testfiles/sem1.pas', 'testfiles/sem2.pas', 'testfiles/sem3.pas', 'testfiles/sem4.pas', 'testfiles/sem5.pas']).
+testokfiles :- write('Testing OK programs '), nl, nl, parseFiles(['testfiles/testok1.pas', 'testfiles/testok2.pas', 'testfiles/testok3.pas','testfiles/testok4.pas','testfiles/testok5.pas','testfiles/testok6.pas','testfiles/testok7.pas']).
+testfunfiles :- write('Testing fun programs '), nl, nl, parseFiles(['testfiles/fun1.pas', 'testfiles/fun2.pas', 'testfiles/fun3.pas', 'testfiles/fun4.pas', 'testfiles/fun5.pas']).
+testazfiles :- write('Testing a-z programs '), nl, nl, parseFiles(['testfiles/testa.pas', 'testfiles/testb.pas', 'testfiles/testc.pas', 'testfiles/testd.pas', 'testfiles/teste.pas', 'testfiles/testf.pas', 'testfiles/testg.pas', 'testfiles/testh.pas', 'testfiles/testi.pas', 'testfiles/testj.pas', 'testfiles/testk.pas', 'testfiles/testl.pas', 'testfiles/testm.pas', 'testfiles/testn.pas', 'testfiles/testo.pas', 'testfiles/testp.pas', 'testfiles/testq.pas', 'testfiles/testr.pas', 'testfiles/tests.pas', 'testfiles/testt.pas', 'testfiles/testu.pas', 'testfiles/testv.pas', 'testfiles/testw.pas', 'testfiles/testx.pas', 'testfiles/testy.pas', 'testfiles/testz.pas']).
+testsemfiles :- write('Testing sem programs '), nl, nl, parseFiles(['testfiles/sem1.pas', 'testfiles/sem2.pas', 'testfiles/sem3.pas', 'testfiles/sem4.pas', 'testfiles/sem5.pas']).
 
 parseFiles([ ]).
 parseFiles([H|T]) :- write('Testing '), write(H), nl, nl, read_in(H,L), write(L), nl, lexer(L, Tokens), write(Tokens), nl, parser(Tokens, Result), Result=[], nl, write(H), write(' end of parse'), nl, nl, parseFiles(T).

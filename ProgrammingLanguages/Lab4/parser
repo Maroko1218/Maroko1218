@@ -138,7 +138,9 @@ class Symtab:
     #public methods
     def pSymtab(self):
         print("________________________________________________________ ")
-        print("________________________________________________________ \n THE SYMBOL TABLE\n________________________________________________________ ")
+        print("________________________________________________________ ")
+        print(" THE SYMBOL TABLE")
+        print("________________________________________________________ ")
         print("       NAME       ROLE       TYPE      SIZE      ADDR     \n________________________________________________________ ")
         for i in range(self._startP, len(self._table)):
             print("{:>11s} {:>10s} {:>10s} {:9d} {:9d} ".format(self._getName(i), KeyTokTab.tok2lex(self._getRole(i)), KeyTokTab.tok2lex(self._getType(i)), self._getSize(i), self._getAddr(i)))

@@ -1,4 +1,4 @@
-Testing OK programs
+Testing OK programs 
 
 Testing testfiles/testok1.pas
 
@@ -49,7 +49,7 @@ Testing testfiles/testok7.pas
 Parse OK!
 testfiles/testok7.pas end of parse
 
-Testing a-z programs
+Testing a-z programs 
 
 Testing testfiles/testa.pas
 
@@ -233,7 +233,7 @@ Testing testfiles/testz.pas
 Parse Fail!
 testfiles/testz.pas end of parse
 
-Testing fun programs
+Testing fun programs 
 
 Testing testfiles/fun1.pas
 
@@ -270,7 +270,7 @@ Testing testfiles/fun5.pas
 Parse OK!
 testfiles/fun5.pas end of parse
 
-Testing sem programs
+Testing sem programs 
 
 Testing testfiles/sem1.pas
 
